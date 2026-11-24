@@ -72,7 +72,7 @@ details.qa .ans{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px;pa
 .player button{min-height:44px;min-width:44px;border-radius:12px;border:0;background:rgba(127,127,127,.25);color:inherit;padding:0 12px;font-weight:600}
 .player .prog{height:5px;background:rgba(127,127,127,.35);border-radius:3px;margin-top:10px}.player .prog i{display:block;height:100%;background:var(--lime);border-radius:3px}
 .line{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;cursor:pointer}
-.line.on{background:color-mix(in srgb,var(--lime) 35%,transparent)}
+.spon{background:color-mix(in srgb,var(--lime) 35%,transparent);border-radius:8px}.seek{cursor:pointer}.pcur{margin:8px 0 0;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.mini{border:1px solid var(--line);background:var(--bg);border-radius:99px;min-height:36px;padding:0 14px;font-weight:600;font-size:14px}
 .q{font-size:18px;font-weight:600;margin:10px 0 14px}
 .opt{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:2px solid transparent;border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:52px}
 .opt .l{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font:700 17px "Barlow Condensed",sans-serif;background:var(--bg);border:1px solid var(--line)}
@@ -572,6 +572,96 @@ test:[
 }
 ];
 
+// Ek çoktan seçmeli sorular (ilk şık doğru; uygulama karıştırır)
+const EXTRA = {
+bes:[
+["İlk Modern Olimpiyat Oyunları hangi yıl düzenlenmiştir?",["1896","1894","1900","1908","1912"],"İlk modern oyunlar 1896'da Atina'da yapılmıştır; 1894 IOC'nin kurulduğu yıldır."],
+["Uluslararası Olimpiyat Komitesi (IOC) hangi yıl kurulmuştur?",["1894","1896","1900","1920","1888"],"IOC, Coubertin'in öncülüğünde 1894'te Paris'te kurulmuştur."],
+["Antik Olimpiyat Oyunları hangi kentte düzenlenirdi?",["Olympia","Atina","Sparta","Delfi","Korint"],"Oyunlar Zeus adına Olympia'da yapılırdı."],
+["Olimpizm hangi nitelikleri dengeli bir bütün içinde yüceltmeyi amaçlar?",["Beden, irade ve zihin","Kuvvet, sürat ve dayanıklılık","Rekabet, kazanç ve şöhret","Teknik, taktik ve kondisyon","Disiplin, itaat ve hiyerarşi"],"Olimpiyat Şartı Olimpizmi beden, irade ve zihin niteliklerini dengeli biçimde yücelten bir yaşam felsefesi olarak tanımlar."],
+["Kurallara uyma, rakibe ve hakeme saygı gösterme ilkesini ifade eden kavram hangisidir?",["Fair play","Doping","Amatörlük","Profesyonellik","Rekreasyon"],"Fair play (adil oyun) sporun ahlaki temelini oluşturur."],
+["Aşağıdakilerden hangisi beden eğitiminin nöromüsküler (devinişsel) amacına örnektir?",["Temel hareket becerilerini kazanma","Oyun kurallarını açıklayabilme","Takım arkadaşına saygı gösterme","Sağlıklı beslenme bilgisini edinme","Spor tarihini öğrenme"],"Devinişsel alan hareket becerilerinin kazanılmasıyla ilgilidir."],
+["Aşağıdakilerden hangisi beden eğitiminin bedensel (organik) amacına örnektir?",["Kalp-dolaşım dayanıklılığının artması","Oyun stratejisi geliştirebilme","Liderlik becerisi kazanma","Kurallara uyma alışkanlığı","Başkalarıyla iletişim kurma"],"Organik gelişim organ sistemlerinin kapasitesinin artmasıdır."],
+["Aşağıdakilerden hangisi beden eğitiminin bilişsel amacına örnektir?",["Oyunun kurallarını ve stratejisini kavrama","Esnekliği artırma","Takım ruhu kazanma","Kas kuvvetini geliştirme","Kaybetmeyi kabullenme"],"Bilişsel alan bilgi, kavrama ve problem çözme ile ilgilidir."],
+["İngiltere'de Rugby School'da oyun ve takım sporlarını karakter eğitiminin aracı olarak kullanan eğitimci kimdir?",["Thomas Arnold","Per Henrik Ling","Friedrich Ludwig Jahn","Pierre de Coubertin","Johann Pestalozzi"],"Thomas Arnold'ın yaklaşımı Coubertin'i de etkilemiştir."],
+["Düzenli egzersiz sonucunda organizmada oluşan kalıcı değişikliklere ne ad verilir?",["Kronik uyum","Akut yanıt","Yorgunluk","Isınma etkisi","Toparlanma"],"Kronik uyumlar haftalar-aylar süren düzenli antrenmanla oluşur."],
+["Tek bir egzersiz seansı sırasında kalp atım hızının yükselmesi gibi geçici değişikliklere ne ad verilir?",["Akut yanıt","Kronik uyum","Süperkompanzasyon","Adaptasyon","Antrenman etkisi"],"Akut yanıtlar egzersiz bitince kısa sürede normale döner."],
+["Aşağıdakilerden hangisi spor bilimlerinin psikolojik temeli kapsamında incelenir?",["Motivasyon ve kaygı","Maksimal oksijen tüketimi","Kemik mineral yoğunluğu","Kaldıraç sistemleri","Toplumsal tabakalaşma"],"Motivasyon, kaygı, dikkat ve öz yeterlik psikolojik temellerdendir."],
+["Antik Roma'da beden eğitiminin öne çıkan amacı aşağıdakilerden hangisidir?",["Askerî hazırlık ve gösteri","Estetik ve felsefi gelişim","Sağlık ve terapi","Okul eğitiminin bütünlüğü","Olimpiyat hazırlığı"],"Roma'da beden eğitimi asker yetiştirme ve seyirlik gösterilerle ilişkilidir."],
+["Türkiye Millî Olimpiyat Cemiyeti hangi yıl kurulmuştur?",["1908","1923","1936","1896","1920"],"Türkiye Millî Olimpiyat Cemiyeti 1908'de kurulmuştur."],
+["Sporu oyundan ayıran temel özellik aşağıdakilerden hangisidir?",["Kurumsallaşmış kurallar ve örgütlü rekabet","Gönüllü katılım","Haz verme","Hareket içermesi","Boş zamanda yapılması"],"Spor kuralları belirlenmiş, örgütlü ve rekabete dayalı bir etkinliktir."]
+],
+ank:[
+["Torakal bölgede kaç omur bulunur?",["12","7","5","4","10"],"7 servikal, 12 torakal, 5 lomber omur vardır."],
+["Servikal (boyun) bölgede kaç omur bulunur?",["7","12","5","8","6"],"Boyun bölgesinde 7 servikal omur vardır."],
+["Vücudu ön ve arka parçalara ayıran düzlem hangisidir?",["Frontal (koronal) düzlem","Sagittal düzlem","Transvers düzlem","Horizontal eksen","Longitudinal eksen"],"Frontal düzlem vücudu anterior ve posterior parçalara ayırır."],
+["Vücudu sağ ve sol parçalara ayıran düzlem hangisidir?",["Sagittal düzlem","Frontal düzlem","Transvers düzlem","Koronal düzlem","Horizontal düzlem"],"Sagittal düzlemdeki hareketler fleksiyon ve ekstansiyondur."],
+["Patella (diz kapağı) hangi kemik tipine örnektir?",["Sesamoid kemik","Uzun kemik","Kısa kemik","Yassı kemik","Düzensiz kemik"],"Patella quadriceps tendonu içinde gelişen bir sesamoid kemiktir."],
+["Karpal (el bileği) kemikleri hangi kemik tipine örnektir?",["Kısa kemik","Uzun kemik","Yassı kemik","Sesamoid kemik","Düzensiz kemik"],"Karpal ve tarsal kemikler kısa kemiklerdir."],
+["Omurlar hangi kemik tipine örnektir?",["Düzensiz kemik","Uzun kemik","Kısa kemik","Yassı kemik","Sesamoid kemik"],"Omurlar karmaşık şekilleri nedeniyle düzensiz kemik sınıfındadır."],
+["Önkolun pronasyon ve supinasyon hareketleri hangi eklem tipinde gerçekleşir?",["Pivot (silindirik) eklem","Menteşe eklem","Eyer eklem","Top-yuva eklem","Kayma eklem"],"Radioulnar eklemler pivot tipidir."],
+["Aşağıdakilerden hangisi quadriceps kas grubunda yer almaz?",["Biceps femoris","Rectus femoris","Vastus lateralis","Vastus medialis","Vastus intermedius"],"Biceps femoris bir hamstring kasıdır."],
+["Solunumda inspirasyonun (soluk alma) ana kası hangisidir?",["Diyafram","Rectus abdominis","Trapezius","Latissimus dorsi","Pectoralis major"],"Diyafram kasıldığında göğüs boşluğu genişler ve hava içeri girer."],
+["İstemsiz çalışan ve çizgili yapıya sahip kas tipi hangisidir?",["Kalp kası","İskelet kası","Düz kas","Sfinkter kası","Mimik kası"],"Kalp kası çizgili ama istemsizdir."],
+["Bir hareket sırasında eklemi sabitleyerek hareketin verimli olmasını sağlayan kas rolüne ne ad verilir?",["Stabilizatör","Agonist","Antagonist","Sinerjist","Fasya"],"Stabilizatör kaslar hareketin temelini sabitler."],
+["Ayak sırtının kaval kemiğine doğru yaklaşması hareketine ne ad verilir?",["Dorsifleksiyon","Plantar fleksiyon","İnversiyon","Eversiyon","Supinasyon"],"Dorsifleksiyon ayak bileğinde gerçekleşen bir harekettir."],
+["“Proksimal” yön terimi neyi ifade eder?",["Gövdeye veya başlangıç noktasına daha yakın","Gövdeden daha uzak","Orta hatta daha yakın","Vücudun ön yüzünde","Yüzeye daha yakın"],"Proksimalin karşıtı distaldir."],
+["Kemik iliğinde kan hücrelerinin yapımına ne ad verilir?",["Hematopoez","Osteoporoz","Ossifikasyon","Hipertrofi","Glikoliz"],"Hematopoez iskelet sisteminin işlevlerinden biridir."]
+],
+hrk:[
+["Kayma (yan adım) hangi temel hareket becerisi grubundadır?",["Lokomotor","Nesne kontrol","Dengeleme","Manipülatif","Refleksif"],"Kayma vücudu bir yerden başka bir yere taşır."],
+["Top sürme hangi temel hareket becerisi grubundadır?",["Nesne kontrol","Lokomotor","Dengeleme","Refleksif","Algısal"],"Top sürme bir nesnenin kontrolüne yöneliktir."],
+["Bir ayakla kuvvet üretip diğer ayakla yere inme becerisine ne ad verilir?",["Sıçrama (leap)","Sekme (hop)","Atlama (jump)","Galop","Skip"],"Sıçramada kalkış ve iniş farklı ayaklarla yapılır."],
+["Fitts ve Posner'a göre öğrenmenin ilk evresi hangisidir?",["Bilişsel evre","İlişkisel evre","Otonom evre","Olgun evre","Uygulama evresi"],"Öğrenci önce ne yapacağını anlamaya çalışır."],
+["Öğrencinin hatalarını fark edip düzelttiği ve hareketin tutarlılığının arttığı evre hangisidir?",["İlişkisel (çağrışımsal) evre","Bilişsel evre","Otonom evre","Refleksif evre","Başlangıç evresi"],"İlişkisel evrede performans giderek daha tutarlı hâle gelir."],
+["“Serbest atışlarının 10'da 6'sı girdi” şeklindeki geri bildirim hangi türdendir?",["Sonuç bilgisi (KR)","Performans bilgisi (KP)","İçsel geri bildirim","Kinestetik geri bildirim","Eş zamanlı geri bildirim"],"KR hareketin sonucuna ilişkin bilgidir."],
+["Laban'ın hareket çerçevesinde “nerede hareket ediliyor?” sorusu hangi öğeyle ilgilidir?",["Alan","Vücut","Çaba","İlişki","Zaman"],"Alan öğesi düzeyler, yönler ve yolları kapsar."],
+["Laban'ın hareket çerçevesinde “kiminle ya da neyle?” sorusu hangi öğeyle ilgilidir?",["İlişki","Alan","Çaba","Vücut","Akış"],"İlişki; eşle, grupla veya nesneyle hareketi kapsar."],
+["Aşağıdakilerden hangisi Gallahue'nun özelleşmiş hareketler evresinin basamaklarından biridir?",["Geçiş","Başlangıç","İlkel (elementer)","Olgun","Refleks bastırma"],"Özelleşmiş evrenin basamakları geçiş, uygulama ve yaşam boyu kullanımdır; başlangıç, ilkel ve olgun temel hareketler evresine aittir."],
+["Özelleşmiş (sporla ilgili) hareketler evresinin son basamağı hangisidir?",["Yaşam boyu kullanım","Uygulama","Geçiş","Olgun","İlkel"],"Basamaklar sırasıyla geçiş, uygulama ve yaşam boyu kullanımdır."],
+["Alan farkındalığında “alçak, orta, yüksek” ifadeleri neyi tanımlar?",["Düzeyleri","Yönleri","Yolları","Hızı","Akışı"],"Düzeyler hareketin yerden yüksekliğini belirtir."],
+["Aşağıdakilerden hangisi kondisyonel bir özelliktir?",["Dayanıklılık","Denge","Ritim","Oryantasyon","Reaksiyon"],"Kondisyonel özellikler kuvvet, sürat, dayanıklılık ve esnekliktir."],
+["Aynı becerinin ara vermeden art arda tekrarlandığı uygulama düzenine ne ad verilir?",["Bloklu uygulama","Rastgele uygulama","Dağıtılmış uygulama","Değişken uygulama","Zihinsel uygulama"],"Bloklu uygulama kısa vadede iyi performans sağlar ancak kalıcılık açısından rastgele uygulamadan genellikle zayıftır."],
+["Gallahue'ya göre ilkel (rudimentary) hareketler evresi yaklaşık hangi yaş aralığını kapsar?",["0–2 yaş","2–7 yaş","7–10 yaş","11–14 yaş","Doğum öncesi"],"İlkel hareketler evresi doğumdan yaklaşık 2 yaşa kadar sürer."],
+["Çocuğun sağ ve sol ayrımını yapabilmesi hangi algısal-motor beceriyle ilgilidir?",["Yön farkındalığı (lateralite)","Zamansal farkındalık","Vücut farkındalığı","Ritim","Statik denge"],"Yön farkındalığı lateraliteyi ve yön kavramlarını kapsar."]
+],
+egt:[
+["Öğrenme kavramı aşağıdakilerden hangisiyle tanımlanır?",["Yaşantı ürünü, kalıcı izli davranış değişikliği","Olgunlaşmaya bağlı geçici değişiklik","Yorgunluğa bağlı davranış değişikliği","İlaç etkisiyle oluşan değişiklik","Doğuştan gelen refleks"],"Olgunlaşma, yorgunluk ve ilaç etkisiyle oluşan değişiklikler öğrenme sayılmaz."],
+["Öğrenmeyi sağlamaya yönelik rehberlik etkinliklerine ne ad verilir?",["Öğretme","Öğretim","Eğitim","Sosyalleşme","Olgunlaşma"],"Öğretme her ortamda olabilir; okulda planlı olanına öğretim denir."],
+["Okul programında bilinçli ya da bilinçsiz biçimde yer verilmeyen içeriklere ne ad verilir?",["Dışta bırakılan (null) program","Örtük program","Resmî program","Ders programı","Ek program"],"Neyin öğretilmediği de öğrencilere mesaj verir."],
+["Aşağıdakilerden hangisi pragmatizmin temsilcilerinden biri değildir?",["Platon","John Dewey","William James","Charles S. Peirce","Richard Rorty"],"Platon idealizmin kurucusudur."],
+["Felsefi akım olarak idealizmin kurucusu kabul edilen düşünür kimdir?",["Platon","Aristoteles","John Dewey","Jean-Paul Sartre","John Locke"],"İdealizme göre gerçek, idealar dünyasındadır."],
+["Felsefi akım olarak realizm en çok hangi düşünürle ilişkilendirilir?",["Aristoteles","Platon","Sartre","Dewey","Brameld"],"Realizm, gerçekliğin insan zihninden bağımsız var olduğunu savunur."],
+["Varoluşçuluğun önde gelen temsilcilerinden biri kimdir?",["Jean-Paul Sartre","Aristoteles","Theodore Brameld","Charles S. Peirce","Herbert Spencer"],"Sartre bireyin özgürlük ve sorumluluğunu vurgular."],
+["John Dewey'in eğitim felsefesini ortaya koyduğu ünlü eseri hangisidir?",["Demokrasi ve Eğitim","Devlet","Emile","Büyük Didaktik","Mukaddime"],"Democracy and Education 1916'da yayımlanmıştır."],
+["Doğalcı eğitim anlayışını “Emile” adlı eseriyle ortaya koyan düşünür kimdir?",["Jean-Jacques Rousseau","John Locke","Jan Amos Comenius","Johann Pestalozzi","Immanuel Kant"],"Rousseau çocuğun doğasına uygun eğitimi savunmuştur."],
+["“Büyük Didaktik” eseriyle modern öğretim biliminin kurucusu sayılan düşünür kimdir?",["Jan Amos Comenius","Jean-Jacques Rousseau","Friedrich Fröbel","John Dewey","Maria Montessori"],"Comenius herkese her şeyin öğretilmesi idealini savunmuştur."],
+["Eğitimin insan sermayesine yapılan bir yatırım olarak görülmesi, eğitimin hangi temeliyle ilgilidir?",["Ekonomik temel","Felsefi temel","Psikolojik temel","Tarihî temel","Hukuki temel"],"Ekonomik temel eğitimin maliyeti, getirisi ve iş gücüyle ilişkisini inceler."],
+["Kız ve erkek öğrencilerin aynı okulda birlikte eğitim görmesi hangi temel ilkeyle ilgilidir?",["Karma eğitim","Genellik ve eşitlik","Yöneltme","Süreklilik","Planlılık"],"Karma eğitim 1739 sayılı kanunun temel ilkelerindendir."],
+["Maddi imkânı olmayan başarılı öğrencilere burs ve yatılılık imkânı sağlanması hangi temel ilkenin gereğidir?",["Fırsat ve imkân eşitliği","Laiklik","Bilimsellik","Karma eğitim","Planlılık"],"Bu ilke başarılı ama imkânı olmayan öğrencilerin desteklenmesini öngörür."],
+["Bireylerin hayat boyu eğitim almasını öngören temel ilke hangisidir?",["Süreklilik","Yöneltme","Genellik ve eşitlik","Demokrasi eğitimi","Okul ile ailenin iş birliği"],"Süreklilik ilkesi eğitimin ömür boyu devam etmesini vurgular."],
+["Aşağıdakilerden hangisi örgün eğitimin bir kademesidir?",["Ortaöğretim","Halk eğitim merkezi kursu","Hizmet içi eğitim semineri","Kütüphane okuma etkinliği","Belediye spor kursu"],"Örgün eğitim kademeleri okul öncesi, ilkokul, ortaokul, ortaöğretim ve yükseköğretimdir."]
+],
+sos:[
+["Talcott Parsons hangi sosyolojik yaklaşımın temsilcisidir?",["İşlevselci yaklaşım","Çatışmacı yaklaşım","Sembolik etkileşimci yaklaşım","Fenomenolojik yaklaşım","Eleştirel pedagoji"],"Parsons okulun sosyalleşme ve seçme-yerleştirme işlevlerini vurgular."],
+["George Herbert Mead hangi yaklaşımla ilişkilendirilir?",["Sembolik etkileşimci yaklaşım","İşlevselci yaklaşım","Çatışmacı yaklaşım","Pozitivizm","Yapısalcılık"],"Mead benlik ve etkileşim üzerine çalışmıştır."],
+["Belirli bir statüdeki kişiden beklenen davranışlar bütününe ne ad verilir?",["Rol","Statü","Norm","Değer","Kurum"],"Statü konumu, rol ise o konumdan beklenen davranışları ifade eder."],
+["Doğuştan sahip olunan ve kişinin çabasına bağlı olmayan statüye ne ad verilir?",["Verilmiş statü","Kazanılmış statü","Toplumsal rol","Ana statü","Prestij"],"Cinsiyet ve yaş verilmiş statü örnekleridir."],
+["Toplumun gelir, servet, güç ve prestije göre katmanlara ayrılmasına ne ad verilir?",["Toplumsal tabakalaşma","Toplumsal hareketlilik","Kültürleşme","Sosyalleşme","Toplumsal kurum"],"Tabakalaşma eşitsizliklerin yapısal biçimidir."],
+["Bir bireyin aynı toplumsal düzeyde kalarak konum değiştirmesine ne ad verilir?",["Yatay hareketlilik","Dikey hareketlilik","Kuşaklar arası hareketlilik","Aşağı doğru hareketlilik","Tabakalaşma"],"Örneğin bir öğretmenin aynı görevle başka okula geçmesi yatay hareketliliktir."],
+["Bireyin toplumun değer, norm ve rollerini öğrenerek toplumun üyesi hâline gelmesine ne ad verilir?",["Sosyalleşme","Kültür şoku","Tabakalaşma","Kültürel gecikme","Toplumsal hareketlilik"],"Aile, okul, akranlar ve medya başlıca sosyalleşme araçlarıdır."],
+["Bireyin ilk ve en temel sosyalleşme ortamı hangisidir?",["Aile","Okul","Akran grubu","Medya","Spor kulübü"],"Aile birincil sosyalleşmenin gerçekleştiği kurumdur."],
+["Aşağıdakilerden hangisi kültürün maddi unsurlarına örnektir?",["Spor salonu ve malzemeleri","Değerler","İnançlar","Gelenekler","Dil"],"Maddi kültür somut araç, gereç ve yapıları kapsar."],
+["Aşağıdakilerden hangisi kültürün manevi unsurlarına örnektir?",["Değerler ve normlar","Okul binası","Bilgisayar","Futbol topu","Stadyum"],"Manevi kültür değer, inanç, dil ve gelenekleri kapsar."],
+["Bireyin farklı bir kültürle karşılaştığında yaşadığı şaşkınlık ve uyum güçlüğüne ne ad verilir?",["Kültür şoku","Kültürel gecikme","Kültürlenme","Kültürel yayılma","Asimilasyon"],"Kültür şoku genellikle zamanla uyum süreciyle azalır."],
+["Çatışmacı yaklaşımın düşünsel kökeni en çok hangi düşünüre dayanır?",["Karl Marx","Émile Durkheim","Talcott Parsons","George H. Mead","Auguste Comte"],"Çatışmacı yaklaşım toplumsal eşitsizlik ve güç ilişkilerine odaklanır."],
+["Okulun kendine özgü değerleri, normları, törenleri ve alışkanlıkları bütününe ne ad verilir?",["Okul kültürü","Örtük program","Toplumsal kurum","Sosyal tabakalaşma","Resmî program"],"Okul kültürü okulun bir sosyal sistem olarak kimliğini oluşturur."],
+["İşlevselci yaklaşıma göre okulun bireyleri yeteneklerine göre farklı mesleki rollere yönlendirmesi hangi işlevdir?",["Seçme ve yerleştirme (rol dağılımı)","Kültürel yeniden üretim","Etiketleme","Toplumsal çatışma","Kültürel gecikme"],"İşlevselciler bu işlevi toplumun verimli işleyişi için gerekli görür."],
+["Aşağıdakilerden hangisi sporun olumlu toplumsal işlevlerinden biridir?",["Aidiyet ve takım ruhu kazandırma","Fanatizmi artırma","Dopingi yaygınlaştırma","Toplumsal dışlama","Şiddeti meşrulaştırma"],"Spor doğru yönlendirildiğinde güçlü bir sosyalleşme ve bütünleşme aracıdır."]
+]
+};
+COURSES.forEach(c=>{if(EXTRA[c.id])c.test.push(...EXTRA[c.id])});
+
 </script>
 <script>
 {
@@ -616,41 +706,47 @@ function course(){
   const c=C(view.id),tab=view.tab||"konu";const p=prog(c);
   const T=[["konu","Konular"],["pod","Podcast"],["sc","Soru-Cevap"],["test","Test"]];
   let body="";
-  if(tab==="konu")body=c.konular.map((k,i)=>`<div class="card topic"><span class="chip">Konu ${i+1}</span><h3 style="margin-top:8px">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`).join("");
-  if(tab==="pod"){const ep=view.ep;body=(ep!==undefined?playerHTML(c,ep):`<p class="muted">Bölümler hoca ve öğrenci arasında geçen sohbet biçimindedir. Cihazının Türkçe sesiyle okunur; internet gerekmez. Metne dokunarak istediğin yerden başlatabilirsin.</p>`)+c.podcast.map((e,i)=>`<div class="card ep"><button class="play" data-ep="${i}" aria-label="${esc(e.t)} bölümünü oynat">▶</button><div><span class="chip">Bölüm ${i+1} · ~${Math.max(2,Math.round(e.s.reduce((a,l)=>a+l[1].split(" ").length,0)/130))} dk</span><h3 style="margin-top:6px">${esc(e.t)}</h3><span class="muted">${esc(e.d)}</span></div></div>`).join("")}
-  if(tab==="sc")body=`<p class="muted">Öğrencilerin sık sorduğu sorular ve hocanın cevapları. Kendi sorunu “Sorularım” bölümüne not edip derste sorabilirsin.</p>`+c.sc.map(q=>`<details class="qa"><summary><span class="av">Ö</span><span>${esc(q[0])}</span></summary><div class="ans"><span class="av h">H</span><div>${esc(q[1])}</div></div></details>`).join("")+`<button class="btn alt" data-go2="mine" data-cid="${c.id}">Hocaya soracağım soruyu not al</button>`;
+  const P=tab==="test"?"":(sp.key&&sp.key.split(":")[0]===tab&&sp.key.split(":")[1]===c.id?playerHTML():"");
+  if(tab==="konu"){let g=0;body=P+`<div class="btns"><button class="btn" data-pl="konu" data-st="0">▶ Tüm konuları dinle</button></div><p class="muted">Bir maddeye dokunarak oradan dinlemeye başlayabilirsin. Ekran kilitlenince bazı telefonlarda okuma durabilir.</p>`+c.konular.map((k,i)=>{const t=g++;return `<div class="card topic"><div class="qhead"><span class="chip">Konu ${i+1}</span><button class="mini" data-pl="konu" data-st="${t}" aria-label="Konu ${i+1}'i dinle">▶ Dinle</button></div><h3 class="seek" style="margin-top:8px" data-l="konu:${c.id}|${t}">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li class="seek" data-l="konu:${c.id}|${g++}">${esc(m)}</li>`).join("")}</ul></div>`}).join("")}
+  if(tab==="pod"){const ep=sp.key&&sp.key.startsWith("pod:"+c.id+":")?+sp.key.split(":")[2]:-1;body=P+(ep>=0?`<div class="card" style="padding:8px">${c.podcast[ep].s.map((l,i)=>`<div class="line seek" data-l="pod:${c.id}:${ep}|${i}"><span class="av ${l[0]==="H"?"h":""}">${l[0]}</span><div><b>${NM[l[0]]}:</b> ${esc(l[1])}</div></div>`).join("")}</div>`:`<p class="muted">Bölümler hoca ve öğrenci arasında geçen sohbet biçimindedir. Cihazının Türkçe sesiyle okunur; internet gerekmez. Metne dokunarak istediğin yerden başlatabilirsin.</p>`)+c.podcast.map((e,i)=>`<div class="card ep"><button class="play" data-pl="pod" data-ep="${i}" aria-label="${esc(e.t)} bölümünü oynat">▶</button><div><span class="chip">Bölüm ${i+1} · ~${Math.max(2,Math.round(e.s.reduce((a,l)=>a+l[1].split(" ").length,0)/130))} dk</span><h3 style="margin-top:6px">${esc(e.t)}</h3><span class="muted">${esc(e.d)}</span></div></div>`).join("")}
+  if(tab==="sc")body=P+`<div class="btns"><button class="btn" data-pl="sc" data-st="0">▶ Tüm soru-cevapları dinle</button></div><p class="muted">Öğrencilerin sık sorduğu sorular ve hocanın cevapları. Kendi sorunu “Sorularım” bölümüne not edip derste sorabilirsin.</p>`+c.sc.map((q,i)=>`<details class="qa"><summary data-l="sc:${c.id}|${i*2}"><span class="av">Ö</span><span>${esc(q[0])}</span></summary><div class="ans" data-l="sc:${c.id}|${i*2+1}"><span class="av h">H</span><div>${esc(q[1])}<div><button class="mini" data-pl="sc" data-st="${i*2}">▶ Dinle</button></div></div></div></details>`).join("")+`<button class="btn alt" data-go2="mine" data-cid="${c.id}">Hocaya soracağım soruyu not al</button>`;
   if(tab==="test"){const w=c.test.filter((_,i)=>S.r[c.id+":"+i]===0).length;body=`<div class="card"><h3>${c.test.length} soru · 5 şık</h3><p>Her cevaptan sonra doğru şık ve açıklama gösterilir. Şıkların sırası her denemede karışır.</p><p class="muted">Şu ana kadar ${p.done} soru çözdün, ${p.ok} doğru.</p><div class="btns"><button class="btn" data-start="all">Testi başlat</button>${w?`<button class="btn alt" data-start="wrong">Sadece yanlışlarım (${w})</button>`:""}</div></div>`}
   return header(c.ad,`Ders · %${p.p} tamamlandı`,true)+`<div class="tabs" role="tablist">${T.map(t=>`<button role="tab" aria-selected="${t[0]===tab}" data-tab="${t[0]}">${t[1]}</button>`).join("")}</div><div class="wrap">${body}</div>`;
 }
 
-/* ---------- Podcast (Web Speech, çevrimdışı) ---------- */
-const synth=window.speechSynthesis;let sp={c:null,ep:null,i:0,on:false,rate:1};let voices=[];
+/* ---------- Seslendirme (Web Speech, çevrimdışı) ---------- */
+const synth=window.speechSynthesis;let sp={key:null,title:"",lines:[],i:0,on:false,rate:1};let voices=[];
+const NM={H:"Hoca","Ö":"Öğrenci",N:"Anlatıcı"};
 const loadV=()=>{try{voices=synth.getVoices().filter(v=>/^tr/i.test(v.lang))}catch(e){}};
-if(synth){loadV();synth.onvoiceschanged=()=>{loadV();if(view.name==="course"&&view.tab==="pod")render()}}
-function playerHTML(c,ep){const e=c.podcast[ep];const n=e.s.length;
-  const warn=!synth?"Bu tarayıcı sesli okumayı desteklemiyor; metni okuyarak takip edebilirsin.":(!voices.length?"Cihazında Türkçe ses bulunamadı. Ayarlar › Metin okuma bölümünden Türkçe ses paketini indirirsen podcastler sesli çalar.":"");
-  return `<div class="player"><span class="cond" style="font-size:22px">${esc(e.t)}</span>${warn?`<p style="margin:6px 0 0;font-size:14px">${esc(warn)}</p>`:""}<div class="prog"><i id="pp" style="width:${sp.i/n*100}%"></i></div><div class="ctl"><button data-pc="prev" aria-label="Önceki">⏮</button><button data-pc="toggle" id="pt" style="min-width:96px">${sp.on?"Duraklat":"Oynat"}</button><button data-pc="next" aria-label="Sonraki">⏭</button><button data-pc="rate" id="pr">${sp.rate}×</button><button data-pc="close">Kapat</button></div></div>
-  <div id="lines">${e.s.map((l,i)=>`<div class="line${i===sp.i?" on":""}" data-line="${i}"><span class="av ${l[0]==="H"?"h":""}">${l[0]}</span><div><b>${l[0]==="H"?"Hoca":"Öğrenci"}:</b> ${esc(l[1])}</div></div>`).join("")}</div>`}
+if(synth){loadV();synth.onvoiceschanged=()=>{const had=voices.length;loadV();if(!had&&voices.length&&view.name==="course")render()}}
+const playlists=c=>({konu:c.konular.flatMap((k,ti)=>[["N","Konu "+(ti+1)+". "+k.b+"."],...k.m.map(m=>["N",m])]),sc:c.sc.flatMap(q=>[["Ö",q[0]],["H",q[1]]]),pod:c.podcast.map(e=>e.s)});
+function startPl(type,ep,st){const c=C(view.id);const P=playlists(c);const key=type==="pod"?"pod:"+c.id+":"+ep:type+":"+c.id;
+  if(sp.key!==key){stopSpeech();sp.key=key;sp.lines=type==="pod"?P.pod[ep]:P[type];sp.title=type==="pod"?c.podcast[ep].t:(type==="konu"?"Konular":"Soru-Cevap")+" · "+c.kisa;sp.i=st;render()}
+  speakFrom(st)}
+function playerHTML(){const n=sp.lines.length,cur=sp.lines[sp.i]||["N",""];
+  const warn=!synth?"Bu tarayıcı sesli okumayı desteklemiyor; metni okuyarak takip edebilirsin.":(!voices.length?"Cihazında Türkçe ses bulunamadı. Ayarlar › Metin okuma (Metin-konuşma çıktısı) bölümünden Türkçe ses paketini indirirsen içerik sesli okunur.":"");
+  return `<div class="player"><div class="qhead"><span class="cond" style="font-size:21px">${esc(sp.title)}</span><span id="pn" style="font-size:14px">${sp.i+1}/${n}</span></div>${warn?`<p style="margin:6px 0 0;font-size:14px">${esc(warn)}</p>`:""}<p class="pcur" id="pcur"><b>${NM[cur[0]]}:</b> ${esc(cur[1])}</p><div class="prog"><i id="pp" style="width:${sp.i/n*100}%"></i></div><div class="ctl"><button data-pc="prev" aria-label="Önceki">⏮</button><button data-pc="toggle" id="pt" style="min-width:96px">${sp.on?"Duraklat":"Oynat"}</button><button data-pc="next" aria-label="Sonraki">⏭</button><button data-pc="rate" id="pr">${sp.rate}×</button><button data-pc="close">Kapat</button></div></div>`}
 function stopSpeech(){sp.on=false;try{synth&&synth.cancel()}catch(e){}}
-function speakFrom(i){const e=sp.c.podcast[sp.ep];if(i>=e.s.length){sp.on=false;sp.i=0;uiSp();toast("Bölüm bitti");return}
+function sayOnce(t){stopSpeech();if(!synth||!voices.length){toast("Cihazda Türkçe ses yok");return}try{const u=new SpeechSynthesisUtterance(t);u.lang="tr-TR";u.voice=voices[0];u.rate=sp.rate;synth.speak(u)}catch(e){}}
+function speakFrom(i){const n=sp.lines.length;if(i>=n){sp.on=false;sp.i=0;uiSp();toast("Bitti");return}
   sp.i=i;if(!synth||!voices.length){sp.on=false;uiSp();return}sp.on=true;uiSp();
-  try{synth.cancel();const l=e.s[i];const u=new SpeechSynthesisUtterance(l[1]);u.lang="tr-TR";u.rate=sp.rate;
-  const v=l[0]==="H"?voices[0]:(voices[1]||voices[0]);u.voice=v;u.pitch=(l[0]==="Ö"&&!voices[1])?1.3:(l[0]==="H"?0.9:1);
+  try{synth.cancel();const l=sp.lines[i];const u=new SpeechSynthesisUtterance(l[1]);u.lang="tr-TR";u.rate=sp.rate;
+  u.voice=l[0]==="Ö"?(voices[1]||voices[0]):voices[0];u.pitch=(l[0]==="Ö"&&!voices[1])?1.3:(l[0]==="H"?0.9:1);
   u.onend=()=>{if(sp.on&&sp.i===i)speakFrom(i+1)};synth.speak(u)}catch(err){}}
-function uiSp(){const pt=$("#pt");if(!pt)return;pt.textContent=sp.on?"Duraklat":"Oynat";const n=sp.c.podcast[sp.ep].s.length;$("#pp").style.width=(sp.i/n*100)+"%";$("#pr").textContent=sp.rate+"×";
-  document.querySelectorAll(".line").forEach((el,k)=>{el.classList.toggle("on",k===sp.i)});const cur=document.querySelector(".line.on");if(cur)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+function uiSp(){const pt=$("#pt");if(!pt)return;const n=sp.lines.length,cur=sp.lines[sp.i]||["N",""];pt.textContent=sp.on?"Duraklat":"Oynat";$("#pp").style.width=(sp.i/n*100)+"%";$("#pr").textContent=sp.rate+"×";$("#pn").textContent=(sp.i+1)+"/"+n;$("#pcur").innerHTML="<b>"+NM[cur[0]]+":</b> "+esc(cur[1]);
+  document.querySelectorAll(".spon").forEach(e=>e.classList.remove("spon"));const el=document.querySelector('[data-l="'+sp.key+"|"+sp.i+'"]');if(el){el.classList.add("spon");const d=el.closest("details");if(d)d.open=true;if(sp.on)el.scrollIntoView({block:"center",behavior:"smooth"})}}
 
 /* ---------- Test motoru ---------- */
 function makeQ(cid,i){const t=C(cid).test[i];const o=shuffle(t[1].map((x,k)=>({x,k})));return{cid,i,q:t[0],opts:o.map(z=>z.x),ans:o.findIndex(z=>z.k===0),exp:t[2],pick:null}}
 function startQuiz(list,mode,title){quiz={list,pos:0,mode,title,start:Date.now()};nav("quizView")}
 function quizView(){const z=quiz;if(!z)return home();
   if(z.pos>=z.list.length)return results();
-  const q=z.list[z.pos];const done=q.pick!==null;const instant=z.mode!=="exam";
-  const left=z.mode==="exam"?Math.max(0,z.limit-(Date.now()-z.start)):0;
+  const q=z.list[z.pos];const done=q.pick!==null;
+  const left=z.mode==="exam"?Math.max(0,z.limit-(Date.now()-z.start)):0;const last=z.pos===z.list.length-1;
   return header(z.title,z.mode==="exam"?"Deneme sınavı":"Test",true)+`<div class="wrap"><div class="qhead"><span class="chip">${esc(C(q.cid).kisa)}</span><span class="cond" style="font-size:20px">${z.pos+1} / ${z.list.length}${z.mode==="exam"?` · <span id="tm">${fmt(left)}</span>`:""}</span></div><div class="pbar"><i style="width:${z.pos/z.list.length*100}%"></i></div>
-  <p class="q">${esc(q.q)}</p>${q.opts.map((o,k)=>{let cl="opt";if(done&&instant){if(k===q.ans)cl+=" ok";else if(k===q.pick)cl+=" no"}else if(q.pick===k)cl+=" sel";return `<button class="${cl}" data-pick="${k}" ${done&&instant?"disabled":""}><span class="l">${LET[k]}</span><span>${esc(o)}</span></button>`}).join("")}
-  ${done&&instant?`<div class="fb ${q.pick===q.ans?"":"no"}"><b>${q.pick===q.ans?"Doğru!":"Yanlış. Doğru cevap: "+LET[q.ans]}</b><br>${esc(q.exp)}</div>`:""}
-  <div class="btns">${z.mode==="exam"?`${z.pos>0?'<button class="btn alt" data-qnav="-1">Önceki</button>':""}<button class="btn" data-qnav="1">${z.pos===z.list.length-1?"Sınavı bitir":"Sonraki"}</button>`:(done?`<button class="btn" data-qnav="1">${z.pos===z.list.length-1?"Sonuçları gör":"Sonraki soru"}</button>`:"")}</div></div>`}
+  <p class="q">${esc(q.q)}</p>${q.opts.map((o,k)=>{let cl="opt";if(done){if(k===q.ans)cl+=" ok";else if(k===q.pick)cl+=" no"}return `<button class="${cl}" data-pick="${k}" ${done?"disabled":""}><span class="l">${LET[k]}</span><span>${esc(o)}</span></button>`}).join("")}
+  ${done?`<div class="fb ${q.pick===q.ans?"":"no"}" role="status"><b>${q.pick===q.ans?"Doğru!":"Yanlış. Doğru cevap: "+LET[q.ans]}</b><br>${esc(q.exp)}</div>`:""}
+  <div class="btns"><button class="btn alt" data-say="1">🔊 ${done?"Açıklamayı dinle":"Soruyu dinle"}</button>${done?`<button class="btn" data-qnav="1">${last?(z.mode==="exam"?"Sınavı bitir":"Sonuçları gör"):"Sonraki soru"}</button>`:(z.mode==="exam"?`<button class="btn alt" data-qnav="1">${last?"Boş bırak ve bitir":"Boş bırak"}</button>`:"")}</div></div>`}
 const fmt=ms=>{const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
 function finishQuiz(){const z=quiz;z.list.forEach(q=>{if(q.pick!==null)S.r[q.cid+":"+q.i]=q.pick===q.ans?1:0});save();z.pos=z.list.length;clearInterval(timer)}
 function results(){const z=quiz;const ok=z.list.filter(q=>q.pick===q.ans).length,n=z.list.length;const wr=z.list.filter(q=>q.pick!==q.ans);
@@ -660,7 +756,7 @@ function results(){const z=quiz;const ok=z.list.filter(q=>q.pick===q.ans).length
   ${wr.length?`<div class="sec"><h2>Yanlış ve boş bıraktıkların</h2>${wr.map(q=>`<div class="card"><span class="chip">${esc(C(q.cid).kisa)}</span><p><b>${esc(q.q)}</b></p><p>Senin cevabın: ${q.pick===null?"boş":LET[q.pick]+") "+esc(q.opts[q.pick])}<br>Doğru: <b>${LET[q.ans]}) ${esc(q.opts[q.ans])}</b></p><p class="muted">${esc(q.exp)}</p></div>`).join("")}</div>`:"<p>Hepsi doğru, tebrikler!</p>"}
   <div class="btns"><button class="btn" data-again="1">Tekrar çöz</button><button class="btn alt" data-go2="home">Derslere dön</button></div></div>`}
 
-function exam(){return header("Deneme sınavı","Beş dersten karışık",false)+`<div class="wrap"><div class="card"><h3>Vize/final provası</h3><p>Beş dersten rastgele seçilen sorular, süre tutularak çözülür. Cevaplar sınav sonunda gösterilir; istersen önceki sorulara dönüp cevabını değiştirebilirsin.</p><div class="btns"><button class="btn" data-exam="25">25 soru · 30 dk</button><button class="btn alt" data-exam="50">50 soru · 60 dk</button><button class="btn alt" data-exam="10">10 soru · 12 dk</button></div></div>
+function exam(){return header("Deneme sınavı","Beş dersten karışık",false)+`<div class="wrap"><div class="card"><h3>Vize/final provası</h3><p>Beş dersten rastgele seçilen sorular, süre tutularak çözülür. Her cevaptan hemen sonra doğru ya da yanlış olduğu ve açıklaması gösterilir; sınav sonunda ders bazında sonuç ve net hesaplanır.</p><div class="btns"><button class="btn" data-exam="25">25 soru · 30 dk</button><button class="btn alt" data-exam="50">50 soru · 60 dk</button><button class="btn alt" data-exam="10">10 soru · 12 dk</button></div></div>
   <div class="sec"><h2>Tek ders denemesi</h2>${COURSES.map(c=>`<button class="card" data-cexam="${c.id}"><b>${esc(c.ad)}</b><p class="muted">${c.test.length} soru · ${Math.round(c.test.length*1.2)} dk</p></button>`).join("")}</div></div>`}
 
 function wrong(){const items=Object.entries(S.r).filter(([k,v])=>v===0).map(([k])=>{const[c,i]=k.split(":");return{c,i:+i}}).filter(x=>C(x.c)&&C(x.c).test[x.i]);
@@ -682,13 +778,14 @@ function bind(){
   app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{stopSpeech();view.tab=b.dataset.tab;delete view.ep;render()});
   app.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{const[c,i]=b.dataset.daily.split(":");startQuiz([makeQ(c,+i)],"test","Günün sorusu")});
   const qi=$("#q");if(qi){qi.addEventListener("keydown",e=>{if(e.key==="Enter"){nav("search",{t:qi.value})}});qi.addEventListener("search",()=>{if(qi.value)nav("search",{t:qi.value})});if(view.name==="search"){qi.focus();qi.setSelectionRange(qi.value.length,qi.value.length)}}
-  app.querySelectorAll("[data-res]").forEach(b=>b.onclick=()=>{const r=search.res[+b.dataset.res];nav("course",Object.assign({id:r.c.id},r.go));if(r.go.ep!==undefined)initEp(r.c,r.go.ep)});
-  app.querySelectorAll("[data-ep]").forEach(b=>b.onclick=()=>{const c=C(view.id);stopSpeech();view.ep=+b.dataset.ep;initEp(c,view.ep);render();window.scrollTo(0,0);speakFrom(0)});
-  app.querySelectorAll("[data-line]").forEach(b=>b.onclick=()=>speakFrom(+b.dataset.line));
-  app.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{const a=b.dataset.pc;if(a==="toggle"){if(sp.on){stopSpeech();uiSp()}else speakFrom(sp.i)}if(a==="next")speakFrom(Math.min(sp.i+1,sp.c.podcast[sp.ep].s.length-1));if(a==="prev")speakFrom(Math.max(0,sp.i-1));if(a==="rate"){sp.rate=sp.rate===1?1.25:sp.rate===1.25?1.5:sp.rate===1.5?0.85:1;if(sp.on)speakFrom(sp.i);else uiSp()}if(a==="close"){stopSpeech();delete view.ep;render()}});
+  app.querySelectorAll("[data-res]").forEach(b=>b.onclick=()=>{const r=search.res[+b.dataset.res];nav("course",Object.assign({id:r.c.id},r.go))});
+  app.querySelectorAll("[data-pl]").forEach(b=>b.onclick=e=>{e.stopPropagation();startPl(b.dataset.pl,+(b.dataset.ep||0),+(b.dataset.st||0))});
+  app.querySelectorAll(".seek[data-l]").forEach(b=>b.onclick=()=>{const[k,i]=b.dataset.l.split("|");const pr=k.split(":");startPl(pr[0],+(pr[2]||0),+i)});
+  app.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{const a=b.dataset.pc,n=sp.lines.length;if(a==="toggle"){if(sp.on){stopSpeech();uiSp()}else speakFrom(sp.i)}if(a==="next")speakFrom(Math.min(sp.i+1,n-1));if(a==="prev")speakFrom(Math.max(0,sp.i-1));if(a==="rate"){sp.rate=sp.rate===1?1.25:sp.rate===1.25?1.5:sp.rate===1.5?0.85:1;if(sp.on)speakFrom(sp.i);else uiSp()}if(a==="close"){stopSpeech();sp.key=null;render()}});
   app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{const c=C(view.id);let idx=c.test.map((_,i)=>i);if(b.dataset.start==="wrong")idx=idx.filter(i=>S.r[c.id+":"+i]===0);startQuiz(shuffle(idx).map(i=>makeQ(c.id,i)),"test",c.kisa+" testi");quiz.from={id:c.id,tab:"test"}});
-  app.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{const q=quiz.list[quiz.pos];if(quiz.mode!=="exam"&&q.pick!==null)return;q.pick=+b.dataset.pick;if(quiz.mode!=="exam"){S.r[q.cid+":"+q.i]=q.pick===q.ans?1:0;save()}render()});
-  app.querySelectorAll("[data-qnav]").forEach(b=>b.onclick=()=>{const d=+b.dataset.qnav;if(d>0&&quiz.pos===quiz.list.length-1){if(quiz.mode==="exam")finishQuiz();else quiz.pos++}else quiz.pos=Math.max(0,quiz.pos+d);render();window.scrollTo(0,0)});
+  app.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{const q=quiz.list[quiz.pos];if(q.pick!==null)return;q.pick=+b.dataset.pick;S.r[q.cid+":"+q.i]=q.pick===q.ans?1:0;save();render()});
+  app.querySelectorAll("[data-qnav]").forEach(b=>b.onclick=()=>{stopSpeech();if(quiz.pos===quiz.list.length-1){if(quiz.mode==="exam")finishQuiz();else quiz.pos++}else quiz.pos++;render();window.scrollTo(0,0)});
+  app.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>{const q=quiz.list[quiz.pos];if(q.pick===null)sayOnce(q.q+". "+q.opts.map((o,k)=>LET[k]+" şıkkı: "+o).join(". "));else sayOnce((q.pick===q.ans?"Doğru. ":"Yanlış. Doğru cevap "+LET[q.ans]+" şıkkı: "+q.opts[q.ans]+". ")+q.exp)});
   app.querySelectorAll("[data-again]").forEach(b=>b.onclick=()=>{const z=quiz;startQuiz(shuffle(z.list.map(q=>makeQ(q.cid,q.i))),z.mode,z.title);quiz.limit=z.limit;quiz.from=z.from;if(z.mode==="exam")runTimer()});
   app.querySelectorAll("[data-exam]").forEach(b=>b.onclick=()=>{const n=+b.dataset.exam;const pool=shuffle(COURSES.flatMap(c=>c.test.map((_,i)=>[c.id,i]))).slice(0,n);startQuiz(pool.map(p=>makeQ(p[0],p[1])),"exam",n+" soruluk deneme");quiz.limit=(n===25?30:n===50?60:12)*60000;runTimer()});
   app.querySelectorAll("[data-cexam]").forEach(b=>b.onclick=()=>{const c=C(b.dataset.cexam);startQuiz(shuffle(c.test.map((_,i)=>makeQ(c.id,i))),"exam",c.kisa+" denemesi");quiz.limit=Math.round(c.test.length*1.2)*60000;runTimer()});
@@ -698,7 +795,7 @@ function bind(){
   app.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const i=+b.dataset.del;if(b.dataset.sure){S.mine.splice(i,1);save();render();toast("Silindi")}else{b.dataset.sure=1;b.textContent="Emin misin? Sil"}});
   app.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{const m=S.mine[+b.dataset.copy];const txt=(C(m.c)||{ad:""}).ad+" – "+m.q;try{await navigator.clipboard.writeText(txt);toast("Kopyalandı")}catch(e){toast("Kopyalanamadı")}});
 }
-function initEp(c,ep){sp.c=c;sp.ep=ep;sp.i=0}
+
 function runTimer(){clearInterval(timer);timer=setInterval(()=>{if(!quiz||view.name!=="quizView"){clearInterval(timer);return}const left=quiz.limit-(Date.now()-quiz.start);const el=$("#tm");if(el)el.textContent=fmt(Math.max(0,left));if(left<=0&&quiz.pos<quiz.list.length){finishQuiz();toast("Süre doldu");render()}},500)}
 
 const onl=()=>{$("#off").style.display=navigator.onLine?"none":"block"};window.addEventListener("online",onl);window.addEventListener("offline",onl);onl();
