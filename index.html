@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#c4452c">
+<title>BESÖ Ders Cebi</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: çalışkan, enerjik ama sakin; bir antrenman defteri gibi net
+   IDEA: atletizm pisti — her ders bir kulvar, ilerleme koşucunun konumu
+   PICTURE: ana ekranda 5 kulvarlı pist; koşucular doğru cevap oranına göre ilerler
+   COLOUR and TYPE: tartan kırmızısı + beyaz kulvar çizgileri, mürekkep siyahı, limon vurgu; Barlow Condensed + Barlow
+   LAYOUT: tek sütun mobil uygulama, üst başlık, alt sekme çubuğu */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#121416);--ink:light-dark(#16181b,#eef0f2);--mute:light-dark(#5d636b,#a3aab2);
+--card:light-dark(#f3f1ee,#1c1f22);--line:light-dark(#e2ded8,#2c3034);
+--track:light-dark(#c4452c,#a83a24);--lime:#d4f04a;--ok:light-dark(#1f7a3f,#5fd38a);--bad:light-dark(#b3261e,#ff8a80)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Barlow,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip}
+h1,h2,h3,.cond{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-weight:700;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(32px,8vw,46px)}h2{font-size:28px}h3{font-size:21px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.app{max-width:760px;margin:0 auto;min-height:100vh;padding-bottom:92px}
+header.top{background:var(--track);color:#fff;padding:18px 18px 22px;position:relative;overflow:hidden}
+header.top::after{content:"";position:absolute;inset:auto 0 0 0;height:6px;background:repeating-linear-gradient(90deg,#fff 0 28px,transparent 28px 44px);opacity:.55}
+.top .row{display:flex;align-items:center;gap:12px}
+.top small{display:block;opacity:.85;font-size:14px}
+.back{background:rgba(255,255,255,.16);border:0;border-radius:12px;min-width:44px;height:44px;font-size:22px;color:#fff}
+.wrap{padding:18px}
+.track{background:var(--track);border-radius:18px;padding:14px 12px;margin-top:-2px;position:relative}
+.lane{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;border-top:2px solid rgba(255,255,255,.75);padding:6px 0;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;color:#fff}
+.lane:last-child{border-bottom:2px solid rgba(255,255,255,.75)}
+.lane .no{font:700 22px "Barlow Condensed",sans-serif;text-align:center;opacity:.9}
+.lane .run{position:relative;height:46px}
+.lane .nm{position:absolute;left:8px;top:2px;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;right:74px}
+.lane .pc{position:absolute;right:26px;top:2px;font:700 15px "Barlow Condensed",sans-serif}
+.lane .bar{position:absolute;left:8px;right:26px;bottom:6px;height:6px;border-radius:3px;background:rgba(0,0,0,.22)}
+.lane .bar i{display:block;height:100%;border-radius:3px;background:var(--lime);transition:width .8s ease}
+.lane .dot{position:absolute;bottom:-1px;width:20px;height:20px;border-radius:50%;background:var(--lime);border:3px solid #16181b;transform:translateX(-50%);transition:left .8s ease}
+.finish{position:absolute;top:14px;bottom:14px;right:16px;width:8px;background:repeating-linear-gradient(0deg,#fff 0 6px,#16181b 6px 12px);opacity:.6;pointer-events:none}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.stat{background:var(--card);border-radius:14px;padding:12px}
+.stat b{display:block;font:700 30px "Barlow Condensed",sans-serif}
+.stat span{color:var(--mute);font-size:14px}
+.sec{margin-top:22px}.sec h2{margin-bottom:10px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:0;width:100%;text-align:left;display:block}
+.card p{margin:.4em 0 0}
+.muted{color:var(--mute);font-size:14px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 18px 0;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+.tabs button{flex:none;border:0;background:none;padding:12px 14px;min-height:44px;font-weight:600;border-bottom:3px solid transparent;color:var(--mute)}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--track)}
+.topic h3{margin-bottom:8px}.topic ul{margin:0;padding-left:20px}.topic li{margin:6px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;border:0;background:var(--track);color:#fff;font-weight:600}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.lime{background:var(--lime);color:#16181b}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+details.qa{background:var(--card);border-radius:14px;margin-bottom:10px;padding:0 16px}
+details.qa summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none;display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px}
+details.qa summary::-webkit-details-marker{display:none}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 14px "Barlow Condensed",sans-serif;background:var(--ink);color:var(--bg)}
+.av.h{background:var(--track);color:#fff}
+details.qa .ans{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px;padding-bottom:14px}
+.ep{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;align-items:center}
+.play{width:52px;height:52px;border-radius:50%;border:0;background:var(--track);color:#fff;font-size:20px}
+.player{position:sticky;top:58px;z-index:4;background:var(--ink);color:var(--bg);border-radius:16px;padding:14px;margin-bottom:14px}
+.player .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.player button{min-height:44px;min-width:44px;border-radius:12px;border:0;background:rgba(127,127,127,.25);color:inherit;padding:0 12px;font-weight:600}
+.player .prog{height:5px;background:rgba(127,127,127,.35);border-radius:3px;margin-top:10px}.player .prog i{display:block;height:100%;background:var(--lime);border-radius:3px}
+.line{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;cursor:pointer}
+.line.on{background:color-mix(in srgb,var(--lime) 35%,transparent)}
+.q{font-size:18px;font-weight:600;margin:10px 0 14px}
+.opt{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:2px solid transparent;border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:52px}
+.opt .l{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font:700 17px "Barlow Condensed",sans-serif;background:var(--bg);border:1px solid var(--line)}
+.opt.sel{border-color:var(--ink)}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--card))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
+.opt:disabled{cursor:default;color:inherit}
+.fb{border-radius:14px;padding:12px 14px;margin:6px 0 12px;background:var(--card);border-left:5px solid var(--ok)}.fb.no{border-color:var(--bad)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pbar{height:6px;background:var(--line);border-radius:3px;margin-top:8px}.pbar i{display:block;height:100%;background:var(--track);border-radius:3px;transition:width .3s}
+.big{font:700 clamp(56px,16vw,88px)/1 "Barlow Condensed",sans-serif}
+.chip{display:inline-block;font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--card);border:1px solid var(--line);white-space:nowrap}
+input[type=search],textarea,select{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+textarea{min-height:96px;resize:vertical}
+nav.bot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);z-index:9}
+nav.bot div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;max-width:760px}
+nav.bot button{border:0;background:none;min-height:62px;font-size:13px;font-weight:600;color:var(--mute);display:grid;place-items:center;gap:2px;padding:6px 0}
+nav.bot button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav.bot button.on{color:var(--track)}
+.off{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:6px 14px;border-radius:99px;font-size:13px;z-index:20;display:none}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;z-index:20;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+mark{background:var(--lime);color:#16181b;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:420px){.lane .nm{font-size:14px}.stat b{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="off" id="off">Çevrimdışı mod · tüm içerik cihazda</div>
+<div class="app" id="app"></div>
+<nav class="bot" aria-label="Ana menü"><div>
+<button data-go="home"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Dersler</button>
+<button data-go="exam"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>Deneme</button>
+<button data-go="wrong"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m9 9 6 6m0-6-6 6"/></svg>Yanlışlarım</button>
+<button data-go="mine"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Sorularım</button>
+</div></nav>
+<div class="toast" id="toast"></div>
+<script>
+// İçerik: her ders = konular, podcast bölümleri, soru-cevap, test (5 şık; ilk şık doğru, uygulama karıştırır)
+const COURSES = [
+{
+id:"bes", kisa:"BES Temelleri", ad:"Beden Eğitimi ve Sporun Temelleri", renk:"#c4452c",
+konular:[
+{b:"Temel kavramlar", m:[
+"Beden eğitimi: Genel eğitimin ayrılmaz bir parçası olup bireyin bedensel, zihinsel, duygusal ve sosyal gelişimini fiziksel etkinlikler yoluyla destekleyen planlı eğitim sürecidir.",
+"Spor: Kuralları belirlenmiş, rekabet içeren, bireysel ya da takım hâlinde yapılan, belirli bir organizasyon yapısı olan bedensel etkinliklerdir.",
+"Oyun: Belirli bir amaca bağlı olsun ya da olmasın, kendiliğinden ve gönüllü olarak yapılan, eğlence ve haz veren etkinliktir; beden eğitiminin en temel aracıdır.",
+"Fiziksel aktivite: İskelet kaslarının kasılmasıyla oluşan ve dinlenme düzeyinin üzerinde enerji harcanmasını gerektiren her türlü bedensel harekettir.",
+"Egzersiz: Fiziksel uygunluğun bir ya da birkaç bileşenini geliştirmek amacıyla planlı, yapılandırılmış ve tekrarlı olarak yapılan fiziksel aktivitedir.",
+"Rekreasyon: Bireylerin boş zamanlarında gönüllü olarak katıldıkları, yenilenme ve doyum sağlayan etkinliklerdir."]},
+{b:"Beden eğitiminin amaçları", m:[
+"Bedensel (organik) gelişim: Kuvvet, dayanıklılık, esneklik ve organ sistemlerinin sağlıklı gelişimi.",
+"Nöromüsküler (devinişsel) gelişim: Temel hareket becerileri ve spor becerilerinin kazanılması.",
+"Bilişsel gelişim: Hareket, kural, strateji ve sağlık bilgisinin edinilmesi, problem çözme.",
+"Duyuşsal ve sosyal gelişim: İşbirliği, saygı, adil oyun (fair play), liderlik, öz güven ve aidiyet duygusu.",
+"Yaşam boyu fiziksel aktivite alışkanlığı kazandırmak çağdaş beden eğitiminin en önemli hedeflerinden biridir."]},
+{b:"Tarihsel gelişim", m:[
+"Antik Yunan'da Antik Olimpiyat Oyunları MÖ 776'da Olympia'da başlamıştır; eğitimde beden ve zihnin uyumu (kalokagathia) idealize edilmiştir.",
+"Antik Roma'da beden eğitimi daha çok askerî hazırlık ve gösteri (gladyatör oyunları) amaçlıdır.",
+"Orta Çağ Avrupası'nda bedene ilgi azalmış, şövalye eğitimi öne çıkmıştır; Rönesans ile beden eğitimi yeniden değer kazanmıştır.",
+"19. yüzyılda jimnastik sistemleri gelişmiştir: Alman sistemi (F. L. Jahn), İsveç sistemi (P. H. Ling) ve İngiliz oyun-spor geleneği.",
+"Modern Olimpiyat Oyunları Pierre de Coubertin'in öncülüğünde 1894'te kurulan IOC ile başlatılmış, ilk oyunlar 1896'da Atina'da yapılmıştır."]},
+{b:"Türkiye'de beden eğitimi", m:[
+"Osmanlı'da geleneksel sporlar (güreş, okçuluk, cirit, binicilik) tekke ve lonca benzeri yapılarla (ör. okçu tekkeleri) yaşatılmıştır.",
+"Selim Sırrı Tarcan, Türkiye'de modern beden eğitiminin öncülerindendir; İsveç jimnastiğini tanıtmış ve olimpiyat hareketinin Türkiye'de yayılmasına katkı sağlamıştır.",
+"Cumhuriyet döneminde beden eğitimi okul programlarına girmiş, beden eğitimi öğretmeni yetiştirmeye yönelik kurumlar açılmıştır.",
+"Günümüzde beden eğitimi öğretmenleri üniversitelerin spor bilimleri fakülteleri ve eğitim fakültelerinde yetiştirilmektedir."]},
+{b:"Bilimsel temeller ve Olimpizm", m:[
+"Biyolojik/fizyolojik temeller: Egzersize organizmanın verdiği akut ve kronik uyumlar (kalp-dolaşım, solunum, kas-iskelet).",
+"Psikolojik temeller: Motivasyon, öz yeterlik, kaygı, dikkat ve öğrenme süreçleri.",
+"Sosyolojik temeller: Sporun sosyalleşme, kimlik, aidiyet ve toplumsal bütünleşme işlevleri.",
+"Olimpizm: Beden, irade ve zihin niteliklerini dengeli bir bütün içinde yücelten yaşam felsefesidir; sporu kültür ve eğitimle birleştirir.",
+"Olimpiyat halkaları beş kıtanın birliğini simgeler. Olimpiyat sloganı “Citius, Altius, Fortius” (Daha hızlı, daha yüksek, daha güçlü) olup 2021'de “Communiter” (Birlikte) eklenmiştir."]}
+],
+podcast:[
+{t:"Beden eğitimi mi, spor mu?", d:"Temel kavramlar ve farkları", s:[
+["H","Merhaba arkadaşlar. Bugün dersin en temel sorusuyla başlıyoruz: Beden eğitimi ile spor aynı şey mi?"],
+["Ö","Hocam, açıkçası çoğumuz ikisini aynı anlamda kullanıyoruz. Okulda beden eğitimi dersine spor dersi diyorduk."],
+["H","Çok doğal. Ama aralarında önemli bir fark var. Beden eğitimi, genel eğitimin bir parçasıdır. Amacı, hareket yoluyla çocuğu bütün olarak eğitmektir: bedenini, zihnini, duygularını ve sosyal yönünü."],
+["Ö","Spor ise daha çok rekabet mi oluyor?"],
+["H","Evet. Spor; kuralları belli, rekabet içeren ve örgütlü bir yapısı olan etkinliktir. Bir futbol maçında kazanmak hedeflenir. Beden eğitimi dersinde ise futbol bir araçtır; asıl hedef öğrencinin gelişimidir."],
+["Ö","Peki oyun nerede duruyor?"],
+["H","Oyun gönüllü ve kendiliğinden yapılan, haz veren etkinliktir. Özellikle küçük yaşlarda beden eğitiminin en temel aracı oyundur. Çocuk oynarken koşar, atar, yakalar ve kuralı öğrenir."],
+["Ö","Fiziksel aktivite ile egzersiz arasındaki farkı da sınavda sorar mısınız?"],
+["H","Sorabilirim. Fiziksel aktivite, iskelet kaslarıyla yapılan ve enerji harcatan her hareket demektir. Merdiven çıkmak da fiziksel aktivitedir. Egzersiz ise planlı, yapılandırılmış ve tekrarlı fiziksel aktivitedir. Yani her egzersiz bir fiziksel aktivitedir ama her fiziksel aktivite egzersiz değildir."],
+["Ö","Rekreasyon da boş zamanla ilgili, değil mi?"],
+["H","Aynen öyle. Boş zamanda gönüllü katılınan, yenilenme sağlayan etkinliklerdir. Özetleyelim: beden eğitimi eğitimdir, spor rekabettir, oyun hazdır, egzersiz plandır, rekreasyon boş zamandır. Bir sonraki bölümde tarihe yolculuk yapacağız."]]},
+{t:"Olympia'dan Atina'ya", d:"Antik ve modern olimpiyatlar", s:[
+["H","Bu bölümde zamanda geriye gidiyoruz. Antik Olimpiyat Oyunları ne zaman başladı, hatırlayan var mı?"],
+["Ö","Milattan önce 776, Olympia'da hocam."],
+["H","Harika. Antik Yunan'da beden ve zihnin uyumu çok önemliydi. Buna kalokagathia denir: iyi ve güzel insan ideali. Gymnasion'lar hem bedenin hem zihnin eğitildiği yerlerdi."],
+["Ö","Roma'da da aynı anlayış var mıydı?"],
+["H","Pek değil. Roma'da beden eğitimi daha çok askerî hazırlık ve seyirlik gösteriler için önemliydi. Orta Çağ'da ise bedene ilgi azaldı; Rönesans ile birlikte yeniden değer kazandı."],
+["Ö","Jimnastik sistemleri de 19. yüzyılda mı ortaya çıktı?"],
+["H","Evet. Almanya'da Friedrich Ludwig Jahn, İsveç'te Per Henrik Ling öne çıkar. İngiltere ise oyun ve takım sporları geleneğiyle bilinir. Bu üç gelenek, bugünkü okul beden eğitimini derinden etkiledi."],
+["Ö","Ve modern olimpiyatlar Pierre de Coubertin ile başladı."],
+["H","Doğru. Coubertin 1894'te Uluslararası Olimpiyat Komitesi'nin kurulmasına öncülük etti, ilk modern oyunlar 1896'da Atina'da yapıldı. Coubertin sporu bir eğitim aracı olarak görüyordu. Olimpizm dediğimiz felsefe de buradan doğar."],
+["Ö","Halkaların anlamı beş kıta, değil mi?"],
+["H","Evet, beş kıtanın birliği. Slogan ise Citius, Altius, Fortius. 2021'de buna Communiter, yani birlikte kelimesi eklendi. Sınavda bu ayrıntıya dikkat edin."]]},
+{t:"Türkiye'de beden eğitiminin izleri", d:"Osmanlı'dan bugüne", s:[
+["H","Bugün kendi tarihimize bakıyoruz. Osmanlı'da hangi sporlar öne çıkıyordu?"],
+["Ö","Güreş, okçuluk, cirit ve binicilik hocam."],
+["H","Çok iyi. Bu sporlar hem askerî hem kültürel önem taşıyordu. Okçular tekkesi gibi yapılar bu geleneği yaşattı."],
+["Ö","Modern beden eğitimi denince kimin adı geçiyor?"],
+["H","Selim Sırrı Tarcan. Türkiye'de modern beden eğitiminin öncülerinden biridir. İsveç jimnastiğini tanıttı, okullarda beden eğitiminin yayılması ve olimpiyat hareketinin ülkemizde tanınması için çalıştı."],
+["Ö","Cumhuriyet döneminde neler değişti?"],
+["H","Beden eğitimi okul programlarında yer aldı, öğretmen yetiştirme kurumları açıldı. Bugün sizler bu geleneğin devamısınız; spor bilimleri fakültelerinde beden eğitimi ve spor öğretmeni olarak yetişiyorsunuz."],
+["Ö","Bu bilgiyi öğretmenlikte nasıl kullanacağız?"],
+["H","Geleneksel oyunlarımızı derslerinize taşıyabilirsiniz. Mendil kapmaca, yakar top, çelik çomak gibi oyunlar hem kültürü yaşatır hem de temel hareket becerilerini geliştirir. Tarih, sınıfta yaşadığında anlam kazanır."]]}
+],
+sc:[
+["Beden eğitimi ile spor arasındaki en temel fark nedir?","Beden eğitimi genel eğitimin bir parçasıdır ve amacı bireyin çok yönlü gelişimidir. Spor ise kuralları ve örgütlü yapısı olan, rekabete dayalı etkinliktir. Beden eğitiminde spor, eğitimsel amaçlara ulaşmak için kullanılan bir araçtır."],
+["Fiziksel aktivite ile egzersizi nasıl ayırt edebilirim?","Fiziksel aktivite enerji harcatan her bedensel harekettir (yürümek, ev işi yapmak). Egzersiz ise bunun planlı, yapılandırılmış, tekrarlı ve bir fiziksel uygunluk bileşenini geliştirmeye yönelik olanıdır. Her egzersiz fiziksel aktivitedir; tersi her zaman doğru değildir."],
+["Kalokagathia ne demek, neden önemli?","Antik Yunan'da “iyi ve güzel insan” idealini anlatır. Beden ve zihnin birlikte, uyum içinde eğitilmesi gerektiği fikrini taşır. Bütünsel eğitim anlayışının ve Olimpizm felsefesinin tarihsel kökenlerinden biridir."],
+["Olimpizm sadece olimpiyat oyunları mı demek?","Hayır. Olimpizm bir yaşam felsefesidir; beden, irade ve zihnin dengeli gelişimini, sporun kültür ve eğitimle birleşmesini, dostluğu, saygıyı ve mükemmelliği hedefler. Oyunlar bu felsefenin en görünür etkinliğidir."],
+["Beden eğitiminin amaçlarını sınavda nasıl gruplamalıyım?","Dört alan olarak düşünebilirsin: bedensel (organik), nöromüsküler (devinişsel/motor), bilişsel ve duyuşsal-sosyal gelişim. Üstüne çağdaş hedef olarak yaşam boyu fiziksel aktivite alışkanlığını eklersen tablo tamamlanır."],
+["Jimnastik sistemlerini karıştırıyorum, kısa bir ipucu var mı?","Alman sistemi: F. L. Jahn, aletli ve millî bilinç vurgulu. İsveç sistemi: P. H. Ling, sağlık ve düzeltici (terapötik) hareketler. İngiliz geleneği: oyun ve takım sporları, karakter eğitimi. Türkiye'de Selim Sırrı Tarcan İsveç sistemini tanıtmıştır."]
+],
+test:[
+["Antik Olimpiyat Oyunlarının başladığı kabul edilen tarih hangisidir?",["MÖ 776","MÖ 490","MS 393","MÖ 1200","MS 776"],"Antik Olimpiyatlar MÖ 776'da Olympia'da başlamıştır. MS 393 oyunların yasaklandığı tarih olarak bilinir."],
+["İlk Modern Olimpiyat Oyunları nerede yapılmıştır?",["Atina","Paris","Londra","Stockholm","Roma"],"İlk modern oyunlar 1896'da Atina'da düzenlenmiştir."],
+["Modern olimpiyat hareketinin kurucusu olarak kabul edilen kişi kimdir?",["Pierre de Coubertin","Friedrich Ludwig Jahn","Per Henrik Ling","Avery Brundage","Juan Antonio Samaranch"],"Pierre de Coubertin, 1894'te IOC'nin kurulmasına öncülük etmiştir."],
+["İskelet kaslarının kasılmasıyla oluşan ve enerji harcamasını artıran her türlü bedensel hareket aşağıdakilerden hangisidir?",["Fiziksel aktivite","Egzersiz","Antrenman","Spor","Rekreasyon"],"Fiziksel aktivite en kapsayıcı kavramdır; egzersiz onun planlı ve yapılandırılmış alt kümesidir."],
+["Planlı, yapılandırılmış ve tekrarlı olarak fiziksel uygunluğu geliştirmek amacıyla yapılan etkinlik hangisidir?",["Egzersiz","Oyun","Fiziksel aktivite","Rekreasyon","Dans"],"Egzersizin ayırt edici özellikleri planlı, yapılandırılmış ve amaçlı olmasıdır."],
+["Antik Yunan'da beden ve zihnin uyumlu gelişimini ifade eden ideal hangisidir?",["Kalokagathia","Gymnastike","Agon","Paideia","Stadion"],"Kalokagathia “iyi ve güzel insan” idealidir."],
+["İsveç jimnastik sisteminin kurucusu kimdir?",["Per Henrik Ling","Friedrich Ludwig Jahn","Thomas Arnold","Pierre de Coubertin","Johann GutsMuths"],"P. H. Ling sağlık ve düzeltici hareketlere dayanan İsveç sistemini geliştirmiştir."],
+["Türkiye'de modern beden eğitiminin öncülerinden olan ve İsveç jimnastiğini tanıtan kişi kimdir?",["Selim Sırrı Tarcan","Ziya Gökalp","Satı Bey","İsmail Hakkı Tonguç","Hasan Ali Yücel"],"Selim Sırrı Tarcan, okullarda beden eğitimi ve olimpiyat hareketinin yayılmasında öncü rol oynamıştır."],
+["Olimpiyat halkaları neyi simgeler?",["Beş kıtanın birliğini","Beş olimpiyat sporunu","Olimpiyatın beş ilkesini","Kurucu beş ülkeyi","Beş farklı madalyayı"],"Birbirine geçmiş beş halka beş kıtanın birliğini temsil eder."],
+["2021 yılında olimpiyat sloganına eklenen kelime hangisidir?",["Communiter","Fraternitas","Pax","Unitas","Fortius"],"Slogan “Citius, Altius, Fortius – Communiter” biçimini almıştır."],
+["Aşağıdakilerden hangisi beden eğitiminin duyuşsal-sosyal amaçlarına örnektir?",["Takım arkadaşlarıyla işbirliği yapabilme","Dikey sıçrama yüksekliğini artırma","Top sürme tekniğini öğrenme","Kalp atım hızını ölçebilme","Esneklik düzeyini geliştirme"],"İşbirliği, saygı ve fair play duyuşsal-sosyal alanla ilgilidir."],
+["Boş zamanda gönüllü olarak katılınan, yenilenme ve doyum sağlayan etkinlikler hangi kavramla ifade edilir?",["Rekreasyon","Antrenman","Beden eğitimi","Müsabaka","Egzersiz reçetesi"],"Rekreasyonun temel ölçütleri boş zaman, gönüllülük ve doyumdur."],
+["Alman jimnastik sisteminin öncüsü kimdir?",["Friedrich Ludwig Jahn","Per Henrik Ling","Thomas Arnold","Pierre de Coubertin","Rudolf Laban"],"F. L. Jahn, “Turnvater” olarak anılır ve aletli jimnastiğin gelişiminde öncüdür."],
+["Küçük yaş gruplarında beden eğitiminin en temel aracı aşağıdakilerden hangisidir?",["Oyun","Müsabaka","Kuvvet antrenmanı","Teorik ders","Performans testi"],"Oyun çocuğun doğal öğrenme biçimidir ve temel hareket becerilerinin gelişimini destekler."],
+["Çağdaş beden eğitiminin en önemli hedeflerinden biri aşağıdakilerden hangisidir?",["Yaşam boyu fiziksel aktivite alışkanlığı kazandırmak","Yalnızca yetenekli sporcuları seçmek","Öğrencileri tek bir spor dalında uzmanlaştırmak","Askerî hazırlık sağlamak","Sadece rekabet becerisini geliştirmek"],"Okul beden eğitimi tüm öğrencilerin yaşam boyu aktif kalmasını hedefler."]
+]
+},
+{
+id:"ank", kisa:"Anatomi & Kinesiyoloji", ad:"İnsan Anatomisi ve Kinesiyoloji", renk:"#1f6f8b",
+konular:[
+{b:"Anatomik pozisyon, düzlemler ve eksenler", m:[
+"Anatomik pozisyon: Vücut dik, yüz ileri bakar, kollar yanda, avuç içleri öne dönük, ayaklar paraleldir. Tüm yön terimleri bu pozisyona göre tanımlanır.",
+"Sagittal düzlem vücudu sağ ve sol parçalara ayırır; bu düzlemdeki hareketler (fleksiyon, ekstansiyon) frontal (medyolateral) eksen etrafında gerçekleşir.",
+"Frontal (koronal) düzlem vücudu ön ve arka parçalara ayırır; abdüksiyon ve addüksiyon bu düzlemde, sagittal (anteroposterior) eksen etrafında olur.",
+"Transvers (horizontal) düzlem vücudu üst ve alt parçalara ayırır; rotasyon hareketleri bu düzlemde, longitudinal (dikey) eksen etrafında olur.",
+"Yön terimleri: superior-inferior, anterior (ventral)-posterior (dorsal), medial-lateral, proksimal-distal, yüzeyel-derin."]},
+{b:"İskelet sistemi", m:[
+"Yetişkin insan iskeletinde genellikle 206 kemik bulunur; aksiyal (eksen) iskelet ve apendiküler (üye) iskelet olarak ikiye ayrılır.",
+"Kemik tipleri: uzun (femur, humerus), kısa (karpal kemikler), yassı (skapula, kafatası kemikleri), düzensiz (omurlar) ve sesamoid (patella).",
+"Omurga: 7 servikal, 12 torakal, 5 lomber omur, sakrum (5 kaynaşmış omur) ve koksiksten oluşur.",
+"İskeletin işlevleri: destek, koruma, harekete kaldıraç olma, kan hücresi yapımı (hematopoez) ve mineral (kalsiyum, fosfor) depolama.",
+"Düzenli yüklenme içeren egzersizler kemik mineral yoğunluğunu artırır."]},
+{b:"Eklemler", m:[
+"Yapısal olarak fibröz, kartilajinöz ve sinovyal eklemler; işlevsel olarak sinartroz (hareketsiz), amfiartroz (az hareketli) ve diartroz (serbest hareketli) eklemler vardır.",
+"Sinovyal eklemlerde eklem kapsülü, sinovyal sıvı ve eklem kıkırdağı bulunur.",
+"Sinovyal eklem tipleri: menteşe (dirsek – humeroulnar), pivot/silindirik (proksimal radioulnar, atlantoaksiyal), kondiloid/elipsoid (radiokarpal), eyer (başparmak karpometakarpal), top-yuva (omuz, kalça), kayma/düz (interkarpal).",
+"Top-yuva eklemler üç eksende hareket ettikleri için en geniş hareket açıklığına sahiptir."]},
+{b:"Kas sistemi ve kas işlevleri", m:[
+"Kas tipleri: iskelet kası (çizgili, istemli), düz kas (çizgisiz, istemsiz) ve kalp kası (çizgili, istemsiz).",
+"Kasılma türleri: izometrik (boy değişmez), konsantrik (kas kısalarak kuvvet üretir) ve eksantrik (kas uzarken kuvvet üretir; ör. squat'ta iniş evresinde quadriceps).",
+"Agonist (ana hareket ettirici), antagonist (karşıt hareket ettirici), sinerjist (yardımcı) ve stabilizatör (sabitleyici) kas rolleri vardır.",
+"Quadriceps: rectus femoris, vastus lateralis, vastus medialis, vastus intermedius. Hamstring: biceps femoris, semitendinosus, semimembranosus.",
+"Rotator manşet: supraspinatus, infraspinatus, teres minor ve subscapularis. Diyafram, solunumda (inspirasyon) ana kastır."]},
+{b:"Hareket terimleri ve kaldıraçlar", m:[
+"Fleksiyon eklem açısını azaltır, ekstansiyon artırır. Abdüksiyon orta hattan uzaklaşma, addüksiyon orta hatta yaklaşmadır.",
+"Pronasyon avuç içinin aşağı/arkaya, supinasyon yukarı/öne dönmesidir. Dorsifleksiyon ayak sırtının kaval kemiğine yaklaşması, plantar fleksiyon ayak ucuna basmadır. İnversiyon ayak tabanının içe, eversiyon dışa dönmesidir.",
+"Birinci sınıf kaldıraçta destek noktası ortadadır (ör. başın atlanto-oksipital eklemde ekstansiyonu).",
+"İkinci sınıf kaldıraçta yük ortadadır (ör. parmak ucunda yükselme); kuvvet avantajı sağlar.",
+"Üçüncü sınıf kaldıraçta kuvvet ortadadır (ör. biceps ile dirsek fleksiyonu); vücuttaki kaldıraçların çoğu bu türdendir ve hız/hareket açıklığı avantajı sağlar.",
+"Kinesiyoloji hareketi inceler; kinematik hareketi kuvvetlerden bağımsız (konum, hız, ivme), kinetik ise hareketi oluşturan kuvvetlerle birlikte inceler."]}
+],
+podcast:[
+{t:"Düzlemler ve eksenler", d:"Hareketin haritası", s:[
+["H","Kinesiyolojide her şey bir haritayla başlar: anatomik pozisyon, düzlemler ve eksenler."],
+["Ö","Hocam, anatomik pozisyonda avuç içleri neden öne bakıyor?"],
+["H","Çünkü bu pozisyonda önkol kemikleri, yani radius ve ulna, birbirine paralel durur. Tüm yön terimlerini karışıklık olmadan bu pozisyona göre tanımlarız."],
+["Ö","Düzlemleri en kolay nasıl hatırlarım?"],
+["H","Bir kapı düşün. Vücudu sağ ve sol diye ikiye bölen düzlem sagittaldir. Biceps curl ya da yürüme sırasında bacağın öne arkaya salınımı bu düzlemde olur. Bu hareketler frontal eksen etrafında döner."],
+["Ö","Frontal düzlem de ön ve arka diye ayırıyor."],
+["H","Evet. Yana kol açma, yani abdüksiyon, frontal düzlemdedir ve sagittal eksen etrafında gerçekleşir. Jumping jack hareketini düşün."],
+["Ö","Transvers düzlem de rotasyon, değil mi?"],
+["H","Doğru. Vücudu üst ve alt diye ayırır. Başını sağa sola çevirmek, gövde rotasyonu bu düzlemdedir ve dikey, yani longitudinal eksen etrafında olur."],
+["Ö","Düzlem ile eksen hep birbirine dik mi?"],
+["H","Evet, harika bir gözlem. Eksen her zaman hareketin olduğu düzleme diktir. Bu kuralı bilirsen, bir düzlemi bildiğinde ekseni de bulursun. Sınavda en çok yanlış yapılan konu budur, iyi çalışın."]]},
+{t:"Eklemler ve hareket açıklığı", d:"Menteşeden top-yuvaya", s:[
+["H","Bugün eklemleri konuşuyoruz. Hareketin olduğu yer eklemdir."],
+["Ö","Hocam, sinovyal eklemi diğerlerinden ayıran nedir?"],
+["H","Eklem kapsülü, sinovyal sıvı ve eklem kıkırdağı. Bu yapı sürtünmeyi azaltır ve serbest hareket sağlar. İşlevsel olarak bunlara diartroz deriz."],
+["Ö","Dirsek hangi tip?"],
+["H","Humeroulnar eklem menteşe tipidir; tek eksende, yani fleksiyon ve ekstansiyon yapar. Ama dikkat, proksimal radioulnar eklem pivot tipidir ve önkolun pronasyon ve supinasyonunu sağlar."],
+["Ö","Omuz ve kalça top-yuva eklem."],
+["H","Evet, üç eksende hareket ederler. Omuz, hareket açıklığı en fazla olan eklemdir ama bu yüzden daha az stabildir. Stabiliteyi büyük ölçüde rotator manşet kasları sağlar."],
+["Ö","Rotator manşet kasları neydi? SITS diye hatırlıyordum."],
+["H","Çok iyi: supraspinatus, infraspinatus, teres minor ve subscapularis. Bir de başparmağı unutma; karpometakarpal eklemi eyer tipidir, insanı kavrama becerisinde özel kılar."]]},
+{t:"Kaslar nasıl çalışır?", d:"Kasılma türleri ve kaldıraçlar", s:[
+["H","Bir squat düşünelim. Aşağı inerken quadriceps ne yapıyor?"],
+["Ö","Gevşiyor mu hocam?"],
+["H","Aslında hayır. Uzarken kuvvet üretiyor, yani eksantrik kasılıyor. İnişi kontrol eden odur. Yukarı kalkarken ise kısalarak kuvvet üretir; buna konsantrik kasılma deriz."],
+["Ö","Plank pozisyonunda beklerken de izometrik oluyor."],
+["H","Evet, kas boyu değişmeden kuvvet üretir. Şimdi roller: biceps curl'de ana hareket ettirici biceps brachii, yani agonist. Karşıt kas triceps, yani antagonist. Brachialis yardımcı, yani sinerjist."],
+["Ö","Kaldıraçlara geçelim mi? Üç sınıf vardı."],
+["H","Birinci sınıfta destek ortada, tahterevalli gibi. İkinci sınıfta yük ortada; el arabası ya da parmak ucunda yükselme. Üçüncü sınıfta kuvvet ortada; biceps ile dirsek fleksiyonu."],
+["Ö","Vücuttaki kaldıraçların çoğu hangisi?"],
+["H","Üçüncü sınıf. Kuvvet açısından dezavantajlı görünür ama hız ve hareket açıklığı kazandırır. Sporda hızlı atış ve vuruşlar bu sayede mümkündür."]]}
+],
+sc:[
+["Fleksiyon hangi düzlemde ve hangi eksende olur?","Fleksiyon ve ekstansiyon sagittal düzlemde, frontal (medyolateral) eksen etrafında gerçekleşir. Eksen daima hareket düzlemine diktir."],
+["Eksantrik kasılma neden önemli?","Kas uzarken kuvvet ürettiği için inişleri, yavaşlamayı ve frenlemeyi kontrol eder. Aynı yük için daha fazla kuvvet üretilebilir; ancak kas hasarı ve gecikmiş kas ağrısıyla da daha çok ilişkilidir. Sakatlık önleme programlarında sıkça kullanılır."],
+["Vücudumuzda neden çoğunlukla üçüncü sınıf kaldıraç var?","Kuvvet kolu kısa, direnç kolu uzun olduğu için mekanik avantaj düşüktür; ancak kasın küçük bir kısalması uzuv ucunda büyük ve hızlı bir harekete dönüşür. Bu, sporda hız ve hareket açıklığı sağlar."],
+["Pronasyon ve supinasyonu nasıl karıştırmam?","Supinasyonda avuç içi yukarı bakar, sanki elinde bir kâse çorba tutuyorsun. Pronasyonda avuç içi aşağı döner, çorbayı dökersin. Bu hareketler radioulnar eklemlerde gerçekleşir."],
+["Kinematik ile kinetik farkı nedir?","Kinematik hareketi kuvvetleri dikkate almadan; konum, hız, ivme, açı gibi değişkenlerle betimler. Kinetik ise hareketi oluşturan ya da değiştiren kuvvetleri (yer tepki kuvveti, tork vb.) inceler."],
+["Omurgadaki omur sayılarını nasıl ezberlerim?","Kahvaltı saatleri gibi düşün: 7'de kalk (7 servikal), 12'de öğle yemeği (12 torakal), 5'te çay (5 lomber). Ardından kaynaşmış sakrum ve koksiks gelir."]
+],
+test:[
+["Fleksiyon ve ekstansiyon hareketleri hangi düzlemde gerçekleşir?",["Sagittal düzlem","Frontal düzlem","Transvers düzlem","Oblik düzlem","Horizontal düzlem"],"Fleksiyon/ekstansiyon sagittal düzlemde, frontal eksen etrafında olur."],
+["Frontal düzlemdeki hareketler hangi eksen etrafında gerçekleşir?",["Sagittal (anteroposterior) eksen","Frontal (medyolateral) eksen","Longitudinal (dikey) eksen","Oblik eksen","Transvers eksen"],"Eksen hareket düzlemine diktir; frontal düzleme dik olan sagittal eksendir."],
+["Aşağıdaki hareketlerden hangisi transvers düzlemde gerçekleşir?",["Başın sağa-sola çevrilmesi (rotasyon)","Dirseğin bükülmesi","Kolun yana açılması","Dizin düzleştirilmesi","Gövdenin öne eğilmesi"],"Rotasyonlar transvers düzlemde, longitudinal eksen etrafında olur."],
+["Yetişkin insan iskeletinde genellikle kaç kemik bulunur?",["206","216","196","300","186"],"Yetişkinde 206 kemik bulunur; yenidoğanda bu sayı daha fazladır."],
+["Lomber bölgede kaç omur bulunur?",["5","7","12","4","3"],"7 servikal, 12 torakal, 5 lomber omur vardır."],
+["Omuz eklemi hangi sinovyal eklem tipine örnektir?",["Top-yuva","Menteşe","Eyer","Pivot","Kayma"],"Omuz (glenohumeral) ve kalça eklemleri top-yuva tipidir."],
+["Başparmağın karpometakarpal eklemi hangi tiptedir?",["Eyer","Top-yuva","Menteşe","Pivot","Kondiloid"],"Eyer eklem başparmağa karşı koyma (opozisyon) hareketi kazandırır."],
+["Squat hareketinin iniş evresinde quadriceps kasının kasılma türü hangisidir?",["Eksantrik","Konsantrik","İzometrik","İzokinetik","Pliometrik"],"Kas uzarken kuvvet üretir ve inişi kontrol eder."],
+["Kas boyunun değişmeden kuvvet ürettiği kasılma türü hangisidir?",["İzometrik","Konsantrik","Eksantrik","İzotonik","Balistik"],"Plank pozisyonu izometrik kasılmaya örnektir."],
+["Aşağıdakilerden hangisi rotator manşet kaslarından biri değildir?",["Deltoid","Supraspinatus","Infraspinatus","Teres minor","Subscapularis"],"Rotator manşet SITS kaslarından oluşur; deltoid bu gruba girmez."],
+["Aşağıdakilerden hangisi hamstring kas grubunda yer alır?",["Semitendinosus","Rectus femoris","Vastus medialis","Gastrocnemius","Tibialis anterior"],"Hamstring: biceps femoris, semitendinosus, semimembranosus."],
+["Biceps brachii ile dirsek fleksiyonu hangi sınıf kaldıraca örnektir?",["Üçüncü sınıf","Birinci sınıf","İkinci sınıf","Dördüncü sınıf","Karma kaldıraç"],"Kuvvet (kas yapışma yeri) destek ile yük arasındadır."],
+["Parmak ucunda yükselme hareketi hangi sınıf kaldıraca örnektir?",["İkinci sınıf","Birinci sınıf","Üçüncü sınıf","Dördüncü sınıf","Hiçbir kaldıraç sınıfına girmez"],"Destek parmak uçlarında, yük ortada, kuvvet aşil tendonunda uygulanır."],
+["Ayak tabanının içe doğru döndürülmesi hareketine ne ad verilir?",["İnversiyon","Eversiyon","Dorsifleksiyon","Plantar fleksiyon","Pronasyon"],"İnversiyon ayak tabanının içe, eversiyon dışa dönmesidir."],
+["Hareketi kuvvetleri dikkate almadan konum, hız ve ivme ile betimleyen biyomekanik alt alanı hangisidir?",["Kinematik","Kinetik","Statik","Hidrodinamik","Ergonomi"],"Kinematik hareketin betimlemesi, kinetik ise nedeni olan kuvvetlerle ilgilidir."]
+]
+},
+{
+id:"hrk", kisa:"Hareket Eğitimi", ad:"Hareket Eğitimi", renk:"#2d7d46",
+konular:[
+{b:"Hareket eğitiminin kapsamı", m:[
+"Hareket eğitimi, çocuğun bedenini tanıması, hareket becerilerini geliştirmesi ve hareketi bir ifade, öğrenme ve iletişim aracı olarak kullanmasını amaçlar.",
+"Laban'ın hareket çerçevesi dört soruya dayanır: Vücut (ne hareket ediyor?), alan (nerede?), çaba/efor (nasıl?) ve ilişki (kiminle/neyle?).",
+"Çaba (efor) öğeleri: zaman (hızlı-yavaş), ağırlık/kuvvet (güçlü-hafif), alan (doğrudan-dolaylı) ve akış (serbest-kontrollü).",
+"Alan farkındalığı: kişisel alan ve genel alan, yönler (ileri-geri-yana), düzeyler (alçak-orta-yüksek), yollar (düz-eğri-zikzak)."]},
+{b:"Temel hareket becerileri", m:[
+"Lokomotor beceriler: Vücudu bir yerden başka bir yere taşıyan hareketlerdir; yürüme, koşma, sıçrama, atlama, sekme, kayma (yan adım), galop, skip.",
+"Nesne kontrol (manipülatif) beceriler: Bir nesneyi kontrol etmeye yönelik hareketlerdir; atma, yakalama, tekme atma, vurma, top sürme, yuvarlama.",
+"Dengeleme (stabilite) becerileri: Vücudun dengesini koruma ve ağırlık merkezini kontrol etme; statik ve dinamik denge, dönme, eğilme, bükülme, uzanma, iniş yapma.",
+"Temel hareket becerileri sporla ilgili özelleşmiş becerilerin temelidir; bu dönemde yetersiz kalan çocuklar ileride spora katılımda güçlük yaşayabilir (yetkinlik engeli)."]},
+{b:"Motor gelişim evreleri (Gallahue)", m:[
+"Refleksif hareketler evresi: Doğum öncesinden yaklaşık 1 yaşa kadar; istemsiz refleksler (emme, yakalama, Moro).",
+"İlkel (rudimentary) hareketler evresi: Doğumdan yaklaşık 2 yaşa kadar; baş-boyun kontrolü, oturma, emekleme, yürümenin ilk biçimleri.",
+"Temel hareketler evresi: Yaklaşık 2–7 yaş; başlangıç, ilkel (elementer) ve olgun basamaklarından oluşur.",
+"Özelleşmiş (sporla ilgili) hareketler evresi: Yaklaşık 7 yaş ve sonrası; geçiş, uygulama ve yaşam boyu kullanım basamakları.",
+"Gallahue modeli “kum saati” benzetmesiyle anlatılır: kalıtım ve çevre (fırsat, öğretim, cesaretlendirme) gelişimi birlikte belirler."]},
+{b:"Motor öğrenme", m:[
+"Fitts ve Posner'a göre öğrenme evreleri: bilişsel (ne yapacağını anlama, çok hata), ilişkisel/çağrışımsal (hareketi düzeltme, tutarlılık artar) ve otonom (otomatik, dikkat başka unsurlara yönelir).",
+"Geri bildirim: İçsel (duyusal) ve dışsal (öğretmenden). Dışsal geri bildirim sonuç bilgisi (KR – sonuca ilişkin) ve performans bilgisi (KP – hareketin niteliğine ilişkin) olarak ayrılır.",
+"Uygulama düzenleri: toplu (ara vermeden) ve dağıtılmış (aralıklı); bütün ve parça; sabit ve değişken; bloklu ve rastgele uygulama.",
+"Rastgele (değişken sıralı) uygulama, kısa vadede performansı düşürse de kalıcı öğrenmeyi ve transferi genellikle artırır (bağlamsal girişim etkisi)."]},
+{b:"Motorik özellikler ve ders planlama", m:[
+"Kondisyonel özellikler: kuvvet, sürat, dayanıklılık, esneklik (hareketlilik).",
+"Koordinatif özellikler: denge, ritim, reaksiyon, oryantasyon (yön bulma), ayrımlaştırma, eşleştirme ve uyum/değişim yeteneği.",
+"Algısal-motor beceriler: vücut farkındalığı, alan farkındalığı, yön farkındalığı (lateralite ve yön), zamansal farkındalık (ritim, zamanlama).",
+"İyi bir hareket eğitimi dersi: ısınma, ana bölüm (keşfetme, uygulama, oyun) ve soğuma-değerlendirme bölümlerinden oluşur; tüm öğrencilerin maksimum aktif kalması (bekleme süresinin azaltılması) hedeflenir."]}
+],
+podcast:[
+{t:"Koş, at, dengede kal", d:"Temel hareket becerilerinin üç ailesi", s:[
+["H","Bugün hareket eğitiminin alfabesini konuşacağız: temel hareket becerileri."],
+["Ö","Hocam, üç grup vardı: lokomotor, nesne kontrol ve denge."],
+["H","Evet. Lokomotor beceriler vücudu bir yerden başka bir yere taşır: yürüme, koşma, sekme, galop, kayma. Sekme tek ayakla kalkıp aynı ayakla inmektir, atlama ise genellikle iki ayakla yapılır."],
+["Ö","Nesne kontrol becerilerinde de top var."],
+["H","Top, sopa, raket, yani bir nesneyi kontrol ettiğimiz her şey: atma, yakalama, tekme, vurma, top sürme. Bu becerilere manipülatif beceriler de denir."],
+["Ö","Denge becerileri neden ayrı bir grup?"],
+["H","Çünkü her hareketin temelinde ağırlık merkezini kontrol etmek var. Tek ayak üstünde durmak statik dengedir; denge tahtasında yürümek dinamik dengedir. Dönme, eğilme, bükülme ve iniş de bu gruptadır."],
+["Ö","Bu becerileri neden bu kadar önemsiyoruz?"],
+["H","Çünkü bunlar spor becerilerinin temelidir. Basketbolda turnike; koşma, sekme ve atmanın birleşimidir. Temel becerileri olgun düzeye ulaşmayan çocuk sporda zorlanır, zorlandıkça da spordan uzaklaşır. Buna yetkinlik engeli diyoruz. Öğretmen olarak bu engeli kırmak sizin elinizde."]]},
+{t:"Kum saati: Gallahue modeli", d:"Motor gelişim evreleri", s:[
+["H","Motor gelişimi anlatırken en sık kullandığımız model Gallahue'nun kum saati modelidir."],
+["Ö","Neden kum saati hocam?"],
+["H","Kum saatinin içine iki yerden kum dökülür: kalıtım ve çevre. Yani gelişimi hem genler hem de fırsatlar, öğretim ve cesaretlendirme belirler."],
+["Ö","Evreler refleksif hareketlerle başlıyor."],
+["H","Evet, anne karnından yaklaşık bir yaşa kadar. Emme, yakalama, Moro refleksi gibi. Sonra ilkel hareketler evresi gelir, doğumdan yaklaşık iki yaşa kadar: oturma, emekleme, ilk adımlar."],
+["Ö","İki ile yedi yaş temel hareketler evresi."],
+["H","Doğru, bizim için en kritik evre budur. Kendi içinde başlangıç, ilkel ve olgun basamakları vardır. Önemli nokta şu: olgun basamağa ulaşmak yaşla kendiliğinden olmaz. Kaliteli öğretim ve bol uygulama gerekir."],
+["Ö","Sonra yedi yaş üstü özelleşmiş hareketler."],
+["H","Evet; geçiş, uygulama ve yaşam boyu kullanım basamakları. Ortaokul ve lisedeki öğrencileriniz burada. Temeli eksik bir öğrenciye spor tekniği öğretmeye çalışırsanız, önce o temeli onarmanız gerekecek."]]},
+{t:"Bir beceri nasıl öğrenilir?", d:"Öğrenme evreleri ve geri bildirim", s:[
+["H","Bir öğrenciye ilk kez voleybolda manşet öğrettiğinizi düşünün. Ne görürsünüz?"],
+["Ö","Bol hata, kollar bükük, top her yere gidiyor."],
+["H","İşte bu bilişsel evre. Öğrenci ne yapacağını anlamaya çalışıyor. Burada kısa, net açıklamalar ve iyi bir model çok değerli. Fitts ve Posner'ın ilk evresi budur."],
+["Ö","Sonra ilişkisel evre geliyor."],
+["H","Evet, öğrenci hatalarını fark edip düzeltmeye başlar, hareket daha tutarlı olur. En sonunda otonom evreye geçer; manşeti düşünmeden yapar, dikkatini rakibe ve oyuna verir."],
+["Ö","Geri bildirimi nasıl vermeliyiz?"],
+["H","İki tür dışsal geri bildirim var. Sonuç bilgisi: top fileyi geçti ya da geçmedi. Performans bilgisi: kollarını düz tut, dizlerini bük. Başlangıçta performans bilgisi çok işe yarar; ama her denemede geri bildirim vermeyin, öğrenci bağımlı hâle gelir."],
+["Ö","Uygulamayı nasıl düzenlemeliyiz?"],
+["H","Kısa vadede bloklu uygulama, yani aynı beceriyi art arda tekrarlamak, iyi görünür. Ama kalıcı öğrenme için rastgele ve değişken uygulama genellikle daha etkilidir. Buna bağlamsal girişim etkisi denir. Biraz zorlanmak öğrenmenin dostudur."]]}
+],
+sc:[
+["Sekme ile atlama arasındaki fark nedir?","Sekme (hop) tek ayakla sıçrayıp aynı ayakla yere inmektir. Atlama (jump) ise genellikle iki ayakla kuvvet üretip iki ayakla inmektir; uzun ve yüksek atlama biçimleri vardır. Sıçrama (leap) bir ayaktan kalkıp diğer ayakla inmektir."],
+["Temel hareketler evresinde yaş ilerledikçe çocuk kendiliğinden olgun basamağa ulaşmaz mı?","Hayır. Başlangıç ve ilkel basamaklar büyük ölçüde olgunlaşmayla gelebilir; ancak olgun basamağa ulaşmak için öğretim, uygulama fırsatı ve cesaretlendirme gerekir. Bu yüzden birçok yetişkin bile bazı becerilerde (ör. atma) olgun düzeye ulaşamamıştır."],
+["KR ve KP'yi örnekle açıklar mısınız?","KR (sonuç bilgisi): “Serbest atışların 10'da 6'sı girdi.” KP (performans bilgisi): “Atış sırasında dirseğin dışa açılıyor, onu potaya doğru hizala.” Biri sonucu, diğeri hareketin niteliğini anlatır."],
+["Laban'ın çerçevesini ders planında nasıl kullanırım?","Bir beceriyi dört soruyla çeşitlendirebilirsin: Vücut (hangi parçalarla?), alan (hangi düzey/yön/yolda?), çaba (hızlı mı yavaş mı, güçlü mü hafif mi?), ilişki (eşle, grupla, bir nesneyle). Örneğin yürümeyi alçak düzeyde, zikzak yolda, yavaş ve eşinle aynalayarak yaptırabilirsin."],
+["Derste bekleme süresini nasıl azaltırım?","Uzun sıralar yerine küçük gruplar ve istasyonlar kullan, her öğrenciye ya da ikiliye bir malzeme düşmesini sağla, eleme oyunları yerine herkesin oyunda kaldığı varyasyonlar seç ve açıklamaları kısa tut."],
+["Koordinatif ve kondisyonel özellikler arasındaki fark nedir?","Kondisyonel özellikler (kuvvet, sürat, dayanıklılık, esneklik) daha çok enerji sistemleri ve kas kapasitesine dayanır. Koordinatif özellikler (denge, ritim, reaksiyon, oryantasyon vb.) ise sinir sisteminin hareketi düzenleme ve kontrol etme kapasitesiyle ilgilidir."]
+],
+test:[
+["Aşağıdakilerden hangisi lokomotor bir beceridir?",["Galop","Yakalama","Tekme atma","Statik denge","Top sürme"],"Galop vücudu bir yerden başka bir yere taşıyan lokomotor bir beceridir."],
+["Aşağıdakilerden hangisi nesne kontrol (manipülatif) becerisidir?",["Vurma","Kayma","Sekme","Dönme","Eğilme"],"Vurma bir nesnenin kontrolüne yönelik manipülatif bir beceridir."],
+["Tek ayakla sıçrayıp aynı ayakla yere inme becerisine ne ad verilir?",["Sekme","Atlama","Sıçrama","Galop","Kayma"],"Sekme (hop) aynı ayakla kalkış ve iniştir."],
+["Gallahue'ya göre temel hareketler evresi yaklaşık hangi yaş aralığını kapsar?",["2–7 yaş","0–1 yaş","0–2 yaş","7–11 yaş","11–14 yaş"],"Temel hareketler evresi yaklaşık 2–7 yaşları kapsar."],
+["Gallahue'nun motor gelişim modeli hangi benzetmeyle anlatılır?",["Kum saati","Merdiven","Piramit","Ağaç","Spiral"],"Kum saatine kalıtım ve çevre kanallarından kum dökülür."],
+["Emme ve yakalama refleksleri hangi motor gelişim evresine aittir?",["Refleksif hareketler evresi","İlkel hareketler evresi","Temel hareketler evresi","Özelleşmiş hareketler evresi","Yaşam boyu kullanım basamağı"],"Refleksler istemsizdir ve ilk evrenin özelliğidir."],
+["Fitts ve Posner'a göre hareketin otomatikleştiği, dikkatin başka unsurlara yöneltilebildiği evre hangisidir?",["Otonom evre","Bilişsel evre","İlişkisel evre","Başlangıç evresi","Keşif evresi"],"Otonom evrede beceri az dikkat gerektirir."],
+["“Dizlerini biraz daha bük” şeklindeki öğretmen geri bildirimi hangi türdendir?",["Performans bilgisi (KP)","Sonuç bilgisi (KR)","İçsel geri bildirim","Eş zamanlı olmayan içsel bilgi","Kinestetik algı"],"Hareketin niteliğine yönelik bilgi KP'dir."],
+["Laban'ın hareket çerçevesinde “nasıl hareket ediliyor?” sorusu hangi öğeyle ilgilidir?",["Çaba (efor)","Vücut","Alan","İlişki","Ritim"],"Çaba; zaman, ağırlık, alan ve akış niteliklerini kapsar."],
+["Laban'ın çaba öğeleri arasında aşağıdakilerden hangisi yer almaz?",["Yön","Zaman","Ağırlık","Alan","Akış"],"Yön, alan farkındalığının bir boyutudur; çaba öğesi değildir."],
+["Aşağıdakilerden hangisi koordinatif bir özelliktir?",["Reaksiyon","Kuvvet","Dayanıklılık","Esneklik","Maksimal oksijen tüketimi"],"Reaksiyon, sinir sisteminin düzenleme kapasitesine dayanan koordinatif bir özelliktir."],
+["Kısa vadede performansı düşürse de kalıcı öğrenmeyi artırdığı bilinen uygulama düzeni hangisidir?",["Rastgele uygulama","Bloklu uygulama","Toplu uygulama","Sabit uygulama","Pasif uygulama"],"Bağlamsal girişim etkisi rastgele uygulamanın kalıcılığı artırdığını gösterir."],
+["Temel hareket becerilerinde yetersiz kalan çocuğun ileride spora katılımda zorlanması hangi kavramla açıklanır?",["Yetkinlik engeli","Kritik dönem","Plato etkisi","Transfer","Hiperaktivite"],"Yetkinlik engeli, temel becerilerin yetersizliğinin sporla ilgili becerilerin gelişimini sınırlamasıdır."],
+["Aşağıdakilerden hangisi dengeleme (stabilite) becerisidir?",["Dönme","Koşma","Atma","Yuvarlama","Skip"],"Dönme, vücut dengesini korumaya yönelik stabilite becerisidir."],
+["Hareket eğitimi dersinde öğrencinin aktif kalma süresini artırmak için en uygun yaklaşım hangisidir?",["İstasyon ve küçük grup çalışmaları","Tek sıra hâlinde sırayla uygulama","Eleme oyunlarını sık kullanma","Uzun sözlü açıklamalar yapma","Tek topla tüm sınıfın çalışması"],"İstasyonlar ve yeterli malzeme bekleme süresini azaltır."]
+]
+},
+{
+id:"egt", kisa:"Eğitime Giriş", ad:"Eğitime Giriş", renk:"#6a4c93",
+konular:[
+{b:"Temel kavramlar", m:[
+"Eğitim (Ertürk): Bireyin davranışlarında kendi yaşantısı yoluyla kasıtlı olarak istendik değişme meydana getirme sürecidir.",
+"Öğrenme: Yaşantı ürünü, kalıcı izli davranış değişikliğidir. Öğretme: Öğrenmeyi sağlamaya yönelik rehberlik etkinlikleridir. Öğretim: Öğrenmenin planlı ve kontrollü biçimde okulda gerçekleştirilmesidir.",
+"Kasıtlı (formal) eğitim planlı ve amaçlıdır; kasıtsız (informal) eğitim gelişigüzel, plansızdır (ör. akran ve medya etkisi).",
+"Örgün eğitim belirli yaş grubuna, okul çatısı altında, programlı olarak verilir; yaygın eğitim örgün eğitime hiç girmemiş ya da ayrılmış bireylere yöneliktir (halk eğitim merkezleri, kurslar).",
+"Program türleri: resmî program, örtük (gizli) program ve dışta bırakılan (null) program."]},
+{b:"Eğitimin temelleri", m:[
+"Felsefi temeller: Eğitimin amaçlarını, değerleri ve “nasıl bir insan?” sorusunu belirler.",
+"Psikolojik temeller: Gelişim ve öğrenme ilkeleri, bireysel farklılıklar, motivasyon.",
+"Sosyolojik temeller: Eğitim ile toplum, kültür, aile ve toplumsal değişme ilişkisi.",
+"Tarihî, ekonomik ve hukuki (yasal) temeller: Eğitimin geçmişi, insan sermayesi ve yatırım boyutu, eğitimi düzenleyen anayasa ve yasalar."]},
+{b:"Eğitim felsefeleri", m:[
+"Daimicilik (perennializm): Değişmeyen evrensel doğrular, klasik eserler, akıl eğitimi; idealizm ve realizme dayanır.",
+"Esasicilik (esansiyalizm): Kültürün temel bilgi ve becerilerini aktarma, öğretmen merkezli, disiplin ve temel dersler.",
+"İlerlemecilik (progresivizm): John Dewey; pragmatizme dayanır, öğrenci merkezli, yaparak-yaşayarak öğrenme, problem çözme.",
+"Yeniden kurmacılık (rekonstrüksiyonizm): Theodore Brameld; okul toplumu değiştirme ve yeniden yapılandırma aracıdır.",
+"Varoluşçu eğitim: Bireysel seçim, özgürlük ve sorumluluk; öğrencinin kendini gerçekleştirmesi.",
+"Felsefi akımlar: idealizm (Platon), realizm (Aristoteles), pragmatizm (Peirce, James, Dewey), varoluşçuluk (Sartre)."]},
+{b:"Türk eğitim sistemi", m:[
+"1739 sayılı Millî Eğitim Temel Kanunu (1973) Türk millî eğitiminin genel amaçlarını ve temel ilkelerini belirler.",
+"Temel ilkelerden bazıları: genellik ve eşitlik, ferdin ve toplumun ihtiyaçları, yöneltme, eğitim hakkı, fırsat ve imkân eşitliği, süreklilik, demokrasi eğitimi, laiklik, bilimsellik, planlılık, karma eğitim, okul ile ailenin iş birliği, her yerde eğitim.",
+"Tevhid-i Tedrisat Kanunu (3 Mart 1924) tüm eğitim kurumlarını Maarif Vekâletine bağlayarak öğretimi birleştirmiştir.",
+"2012'de 6287 sayılı Kanun ile 12 yıllık zorunlu eğitim (4+4+4) uygulamasına geçilmiştir."]},
+{b:"Öğretmenlik mesleği", m:[
+"Öğretmenlik; özel alan bilgisi, pedagojik formasyon ve genel kültür gerektiren bir uzmanlık mesleğidir.",
+"7354 sayılı Öğretmenlik Meslek Kanunu (2022) öğretmenlik kariyer basamaklarını öğretmen, uzman öğretmen ve başöğretmen olarak düzenlemiştir.",
+"Öğretmen nitelikleri: alan ve pedagojik alan bilgisi, öğrenciyi tanıma, öğrenme ortamı düzenleme, ölçme-değerlendirme, mesleki gelişim ve etik sorumluluk.",
+"Beden eğitimi öğretmeni ayrıca güvenli öğrenme ortamı, ilk yardım farkındalığı, kapsayıcı (engelli bireyleri de içeren) etkinlik tasarımı ve sağlıklı yaşam modeli olma sorumluluğu taşır."]}
+],
+podcast:[
+{t:"Eğitim nedir?", d:"Ertürk tanımını parçalarına ayırmak", s:[
+["H","Eğitime Giriş dersinin en klasik sorusu: eğitim nedir? Selahattin Ertürk'ün tanımını hatırlayan?"],
+["Ö","Bireyin davranışlarında kendi yaşantısı yoluyla kasıtlı olarak istendik değişme meydana getirme süreci."],
+["H","Mükemmel. Şimdi parçalayalım. Kendi yaşantısı yoluyla: yani öğrenci bizzat yaşamalı, ona dışarıdan yapıştıramayız. Kasıtlı: planlı ve amaçlı. İstendik: toplumun ve bireyin değerli bulduğu yönde. Süreç: bir anlık değil, devam eden bir şey."],
+["Ö","Peki kasıtsız öğrenmeler eğitim değil mi?"],
+["H","Bu tanıma göre kasıtsız öğrenmeler informal eğitim olarak ayrı değerlendirilir. Mesela çocuk sokakta küfür öğreniyorsa bu bir öğrenmedir ama istendik değildir."],
+["Ö","Öğrenme, öğretme ve öğretim de karışıyor."],
+["H","Öğrenme, yaşantı ürünü kalıcı davranış değişikliğidir. Öğretme, öğrenmeye rehberlik etmektir. Öğretim ise bu rehberliğin okulda planlı ve kontrollü yapılmasıdır. Her öğretim bir öğretmedir ama her öğretme öğretim değildir."],
+["Ö","Örtük program da sınavlarda çıkıyor."],
+["H","Evet. Resmî programda yazmayan ama okulda öğrenilen her şeydir. Beden eğitimi öğretmeni hep geç gelir, maçta hakeme bağırırsa öğrenciler bunu da öğrenir. Sizin davranışlarınız, en güçlü örtük programdır."]]},
+{t:"Felsefe sınıfa girince", d:"Eğitim felsefeleri ve beden eğitimi", s:[
+["H","Bugün eğitim felsefelerini bir beden eğitimi dersi üzerinden düşüneceğiz."],
+["Ö","Hocam, esasici bir beden eğitimi öğretmeni nasıl olur?"],
+["H","Temel becerileri ve kuralları sistemli öğretir, öğretmen merkezlidir, disiplin ve standartlar önemlidir. Komut stiliyle çalışmayı sever."],
+["Ö","İlerlemeci olan ise öğrenciyi merkeze alır."],
+["H","Evet, John Dewey'in izinden gider. Öğrenciler bir oyunun kurallarını kendileri tasarlar, problem çözerek, yaparak yaşayarak öğrenirler. İlerlemecilik pragmatizme dayanır; bilgi değişir, işe yarayan doğrudur."],
+["Ö","Daimicilik de değişmeyen doğrular."],
+["H","Doğru, klasik eserler, akıl eğitimi, evrensel değerler. Beden eğitiminde Olimpizmin evrensel değerlerini vurgulayan bir yaklaşımı düşünebilirsiniz. Yeniden kurmacılık ise okulu toplumu dönüştürmenin aracı görür; Theodore Brameld ile anılır. Mesela kız çocuklarının spora katılımını artırmaya yönelik bir okul projesi bu bakışa uygundur."],
+["Ö","Varoluşçuluk da bireysel seçim."],
+["H","Evet. Öğrenciye hangi sporu seçeceği, kendi hedefini nasıl koyacağı konusunda özgürlük ve sorumluluk verir. Gerçekte hiçbir öğretmen tek bir felsefeye sığmaz; önemli olan kendi felsefenizin farkında olmanız."]]},
+{t:"Yasalar ve ilkeler", d:"Türk millî eğitim sistemi", s:[
+["H","Bu bölümde Türk eğitim sisteminin yasal çerçevesini konuşacağız. Temel kanunumuz hangisi?"],
+["Ö","1739 sayılı Millî Eğitim Temel Kanunu, 1973."],
+["H","Doğru. Genel amaçları ve temel ilkeleri bu kanun belirler. Genellik ve eşitlik, fırsat ve imkân eşitliği, yöneltme, süreklilik, laiklik, bilimsellik, karma eğitim gibi."],
+["Ö","Yöneltme ilkesini biraz açar mısınız?"],
+["H","Öğrencilerin ilgi, yetenek ve kabiliyetleri doğrultusunda programlara ya da okullara yöneltilmesidir. Bir beden eğitimi öğretmeni olarak yetenekli bir öğrenciyi spor lisesine yönlendirmeniz bunun bir örneğidir."],
+["Ö","Tevhid-i Tedrisat ne zaman çıktı?"],
+["H","3 Mart 1924. Tüm eğitim kurumlarını tek çatı altında, Maarif Vekâletine bağladı. 2012'deki 6287 sayılı Kanun ile de 12 yıllık zorunlu eğitime, yani 4+4+4 sistemine geçildi."],
+["Ö","Öğretmenlik Meslek Kanunu da yeni sayılır."],
+["H","Evet, 2022 tarihli 7354 sayılı kanun. Kariyer basamaklarını öğretmen, uzman öğretmen ve başöğretmen olarak düzenledi. Sizin meslek yaşamınızı doğrudan etkileyen bir kanun, mutlaka okuyun."]]}
+],
+sc:[
+["Ertürk'ün eğitim tanımındaki “kasıtlı” ve “istendik” kavramları aynı şey mi?","Hayır. Kasıtlı, sürecin planlı ve amaçlı olmasıdır. İstendik ise ulaşılan değişikliğin toplum ve birey açısından olumlu, değerli görülmesidir. Kasıtlı olup istenmedik sonuç doğuran durumlar da olabilir."],
+["Örgün ve yaygın eğitim nasıl ayırt edilir?","Örgün eğitim belirli yaş grubuna, okul içinde, belirli bir programla ve diploma/kademe sistemiyle verilir. Yaygın eğitim ise örgün eğitim yanında ya da dışında, her yaştan bireye kurs, seminer ve halk eğitim merkezleri gibi esnek yapılarla verilir."],
+["Örtük program beden eğitimi dersinde neye benzer?","Programda yazmayan ama öğrencilerin öğrendiği her şeydir: öğretmenin kaybetmeye tepkisi, erkek ve kız öğrencilere farklı davranması, sürekli aynı öğrencilerin takım kaptanı seçilmesi gibi. Bunlar güçlü mesajlar taşır."],
+["İlerlemecilik ile yeniden kurmacılık arasındaki fark nedir?","İlerlemecilik öğrenciyi merkeze alır ve toplumsal değişime uyum sağlayan bireyler yetiştirmeyi hedefler. Yeniden kurmacılık bir adım ileri gider; okulu toplumu değiştirme ve yeniden yapılandırma aracı olarak görür."],
+["Fırsat ve imkân eşitliği ilkesini derste nasıl uygularım?","Tüm öğrencilerin, cinsiyet, engel durumu veya beceri düzeyi fark etmeksizin etkinliklere katılabileceği uyarlamalar yaparak: farklı top boyutları, farklı mesafeler, eleme olmayan oyunlar, engelli öğrenciler için uyarlanmış görevler."],
+["Daimicilik ve esasicilik neden karıştırılır?","İkisi de geleneksel, öğretmen merkezli ve konu merkezlidir. Fark şudur: Daimicilik değişmeyen evrensel doğrulara ve klasik eserlere odaklanır; esasicilik ise kültürün güncel temel bilgi ve becerilerinin (okuma, yazma, matematik, bilim) aktarılmasına odaklanır."]
+],
+test:[
+["“Bireyin davranışlarında kendi yaşantısı yoluyla kasıtlı olarak istendik değişme meydana getirme süreci” tanımı kime aittir?",["Selahattin Ertürk","John Dewey","Ziya Gökalp","Émile Durkheim","Hasan Ali Yücel"],"Bu tanım Türkiye'de en yaygın kullanılan Ertürk tanımıdır."],
+["Öğrenmenin okulda planlı ve kontrollü biçimde gerçekleştirilmesine ne ad verilir?",["Öğretim","Öğretme","Eğitim","Sosyalleşme","Kültürleme"],"Öğretim, öğretmenin okul ortamında planlı ve kontrollü yürütülen biçimidir."],
+["Resmî programda yer almadığı hâlde okulda öğrencilerin kazandığı davranışlar hangi programla ilgilidir?",["Örtük program","Dışta bırakılan program","Ders programı","Eğitim programı","Öğretim programı"],"Örtük (gizli) program yazılı olmayan ama öğrenilen öğeleri kapsar."],
+["Halk eğitim merkezlerinde düzenlenen kurslar hangi eğitim türüne örnektir?",["Yaygın eğitim","Örgün eğitim","İnformal eğitim","Okul öncesi eğitim","Özel eğitim"],"Yaygın eğitim örgün eğitim dışında her yaştan bireye esnek yapılarla verilir."],
+["“Yaparak yaşayarak öğrenme” anlayışı en çok hangi eğitim felsefesiyle ilişkilidir?",["İlerlemecilik","Daimicilik","Esasicilik","İdealizm","Realizm"],"Dewey'in ilerlemeciliği deneyim ve problem çözmeyi merkeze alır."],
+["Okulu toplumu değiştirme ve yeniden yapılandırma aracı olarak gören eğitim felsefesi hangisidir?",["Yeniden kurmacılık","Daimicilik","Esasicilik","Varoluşçuluk","İdealizm"],"Yeniden kurmacılık Theodore Brameld ile anılır."],
+["Değişmeyen evrensel doğruları ve klasik eserleri öne çıkaran eğitim felsefesi hangisidir?",["Daimicilik","İlerlemecilik","Yeniden kurmacılık","Varoluşçuluk","Pragmatizm"],"Daimicilik (perennializm) idealizm ve realizme dayanır."],
+["İlerlemecilik eğitim felsefesi hangi felsefi akıma dayanır?",["Pragmatizm","İdealizm","Realizm","Skolastisizm","Rasyonalizm"],"Pragmatizm bilginin değişken ve işe yararlığıyla ölçülen bir şey olduğunu savunur."],
+["Türk millî eğitiminin genel amaç ve temel ilkelerini belirleyen kanun hangisidir?",["1739 sayılı Millî Eğitim Temel Kanunu","6287 sayılı Kanun","7354 sayılı Öğretmenlik Meslek Kanunu","430 sayılı Tevhid-i Tedrisat Kanunu","2547 sayılı Yükseköğretim Kanunu"],"1739 sayılı kanun 1973'te yürürlüğe girmiştir."],
+["Tevhid-i Tedrisat Kanunu hangi tarihte kabul edilmiştir?",["3 Mart 1924","29 Ekim 1923","1 Kasım 1928","23 Nisan 1920","24 Temmuz 1923"],"Tevhid-i Tedrisat 3 Mart 1924'te kabul edilmiştir."],
+["12 yıllık zorunlu eğitime (4+4+4) geçişi sağlayan kanun numarası hangisidir?",["6287","1739","7354","2547","222"],"6287 sayılı Kanun 2012'de kabul edilmiştir."],
+["7354 sayılı Öğretmenlik Meslek Kanunu'na göre öğretmenlik kariyer basamakları hangileridir?",["Öğretmen, uzman öğretmen, başöğretmen","Aday öğretmen, öğretmen, müdür","Stajyer, öğretmen, eğitim uzmanı","Öğretmen, şef öğretmen, baş müfettiş","Sözleşmeli, kadrolu, uzman"],"Kanun kariyer basamaklarını öğretmen, uzman öğretmen ve başöğretmen olarak düzenler."],
+["Öğrencilerin ilgi ve yetenekleri doğrultusunda programlara ve okullara yönlendirilmesi hangi temel ilkeyle ilgilidir?",["Yöneltme","Süreklilik","Laiklik","Planlılık","Karma eğitim"],"Yöneltme ilkesi bireysel ilgi ve yeteneklere göre yönlendirmeyi öngörür."],
+["Aşağıdakilerden hangisi eğitimin felsefi temelinin cevap aradığı sorudur?",["Nasıl bir insan yetiştirmeliyiz?","Öğrenme beyinde nasıl gerçekleşir?","Eğitime ne kadar bütçe ayrılmalı?","Okul kaç derslikli olmalı?","Ders saatleri kaç dakika olmalı?"],"Felsefi temel eğitimin amaç ve değerlerini belirler."],
+["Kasıtsız ve plansız gerçekleşen, örneğin akran ve medya yoluyla oluşan öğrenmeler hangi kavramla ifade edilir?",["İnformal eğitim","Formal eğitim","Örgün eğitim","Yaygın eğitim","Hizmet içi eğitim"],"İnformal eğitim kasıtsız ve gelişigüzeldir."]
+]
+},
+{
+id:"sos", kisa:"Eğitim Sosyolojisi", ad:"Eğitim Sosyolojisi", renk:"#b7791f",
+konular:[
+{b:"Sosyoloji ve eğitim sosyolojisi", m:[
+"Sosyoloji, toplumsal ilişkileri, grupları, kurumları ve toplumsal değişmeyi bilimsel yöntemlerle inceleyen bilimdir; “sosyoloji” terimini Auguste Comte kullanmıştır.",
+"İbn Haldun, Mukaddime adlı eseriyle toplumsal olayları sistemli inceleyen öncü düşünürlerdendir.",
+"Émile Durkheim eğitim sosyolojisinin kurucusu kabul edilir; eğitimi yetişkin kuşağın genç kuşak üzerindeki sistemli etkisi, yani metodik sosyalleşme olarak tanımlar.",
+"Türkiye'de Ziya Gökalp sosyolojinin öncüsüdür; 1914'te Darülfünun'da ilk sosyoloji kürsüsü kurulmuştur.",
+"Eğitim sosyolojisi; okul, aile, kültür, toplumsal tabakalaşma ve değişme ile eğitim arasındaki ilişkileri inceler."]},
+{b:"Kuramsal yaklaşımlar", m:[
+"İşlevselci (yapısal-işlevselci) yaklaşım: Durkheim, Parsons. Eğitim toplumsal bütünleşmeyi, kültür aktarımını ve rol dağılımını (seçme-yerleştirme) sağlar.",
+"Çatışmacı yaklaşım: Marx kökenli; Bowles ve Gintis'e göre okul, kapitalist üretim ilişkilerini yeniden üretir (uygunluk/yazışma ilkesi).",
+"Pierre Bourdieu: Kültürel sermaye ve habitus kavramlarıyla okulun toplumsal eşitsizlikleri yeniden ürettiğini savunur.",
+"Sembolik etkileşimci yaklaşım: G. H. Mead; sınıf içi etkileşim, etiketleme ve beklentiler. Rosenthal ve Jacobson'ın çalışması öğretmen beklentisinin öğrenci başarısını etkilediğini gösterir (Pygmalion etkisi / kendini gerçekleştiren kehanet)."]},
+{b:"Sosyalleşme ve kültür", m:[
+"Sosyalleşme, bireyin toplumun değer, norm ve rollerini öğrenerek toplumun üyesi olma sürecidir; aile, okul, akran grubu ve medya başlıca sosyalleşme araçlarıdır.",
+"Kültür, bir topluluğun maddi (araç-gereç, yapı) ve manevi (değer, inanç, dil, gelenek) unsurlarının bütünüdür.",
+"Kültürlenme: Bireyin kendi kültürünü öğrenmesi. Kültürleşme: Farklı kültürlerin etkileşim sonucu birbirinden öğe alması. Kültürel yayılma: Kültür öğelerinin bir toplumdan diğerine geçmesi.",
+"Kültürel gecikme (Ogburn): Maddi kültürün manevi kültüre göre daha hızlı değişmesiyle ortaya çıkan uyumsuzluk.",
+"Kültür şoku: Bireyin farklı bir kültürle karşılaştığında yaşadığı uyum güçlüğü ve şaşkınlık."]},
+{b:"Toplumsal yapı, tabakalaşma ve hareketlilik", m:[
+"Toplumsal kurumlar: aile, eğitim, din, ekonomi ve siyaset; temel toplumsal ihtiyaçları karşılayan kalıcı yapılardır.",
+"Statü, bireyin toplumdaki konumudur: verilmiş (doğuştan, ör. cinsiyet) ve kazanılmış (çabayla, ör. öğretmenlik). Rol, o statüden beklenen davranışlardır.",
+"Toplumsal tabakalaşma: Toplumun gelir, servet, güç ve prestije göre katmanlara ayrılması.",
+"Toplumsal hareketlilik: Dikey (yukarı/aşağı) ve yatay (aynı düzeyde) hareketlilik; kuşaklar arası ve kuşak içi hareketlilik. Eğitim dikey hareketliliğin en önemli araçlarından biridir."]},
+{b:"Okul, toplum ve spor", m:[
+"Okul bir sosyal sistemdir; kendine özgü kültürü (okul kültürü), normları, rolleri ve iletişim ağları vardır.",
+"Öğretmen; sınıfta rehber, model, lider ve toplumla okul arasında köprü rollerini üstlenir.",
+"Spor güçlü bir sosyalleşme aracıdır: kural, iş birliği, rekabet ve aidiyet duygusu kazandırır; ancak şiddet, fanatizm ve dışlama gibi işlev bozuklukları da gösterebilir.",
+"Spora katılımda cinsiyet, sosyoekonomik düzey, engellilik ve kentsel-kırsal farklılıklar eşitsizlik yaratabilir; okul beden eğitimi bu eşitsizlikleri azaltmada kritik role sahiptir."]}
+],
+podcast:[
+{t:"Durkheim'dan Bourdieu'ya", d:"Eğitim sosyolojisinin büyük kuramları", s:[
+["H","Bugün eğitim sosyolojisinin büyük kuramlarını bir saha üzerinde düşüneceğiz. Okul bir futbol sahası olsun."],
+["Ö","İşlevselci bakış bu sahayı nasıl görür hocam?"],
+["H","Durkheim ve Parsons'a göre saha düzenli bir sistemdir. Herkesin bir mevkisi, bir rolü vardır. Okul ortak değerleri aktarır, toplumu bir arada tutar ve bireyleri yeteneklerine göre farklı rollere yerleştirir."],
+["Ö","Çatışmacılar da bu sahanın eğimli olduğunu söylüyor."],
+["H","Çok güzel bir benzetme. Marx kökenli çatışmacı yaklaşıma göre saha eşit değildir. Bowles ve Gintis okulun, iş dünyasındaki hiyerarşiyi yeniden ürettiğini söyler; buna uygunluk ilkesi denir."],
+["Ö","Bourdieu nereye oturuyor?"],
+["H","Bourdieu kültürel sermaye kavramını getirir. Bazı çocuklar sahaya krampon, antrenman geçmişi ve oyunu bilen bir aileyle gelir. Okul bu sermayeyi ödüllendirir, böylece eşitsizlik yeniden üretilir."],
+["Ö","Sembolik etkileşimciler ise sahadaki konuşmalara bakıyor."],
+["H","Evet, mikro düzeyde. Öğretmen bir öğrenciye sürekli beceriksiz derse, öğrenci bu etiketi içselleştirebilir. Rosenthal ve Jacobson'ın çalışması öğretmen beklentisinin başarıyı etkilediğini gösterdi; buna Pygmalion etkisi diyoruz. Öğretmen olarak sözlerinizin gücünü unutmayın."]]},
+{t:"Kültür değişirken", d:"Kültürlenme, kültürleşme, kültürel gecikme", s:[
+["H","Kültür kavramlarını en çok karıştırılan üçlüyle başlatalım: kültürlenme, kültürleşme, kültürel yayılma."],
+["Ö","Kültürlenme kendi kültürünü öğrenmek, değil mi?"],
+["H","Evet. Bir çocuğun bayramda büyüklerinin elini öpmeyi öğrenmesi kültürlenmedir. Kültürleşme ise iki farklı kültürün etkileşime girip birbirinden öğe almasıdır."],
+["Ö","Kültürel gecikme de Ogburn'du."],
+["H","Doğru. Maddi kültür, yani teknoloji, manevi kültürden, yani değerlerden ve normlardan daha hızlı değişir. Örneğin akıllı telefonlar hızla yayıldı ama dijital etik ve mahremiyet normları geriden geliyor."],
+["Ö","Kültür şoku da başka bir ülkeye gidince yaşanıyor."],
+["H","Ya da başka bir ortama. Kırsaldan büyük şehre gelen bir öğrenci üniversitede kültür şoku yaşayabilir. Öğretmenler bunun farkında olmalı."],
+["Ö","Spor kültürle nasıl ilişkili?"],
+["H","Spor bir kültür ögesidir ve kültürel yayılmanın güzel bir örneğidir. Futbol İngiltere'den tüm dünyaya yayıldı, güreş ise bizim kültürümüzün derin bir parçası. Beden eğitimi dersleri, kültürü aktaran en canlı alanlardan biridir."]]},
+{t:"Merdiven ve okul", d:"Toplumsal hareketlilik ve eşitsizlik", s:[
+["H","Toplumsal hareketliliği bir merdiven gibi düşünelim. Merdivende yukarı ya da aşağı inmek?"],
+["Ö","Dikey hareketlilik hocam."],
+["H","Evet. Aynı basamakta sağa sola geçmek ise yatay hareketliliktir; örneğin bir öğretmenin başka bir okulda aynı görevde çalışmaya başlaması."],
+["Ö","Kuşaklar arası hareketlilik de anne baba ile çocuk arasındaki fark."],
+["H","Doğru. Babası tarım işçisi olan bir çocuğun öğretmen olması kuşaklar arası dikey yukarı hareketliliktir. Bir kişinin kendi yaşamı içinde değişen konumu ise kuşak içi hareketliliktir."],
+["Ö","Eğitim burada nasıl bir rol oynuyor?"],
+["H","Eğitim dikey hareketliliğin en önemli araçlarından biridir. Ama çatışmacı kuramcılar bize şunu hatırlatır: Okula herkes aynı sermayeyle gelmez. Bu yüzden fırsat eşitliği sadece aynı okula gitmek değildir."],
+["Ö","Spor da bir hareketlilik kanalı olabilir mi?"],
+["H","Olabilir; bazı sporcular dar gelirli ailelerden gelip yüksek statü kazanır. Ama bu yol çok dar bir kapıdır. Asıl güçlü kanal eğitimdir. Sporu öğrencileriniz için okuldan kopmanın değil, okula bağlanmanın aracı yapın."]]}
+],
+sc:[
+["Durkheim eğitimi nasıl tanımlar?","Durkheim'a göre eğitim, yetişkin kuşakların toplumsal yaşama henüz hazır olmayan genç kuşaklar üzerindeki sistemli etkisidir. Buna metodik sosyalleşme denir; amaç toplumun ortak değerlerini aktarmak ve toplumsal bütünleşmeyi sağlamaktır."],
+["Kültürel sermaye ile ekonomik sermaye arasındaki fark nedir?","Ekonomik sermaye para ve mülkiyettir. Kültürel sermaye ise dil kullanımı, bilgi, beğeniler, eğitim belgeleri ve kültürel alışkanlıklardır. Bourdieu'ya göre okul, üst sınıfların kültürel sermayesini “doğal yetenek” gibi ödüllendirerek eşitsizliği yeniden üretir."],
+["Pygmalion etkisini beden eğitimi dersinde nasıl görürüm?","Öğretmen bazı öğrencileri “yetenekli” görüp onlara daha çok fırsat, geri bildirim ve cesaret verirse bu öğrenciler gerçekten daha çok gelişir. “Beceriksiz” görülenler ise geri planda kalır. Herkese yüksek ve olumlu beklentiyle yaklaşmak bu döngüyü kırar."],
+["Kültürleşme ile kültürlenme nasıl ayırt edilir?","Kültürlenme bireyin kendi kültürünü öğrenmesidir (dikey aktarım, kuşaktan kuşağa). Kültürleşme ise farklı kültürlerin karşılaşması sonucu karşılıklı öğe alışverişidir (yatay etkileşim)."],
+["Verilmiş ve kazanılmış statü örnekleri neler?","Verilmiş statü doğuştan gelir ve kişinin seçimine bağlı değildir: cinsiyet, yaş, kardeş sırası. Kazanılmış statü kişinin çabasıyla elde edilir: öğretmenlik, milli sporculuk, takım kaptanlığı."],
+["Sporun toplumsal işlev bozuklukları nelerdir?","Şiddet ve holiganizm, fanatizm, doping, aşırı ticarileşme, cinsiyet ve engellilik temelli dışlama ve başarı baskısı. Eğitimci olarak sporun olumlu işlevlerini güçlendirip bu sorunları önlemek gerekir."]
+],
+test:[
+["Eğitim sosyolojisinin kurucusu olarak kabul edilen ve eğitimi “metodik sosyalleşme” olarak tanımlayan sosyolog kimdir?",["Émile Durkheim","Max Weber","Karl Marx","Auguste Comte","George Herbert Mead"],"Durkheim eğitimi yetişkin kuşağın genç kuşak üzerindeki sistemli etkisi olarak görür."],
+["“Sosyoloji” terimini ilk kullanan düşünür kimdir?",["Auguste Comte","İbn Haldun","Émile Durkheim","Herbert Spencer","Ziya Gökalp"],"Comte, toplumu inceleyen bilim için bu terimi kullanmıştır."],
+["Türkiye'de ilk sosyoloji kürsüsü kimin öncülüğünde, hangi yıl kurulmuştur?",["Ziya Gökalp – 1914","Prens Sabahattin – 1908","Hilmi Ziya Ülken – 1933","Mümtaz Turhan – 1945","Nurettin Topçu – 1924"],"Ziya Gökalp 1914'te Darülfünun'da ilk sosyoloji kürsüsüne getirilmiştir."],
+["Okulun toplumsal bütünleşmeyi ve kültür aktarımını sağladığını vurgulayan yaklaşım hangisidir?",["İşlevselci yaklaşım","Çatışmacı yaklaşım","Sembolik etkileşimci yaklaşım","Postmodern yaklaşım","Fenomenolojik yaklaşım"],"İşlevselcilik toplumun düzen ve uyumuna odaklanır."],
+["Okulun kapitalist üretim ilişkilerini yeniden ürettiğini “uygunluk ilkesi” ile açıklayanlar kimlerdir?",["Bowles ve Gintis","Rosenthal ve Jacobson","Parsons ve Merton","Mead ve Cooley","Berger ve Luckmann"],"Bowles ve Gintis çatışmacı yaklaşımın önemli temsilcileridir."],
+["“Kültürel sermaye” ve “habitus” kavramlarıyla tanınan sosyolog kimdir?",["Pierre Bourdieu","Émile Durkheim","Talcott Parsons","Max Weber","William Ogburn"],"Bourdieu okulun eşitsizlikleri yeniden ürettiğini bu kavramlarla açıklar."],
+["Öğretmen beklentisinin öğrenci başarısını etkilediğini gösteren etki hangisidir?",["Pygmalion etkisi","Hawthorne etkisi","Halo etkisi","Kültürel gecikme","Kültür şoku"],"Rosenthal ve Jacobson'ın çalışmasıyla tanınır; kendini gerçekleştiren kehanet olarak da bilinir."],
+["Maddi kültürün manevi kültüre göre daha hızlı değişmesiyle oluşan uyumsuzluğa ne ad verilir?",["Kültürel gecikme","Kültür şoku","Kültürleşme","Kültürel yayılma","Kültürlenme"],"Kavram William Ogburn'a aittir."],
+["Bireyin doğduğu toplumun kültürünü öğrenmesi sürecine ne ad verilir?",["Kültürlenme","Kültürleşme","Kültürel yayılma","Asimilasyon","Kültür şoku"],"Kültürlenme kendi kültürünü öğrenmektir; kültürleşme farklı kültürler arası etkileşimdir."],
+["Babası mevsimlik tarım işçisi olan bir kişinin öğretmen olması hangi hareketlilik türüne örnektir?",["Kuşaklar arası dikey hareketlilik","Kuşak içi yatay hareketlilik","Coğrafi hareketlilik","Kuşaklar arası yatay hareketlilik","Aşağı doğru dikey hareketlilik"],"Kuşaklar arasında yukarı doğru dikey bir statü değişimi vardır."],
+["Aşağıdakilerden hangisi kazanılmış statüye örnektir?",["Milli takım kaptanı olmak","Kadın olmak","Ailenin ilk çocuğu olmak","Belirli bir yaşta olmak","Belirli bir etnik kökene sahip olmak"],"Kazanılmış statü bireyin çabasıyla elde edilir."],
+["Sınıf içi etkileşim, etiketleme ve anlam üretimi gibi mikro süreçlere odaklanan yaklaşım hangisidir?",["Sembolik etkileşimci yaklaşım","İşlevselci yaklaşım","Çatışmacı yaklaşım","Yapısalcı yaklaşım","Sistem yaklaşımı"],"Sembolik etkileşimcilik G. H. Mead ile ilişkilendirilir."],
+["Futbolun İngiltere'den dünyaya yayılması hangi kavrama örnektir?",["Kültürel yayılma","Kültürel gecikme","Kültürlenme","Kültür şoku","Kültürel görecelik"],"Bir kültür ögesinin başka toplumlara geçmesi kültürel yayılmadır."],
+["Mukaddime adlı eseriyle toplumsal olayları sistemli inceleyen öncü düşünür kimdir?",["İbn Haldun","Farabi","İbn Sina","Gazali","Biruni"],"İbn Haldun sosyolojinin öncülerinden sayılır."],
+["Aşağıdakilerden hangisi sporun toplumsal işlev bozukluklarından biridir?",["Fanatizm ve şiddet","Takım ruhu kazandırma","Kural bilinci geliştirme","Aidiyet duygusu oluşturma","Sağlıklı yaşamı teşvik etme"],"Fanatizm ve şiddet sporun olumsuz (işlev bozucu) yönlerindendir."]
+]
+}
+];
+
+</script>
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KEY="beso-ders-cebi-v1";
+let S={r:{},mine:[],seen:{}};
+try{const v=JSON.parse(localStorage.getItem(KEY));if(v)S=Object.assign(S,v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const toast=t=>{const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1800)};
+const LET="ABCDE";
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const C=id=>COURSES.find(c=>c.id===id);
+const prog=c=>{const n=c.test.length;let ok=0,done=0;c.test.forEach((_,i)=>{const v=S.r[c.id+":"+i];if(v!==undefined){done++;if(v)ok++}});return{n,ok,done,p:Math.round(ok/n*100)}};
+const app=$("#app");
+let view={name:"home"};let quiz=null;let timer=null;
+
+function nav(name,extra){stopSpeech();clearInterval(timer);view=Object.assign({name},extra||{});render();window.scrollTo(0,0)}
+document.querySelectorAll("nav.bot button").forEach(b=>b.addEventListener("click",()=>nav(b.dataset.go)));
+
+function header(title,sub,back){return `<header class="top"><div class="row">${back?'<button class="back" data-act="back" aria-label="Geri">‹</button>':''}<div><small>${esc(sub)}</small><h1>${esc(title)}</h1></div></div></header>`}
+
+function render(){
+  document.querySelectorAll("nav.bot button").forEach(b=>b.classList.toggle("on",b.dataset.go===view.name||(view.name==="course"&&b.dataset.go==="home")));
+  const f={home,course,quizView,exam,wrong,mine,search}[view.name];app.innerHTML=f();bind();
+}
+
+function home(){
+  const all=COURSES.map(prog);const tot=all.reduce((a,b)=>a+b.n,0),ok=all.reduce((a,b)=>a+b.ok,0),done=all.reduce((a,b)=>a+b.done,0);
+  const day=Math.floor(Date.now()/864e5);const pool=COURSES.flatMap(c=>c.test.map((t,i)=>({c,i,t})));const dq=pool[day%pool.length];
+  return header("Ders Cebi","Marmara Üniversitesi · BESÖ · 1. sınıf")+`<div class="wrap">
+  <div class="track" role="list" aria-label="Dersler ve ilerleme">${COURSES.map((c,i)=>{const p=prog(c);return `<button class="lane" role="listitem" data-open="${c.id}"><span class="no">${i+1}</span><span class="run"><span class="nm">${esc(c.ad)}</span><span class="pc">%${p.p}</span><span class="bar"><i style="width:${p.p}%"></i></span><span class="dot" style="left:calc(8px + (100% - 34px) * ${p.p/100})"></span></span></button>`}).join("")}<span class="finish"></span></div>
+  <p class="muted">Koşucular her dersin testinde doğru cevapladığın soru oranına göre ilerler. Kulvara dokunarak derse gir.</p>
+  <div class="stats"><div class="stat"><b>${done}/${tot}</b><span>çözülen soru</span></div><div class="stat"><b>%${done?Math.round(ok/done*100):0}</b><span>başarı</span></div><div class="stat"><b>${Object.values(S.r).filter(v=>v===0).length}</b><span>tekrar edilecek</span></div></div>
+  <input type="search" id="q" placeholder="Konu, kavram veya soru ara (ör. kaldıraç, Dewey)" aria-label="Ara">
+  <div class="sec"><h2>Günün sorusu</h2><button class="card" data-daily="${dq.c.id}:${dq.i}"><span class="chip">${esc(dq.c.kisa)}</span><p class="q" style="margin:10px 0 4px">${esc(dq.t[0])}</p><span class="muted">Cevaplamak için dokun</span></button></div>
+  <div class="sec"><h2>Hızlı başla</h2><div class="btns"><button class="btn" data-go2="exam">25 soruluk deneme sınavı</button><button class="btn alt" data-go2="wrong">Yanlışlarımı tekrar et</button></div></div>
+  <p class="muted">İçerik derslerin genel müfredatına göre hazırlanmış çalışma materyalidir; hocanızın ders notları ve kaynakları esastır. Uygulama internet olmadan çalışır; ilerlemen bu cihazda saklanır.</p></div>`;
+}
+
+function course(){
+  const c=C(view.id),tab=view.tab||"konu";const p=prog(c);
+  const T=[["konu","Konular"],["pod","Podcast"],["sc","Soru-Cevap"],["test","Test"]];
+  let body="";
+  if(tab==="konu")body=c.konular.map((k,i)=>`<div class="card topic"><span class="chip">Konu ${i+1}</span><h3 style="margin-top:8px">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`).join("");
+  if(tab==="pod"){const ep=view.ep;body=(ep!==undefined?playerHTML(c,ep):`<p class="muted">Bölümler hoca ve öğrenci arasında geçen sohbet biçimindedir. Cihazının Türkçe sesiyle okunur; internet gerekmez. Metne dokunarak istediğin yerden başlatabilirsin.</p>`)+c.podcast.map((e,i)=>`<div class="card ep"><button class="play" data-ep="${i}" aria-label="${esc(e.t)} bölümünü oynat">▶</button><div><span class="chip">Bölüm ${i+1} · ~${Math.max(2,Math.round(e.s.reduce((a,l)=>a+l[1].split(" ").length,0)/130))} dk</span><h3 style="margin-top:6px">${esc(e.t)}</h3><span class="muted">${esc(e.d)}</span></div></div>`).join("")}
+  if(tab==="sc")body=`<p class="muted">Öğrencilerin sık sorduğu sorular ve hocanın cevapları. Kendi sorunu “Sorularım” bölümüne not edip derste sorabilirsin.</p>`+c.sc.map(q=>`<details class="qa"><summary><span class="av">Ö</span><span>${esc(q[0])}</span></summary><div class="ans"><span class="av h">H</span><div>${esc(q[1])}</div></div></details>`).join("")+`<button class="btn alt" data-go2="mine" data-cid="${c.id}">Hocaya soracağım soruyu not al</button>`;
+  if(tab==="test"){const w=c.test.filter((_,i)=>S.r[c.id+":"+i]===0).length;body=`<div class="card"><h3>${c.test.length} soru · 5 şık</h3><p>Her cevaptan sonra doğru şık ve açıklama gösterilir. Şıkların sırası her denemede karışır.</p><p class="muted">Şu ana kadar ${p.done} soru çözdün, ${p.ok} doğru.</p><div class="btns"><button class="btn" data-start="all">Testi başlat</button>${w?`<button class="btn alt" data-start="wrong">Sadece yanlışlarım (${w})</button>`:""}</div></div>`}
+  return header(c.ad,`Ders · %${p.p} tamamlandı`,true)+`<div class="tabs" role="tablist">${T.map(t=>`<button role="tab" aria-selected="${t[0]===tab}" data-tab="${t[0]}">${t[1]}</button>`).join("")}</div><div class="wrap">${body}</div>`;
+}
+
+/* ---------- Podcast (Web Speech, çevrimdışı) ---------- */
+const synth=window.speechSynthesis;let sp={c:null,ep:null,i:0,on:false,rate:1};let voices=[];
+const loadV=()=>{try{voices=synth.getVoices().filter(v=>/^tr/i.test(v.lang))}catch(e){}};
+if(synth){loadV();synth.onvoiceschanged=()=>{loadV();if(view.name==="course"&&view.tab==="pod")render()}}
+function playerHTML(c,ep){const e=c.podcast[ep];const n=e.s.length;
+  const warn=!synth?"Bu tarayıcı sesli okumayı desteklemiyor; metni okuyarak takip edebilirsin.":(!voices.length?"Cihazında Türkçe ses bulunamadı. Ayarlar › Metin okuma bölümünden Türkçe ses paketini indirirsen podcastler sesli çalar.":"");
+  return `<div class="player"><span class="cond" style="font-size:22px">${esc(e.t)}</span>${warn?`<p style="margin:6px 0 0;font-size:14px">${esc(warn)}</p>`:""}<div class="prog"><i id="pp" style="width:${sp.i/n*100}%"></i></div><div class="ctl"><button data-pc="prev" aria-label="Önceki">⏮</button><button data-pc="toggle" id="pt" style="min-width:96px">${sp.on?"Duraklat":"Oynat"}</button><button data-pc="next" aria-label="Sonraki">⏭</button><button data-pc="rate" id="pr">${sp.rate}×</button><button data-pc="close">Kapat</button></div></div>
+  <div id="lines">${e.s.map((l,i)=>`<div class="line${i===sp.i?" on":""}" data-line="${i}"><span class="av ${l[0]==="H"?"h":""}">${l[0]}</span><div><b>${l[0]==="H"?"Hoca":"Öğrenci"}:</b> ${esc(l[1])}</div></div>`).join("")}</div>`}
+function stopSpeech(){sp.on=false;try{synth&&synth.cancel()}catch(e){}}
+function speakFrom(i){const e=sp.c.podcast[sp.ep];if(i>=e.s.length){sp.on=false;sp.i=0;uiSp();toast("Bölüm bitti");return}
+  sp.i=i;if(!synth||!voices.length){sp.on=false;uiSp();return}sp.on=true;uiSp();
+  try{synth.cancel();const l=e.s[i];const u=new SpeechSynthesisUtterance(l[1]);u.lang="tr-TR";u.rate=sp.rate;
+  const v=l[0]==="H"?voices[0]:(voices[1]||voices[0]);u.voice=v;u.pitch=(l[0]==="Ö"&&!voices[1])?1.3:(l[0]==="H"?0.9:1);
+  u.onend=()=>{if(sp.on&&sp.i===i)speakFrom(i+1)};synth.speak(u)}catch(err){}}
+function uiSp(){const pt=$("#pt");if(!pt)return;pt.textContent=sp.on?"Duraklat":"Oynat";const n=sp.c.podcast[sp.ep].s.length;$("#pp").style.width=(sp.i/n*100)+"%";$("#pr").textContent=sp.rate+"×";
+  document.querySelectorAll(".line").forEach((el,k)=>{el.classList.toggle("on",k===sp.i)});const cur=document.querySelector(".line.on");if(cur)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+
+/* ---------- Test motoru ---------- */
+function makeQ(cid,i){const t=C(cid).test[i];const o=shuffle(t[1].map((x,k)=>({x,k})));return{cid,i,q:t[0],opts:o.map(z=>z.x),ans:o.findIndex(z=>z.k===0),exp:t[2],pick:null}}
+function startQuiz(list,mode,title){quiz={list,pos:0,mode,title,start:Date.now()};nav("quizView")}
+function quizView(){const z=quiz;if(!z)return home();
+  if(z.pos>=z.list.length)return results();
+  const q=z.list[z.pos];const done=q.pick!==null;const instant=z.mode!=="exam";
+  const left=z.mode==="exam"?Math.max(0,z.limit-(Date.now()-z.start)):0;
+  return header(z.title,z.mode==="exam"?"Deneme sınavı":"Test",true)+`<div class="wrap"><div class="qhead"><span class="chip">${esc(C(q.cid).kisa)}</span><span class="cond" style="font-size:20px">${z.pos+1} / ${z.list.length}${z.mode==="exam"?` · <span id="tm">${fmt(left)}</span>`:""}</span></div><div class="pbar"><i style="width:${z.pos/z.list.length*100}%"></i></div>
+  <p class="q">${esc(q.q)}</p>${q.opts.map((o,k)=>{let cl="opt";if(done&&instant){if(k===q.ans)cl+=" ok";else if(k===q.pick)cl+=" no"}else if(q.pick===k)cl+=" sel";return `<button class="${cl}" data-pick="${k}" ${done&&instant?"disabled":""}><span class="l">${LET[k]}</span><span>${esc(o)}</span></button>`}).join("")}
+  ${done&&instant?`<div class="fb ${q.pick===q.ans?"":"no"}"><b>${q.pick===q.ans?"Doğru!":"Yanlış. Doğru cevap: "+LET[q.ans]}</b><br>${esc(q.exp)}</div>`:""}
+  <div class="btns">${z.mode==="exam"?`${z.pos>0?'<button class="btn alt" data-qnav="-1">Önceki</button>':""}<button class="btn" data-qnav="1">${z.pos===z.list.length-1?"Sınavı bitir":"Sonraki"}</button>`:(done?`<button class="btn" data-qnav="1">${z.pos===z.list.length-1?"Sonuçları gör":"Sonraki soru"}</button>`:"")}</div></div>`}
+const fmt=ms=>{const s=Math.ceil(ms/1000);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+function finishQuiz(){const z=quiz;z.list.forEach(q=>{if(q.pick!==null)S.r[q.cid+":"+q.i]=q.pick===q.ans?1:0});save();z.pos=z.list.length;clearInterval(timer)}
+function results(){const z=quiz;const ok=z.list.filter(q=>q.pick===q.ans).length,n=z.list.length;const wr=z.list.filter(q=>q.pick!==q.ans);
+  const by={};z.list.forEach(q=>{by[q.cid]=by[q.cid]||[0,0];by[q.cid][1]++;if(q.pick===q.ans)by[q.cid][0]++});
+  return header("Sonuç",z.title,true)+`<div class="wrap"><div class="card" style="text-align:center"><div class="big">${ok}/${n}</div><p>%${Math.round(ok/n*100)} başarı${z.mode==="exam"?` · net ${(ok-(n-ok-z.list.filter(q=>q.pick===null).length)/4).toFixed(2)} (4 yanlış 1 doğruyu götürür)`:""}</p></div>
+  ${z.mode==="exam"?Object.entries(by).map(([k,v])=>`<div class="card" style="padding:12px 16px"><div class="qhead"><b>${esc(C(k).ad)}</b><span>${v[0]}/${v[1]}</span></div><div class="pbar"><i style="width:${v[0]/v[1]*100}%"></i></div></div>`).join(""):""}
+  ${wr.length?`<div class="sec"><h2>Yanlış ve boş bıraktıkların</h2>${wr.map(q=>`<div class="card"><span class="chip">${esc(C(q.cid).kisa)}</span><p><b>${esc(q.q)}</b></p><p>Senin cevabın: ${q.pick===null?"boş":LET[q.pick]+") "+esc(q.opts[q.pick])}<br>Doğru: <b>${LET[q.ans]}) ${esc(q.opts[q.ans])}</b></p><p class="muted">${esc(q.exp)}</p></div>`).join("")}</div>`:"<p>Hepsi doğru, tebrikler!</p>"}
+  <div class="btns"><button class="btn" data-again="1">Tekrar çöz</button><button class="btn alt" data-go2="home">Derslere dön</button></div></div>`}
+
+function exam(){return header("Deneme sınavı","Beş dersten karışık",false)+`<div class="wrap"><div class="card"><h3>Vize/final provası</h3><p>Beş dersten rastgele seçilen sorular, süre tutularak çözülür. Cevaplar sınav sonunda gösterilir; istersen önceki sorulara dönüp cevabını değiştirebilirsin.</p><div class="btns"><button class="btn" data-exam="25">25 soru · 30 dk</button><button class="btn alt" data-exam="50">50 soru · 60 dk</button><button class="btn alt" data-exam="10">10 soru · 12 dk</button></div></div>
+  <div class="sec"><h2>Tek ders denemesi</h2>${COURSES.map(c=>`<button class="card" data-cexam="${c.id}"><b>${esc(c.ad)}</b><p class="muted">${c.test.length} soru · ${Math.round(c.test.length*1.2)} dk</p></button>`).join("")}</div></div>`}
+
+function wrong(){const items=Object.entries(S.r).filter(([k,v])=>v===0).map(([k])=>{const[c,i]=k.split(":");return{c,i:+i}}).filter(x=>C(x.c)&&C(x.c).test[x.i]);
+  return header("Yanlışlarım","Tekrar listesi",false)+`<div class="wrap">${items.length?`<p>${items.length} soru tekrar bekliyor. Doğru cevapladığında listeden düşer.</p><div class="btns"><button class="btn" data-wrongq="1">Hepsini tekrar çöz</button></div>${items.map(x=>{const t=C(x.c).test[x.i];return `<div class="card"><span class="chip">${esc(C(x.c).kisa)}</span><p><b>${esc(t[0])}</b></p><p>Doğru cevap: ${esc(t[1][0])}</p><p class="muted">${esc(t[2])}</p></div>`}).join("")}`:`<div class="card"><h3>Liste boş</h3><p>Test çözdükçe yanlış yaptığın sorular burada toplanır.</p><div class="btns"><button class="btn" data-go2="exam">Deneme çöz</button></div></div>`}</div>`}
+
+function mine(){const pre=view.cid||"";return header("Sorularım","Hocaya soracaklarım",false)+`<div class="wrap"><div class="card"><label for="mc" class="muted">Ders</label><select id="mc" style="margin:6px 0 10px">${COURSES.map(c=>`<option value="${c.id}" ${c.id===pre?"selected":""}>${esc(c.ad)}</option>`).join("")}</select>
+  <label for="mt" class="muted">Sorun</label><textarea id="mt" style="margin-top:6px" placeholder="Ör. Eksantrik kasılmada kas neden daha fazla kuvvet üretebiliyor?"></textarea><div class="btns"><button class="btn" data-addq="1">Kaydet</button></div><p class="muted" style="margin:0">Sorular bu cihazda saklanır. Derste ya da ofis saatinde hocana sorduktan sonra cevabını not alabilirsin.</p></div>
+  ${S.mine.length?S.mine.map((m,i)=>`<div class="card"><div class="qhead"><span class="chip">${esc((C(m.c)||{kisa:""}).kisa)}</span><span class="muted">${esc(new Date(m.t).toLocaleDateString("tr-TR"))}</span></div><p><b>${esc(m.q)}</b></p><textarea data-ans="${i}" placeholder="Hocanın cevabını buraya yaz">${esc(m.a||"")}</textarea><div class="btns"><button class="btn alt" data-copy="${i}">Kopyala</button><button class="btn alt" data-del="${i}">Sil</button></div></div>`).join(""):`<p class="muted">Henüz kayıtlı soru yok.</p>`}</div>`}
+
+function search(){const term=(view.t||"").trim();const lo=term.toLocaleLowerCase("tr");const hl=s=>{const e=esc(s);if(!term)return e;const i=s.toLocaleLowerCase("tr").indexOf(lo);if(i<0)return e;return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+term.length))+"</mark>"+esc(s.slice(i+term.length))};
+  const res=[];if(lo.length>1)COURSES.forEach(c=>{c.konular.forEach(k=>k.m.forEach(m=>{if(m.toLocaleLowerCase("tr").includes(lo))res.push({c,k:"Konu · "+k.b,s:m,go:{tab:"konu"}})}));c.sc.forEach(q=>{if((q[0]+q[1]).toLocaleLowerCase("tr").includes(lo))res.push({c,k:"Soru-Cevap",s:q[0],go:{tab:"sc"}})});c.podcast.forEach((e,i)=>{if(e.s.some(l=>l[1].toLocaleLowerCase("tr").includes(lo)))res.push({c,k:"Podcast",s:e.t,go:{tab:"pod",ep:i}})});c.test.forEach(t=>{if((t[0]+t[1][0]).toLocaleLowerCase("tr").includes(lo))res.push({c,k:"Test sorusu",s:t[0],go:{tab:"test"}})})});
+  search.res=res;
+  return header("Arama",res.length+" sonuç",true)+`<div class="wrap"><input type="search" id="q" value="${esc(term)}" aria-label="Ara"><div class="sec">${res.slice(0,60).map((r,i)=>`<button class="card" data-res="${i}"><span class="chip">${esc(r.c.kisa)} · ${esc(r.k)}</span><p>${hl(r.s)}</p></button>`).join("")||'<p class="muted">Sonuç yok. Başka bir kavram dene.</p>'}</div></div>`}
+
+function bind(){
+  app.querySelectorAll("[data-act=back]").forEach(b=>b.onclick=()=>{if(view.name==="quizView"&&quiz&&quiz.mode==="exam"&&quiz.pos<quiz.list.length){finishQuiz();render();return}if(view.name==="quizView"&&quiz&&quiz.from)nav("course",quiz.from);else if(view.name==="quizView")nav(quiz&&quiz.mode==="exam"?"exam":"home");else nav("home")});
+  app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>nav("course",{id:b.dataset.open,tab:"konu"}));
+  app.querySelectorAll("[data-go2]").forEach(b=>b.onclick=()=>nav(b.dataset.go2,b.dataset.cid?{cid:b.dataset.cid}:{}));
+  app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{stopSpeech();view.tab=b.dataset.tab;delete view.ep;render()});
+  app.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{const[c,i]=b.dataset.daily.split(":");startQuiz([makeQ(c,+i)],"test","Günün sorusu")});
+  const qi=$("#q");if(qi){qi.addEventListener("keydown",e=>{if(e.key==="Enter"){nav("search",{t:qi.value})}});qi.addEventListener("search",()=>{if(qi.value)nav("search",{t:qi.value})});if(view.name==="search"){qi.focus();qi.setSelectionRange(qi.value.length,qi.value.length)}}
+  app.querySelectorAll("[data-res]").forEach(b=>b.onclick=()=>{const r=search.res[+b.dataset.res];nav("course",Object.assign({id:r.c.id},r.go));if(r.go.ep!==undefined)initEp(r.c,r.go.ep)});
+  app.querySelectorAll("[data-ep]").forEach(b=>b.onclick=()=>{const c=C(view.id);stopSpeech();view.ep=+b.dataset.ep;initEp(c,view.ep);render();window.scrollTo(0,0);speakFrom(0)});
+  app.querySelectorAll("[data-line]").forEach(b=>b.onclick=()=>speakFrom(+b.dataset.line));
+  app.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{const a=b.dataset.pc;if(a==="toggle"){if(sp.on){stopSpeech();uiSp()}else speakFrom(sp.i)}if(a==="next")speakFrom(Math.min(sp.i+1,sp.c.podcast[sp.ep].s.length-1));if(a==="prev")speakFrom(Math.max(0,sp.i-1));if(a==="rate"){sp.rate=sp.rate===1?1.25:sp.rate===1.25?1.5:sp.rate===1.5?0.85:1;if(sp.on)speakFrom(sp.i);else uiSp()}if(a==="close"){stopSpeech();delete view.ep;render()}});
+  app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{const c=C(view.id);let idx=c.test.map((_,i)=>i);if(b.dataset.start==="wrong")idx=idx.filter(i=>S.r[c.id+":"+i]===0);startQuiz(shuffle(idx).map(i=>makeQ(c.id,i)),"test",c.kisa+" testi");quiz.from={id:c.id,tab:"test"}});
+  app.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{const q=quiz.list[quiz.pos];if(quiz.mode!=="exam"&&q.pick!==null)return;q.pick=+b.dataset.pick;if(quiz.mode!=="exam"){S.r[q.cid+":"+q.i]=q.pick===q.ans?1:0;save()}render()});
+  app.querySelectorAll("[data-qnav]").forEach(b=>b.onclick=()=>{const d=+b.dataset.qnav;if(d>0&&quiz.pos===quiz.list.length-1){if(quiz.mode==="exam")finishQuiz();else quiz.pos++}else quiz.pos=Math.max(0,quiz.pos+d);render();window.scrollTo(0,0)});
+  app.querySelectorAll("[data-again]").forEach(b=>b.onclick=()=>{const z=quiz;startQuiz(shuffle(z.list.map(q=>makeQ(q.cid,q.i))),z.mode,z.title);quiz.limit=z.limit;quiz.from=z.from;if(z.mode==="exam")runTimer()});
+  app.querySelectorAll("[data-exam]").forEach(b=>b.onclick=()=>{const n=+b.dataset.exam;const pool=shuffle(COURSES.flatMap(c=>c.test.map((_,i)=>[c.id,i]))).slice(0,n);startQuiz(pool.map(p=>makeQ(p[0],p[1])),"exam",n+" soruluk deneme");quiz.limit=(n===25?30:n===50?60:12)*60000;runTimer()});
+  app.querySelectorAll("[data-cexam]").forEach(b=>b.onclick=()=>{const c=C(b.dataset.cexam);startQuiz(shuffle(c.test.map((_,i)=>makeQ(c.id,i))),"exam",c.kisa+" denemesi");quiz.limit=Math.round(c.test.length*1.2)*60000;runTimer()});
+  app.querySelectorAll("[data-wrongq]").forEach(b=>b.onclick=()=>{const it=Object.entries(S.r).filter(([k,v])=>v===0).map(([k])=>k.split(":")).filter(x=>C(x[0])&&C(x[0]).test[+x[1]]);startQuiz(shuffle(it).map(x=>makeQ(x[0],+x[1])),"test","Yanlışlarım")});
+  app.querySelectorAll("[data-addq]").forEach(b=>b.onclick=()=>{const t=$("#mt").value.trim();if(!t){toast("Önce sorunu yaz");return}S.mine.unshift({c:$("#mc").value,q:t,a:"",t:Date.now()});save();view.cid=$("#mc").value;render();toast("Soru kaydedildi")});
+  app.querySelectorAll("[data-ans]").forEach(t=>t.oninput=()=>{S.mine[+t.dataset.ans].a=t.value;save()});
+  app.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const i=+b.dataset.del;if(b.dataset.sure){S.mine.splice(i,1);save();render();toast("Silindi")}else{b.dataset.sure=1;b.textContent="Emin misin? Sil"}});
+  app.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{const m=S.mine[+b.dataset.copy];const txt=(C(m.c)||{ad:""}).ad+" – "+m.q;try{await navigator.clipboard.writeText(txt);toast("Kopyalandı")}catch(e){toast("Kopyalanamadı")}});
+}
+function initEp(c,ep){sp.c=c;sp.ep=ep;sp.i=0}
+function runTimer(){clearInterval(timer);timer=setInterval(()=>{if(!quiz||view.name!=="quizView"){clearInterval(timer);return}const left=quiz.limit-(Date.now()-quiz.start);const el=$("#tm");if(el)el.textContent=fmt(Math.max(0,left));if(left<=0&&quiz.pos<quiz.list.length){finishQuiz();toast("Süre doldu");render()}},500)}
+
+const onl=()=>{$("#off").style.display=navigator.onLine?"none":"block"};window.addEventListener("online",onl);window.addEventListener("offline",onl);onl();
+render();
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
+}
+</script>
+</body>
+</html>
