@@ -602,7 +602,7 @@ function render(){
 function home(){
   const all=COURSES.map(prog);const tot=all.reduce((a,b)=>a+b.n,0),ok=all.reduce((a,b)=>a+b.ok,0),done=all.reduce((a,b)=>a+b.done,0);
   const day=Math.floor(Date.now()/864e5);const pool=COURSES.flatMap(c=>c.test.map((t,i)=>({c,i,t})));const dq=pool[day%pool.length];
-  return header("Ders Cebi","Marmara Üniversitesi · BESÖ · 1. sınıf")+`<div class="wrap">
+  return header("Ders Cebi","MÜ · BESÖ · 1. sınıf")+`<div class="wrap">
   <div class="track" role="list" aria-label="Dersler ve ilerleme">${COURSES.map((c,i)=>{const p=prog(c);return `<button class="lane" role="listitem" data-open="${c.id}"><span class="no">${i+1}</span><span class="run"><span class="nm">${esc(c.ad)}</span><span class="pc">%${p.p}</span><span class="bar"><i style="width:${p.p}%"></i></span><span class="dot" style="left:calc(8px + (100% - 34px) * ${p.p/100})"></span></span></button>`}).join("")}<span class="finish"></span></div>
   <p class="muted">Koşucular her dersin testinde doğru cevapladığın soru oranına göre ilerler. Kulvara dokunarak derse gir.</p>
   <div class="stats"><div class="stat"><b>${done}/${tot}</b><span>çözülen soru</span></div><div class="stat"><b>%${done?Math.round(ok/done*100):0}</b><span>başarı</span></div><div class="stat"><b>${Object.values(S.r).filter(v=>v===0).length}</b><span>tekrar edilecek</span></div></div>
