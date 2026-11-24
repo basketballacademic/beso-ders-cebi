@@ -1316,6 +1316,161 @@ sc:[
 ]
 });
 
+// Yeni 7 konu için sorular (ilk şık doğru; uygulama karıştırır)
+const EXTRA2 = {
+bes:[
+// Felsefi temeller
+["Beden eğitimini öncelikle karakter ve değer eğitiminin aracı olarak gören, öğretmeni model olarak öne çıkaran felsefi akım hangisidir?",["İdealizm","Realizm","Pragmatizm","Varoluşçuluk","Pozitivizm"],"İdealizm zihin ve karakter eğitimini merkeze alır."],
+["Öğrencilerin oyun kurallarını ve stratejileri birlikte geliştirerek problem çözmesini öne çıkaran felsefi bakış hangisidir?",["Pragmatizm","İdealizm","Realizm","Skolastisizm","Daimicilik"],"Pragmatizm deneyim ve problem çözmeyi merkeze alır."],
+["Öğrencinin kendi hedefini koymasını ve etkinlikler arasından seçim yapmasını destekleyen felsefi akım hangisidir?",["Varoluşçuluk","Realizm","İdealizm","Esasicilik","Davranışçılık"],"Varoluşçuluk bireysel seçim ve sorumluluğu vurgular."],
+// Fiziksel uygunluk
+["Aşağıdakilerden hangisi sağlıkla ilgili fiziksel uygunluk bileşenlerinden biridir?",["Vücut kompozisyonu","Çeviklik","Reaksiyon zamanı","Koordinasyon","Güç"],"Sağlıkla ilgili bileşenler: kardiyorespiratuvar dayanıklılık, kas kuvveti, kas dayanıklılığı, esneklik ve vücut kompozisyonu."],
+["Aşağıdakilerden hangisi beceriyle ilgili fiziksel uygunluk bileşenidir?",["Çeviklik","Esneklik","Kas dayanıklılığı","Vücut kompozisyonu","Kardiyorespiratuvar dayanıklılık"],"Çeviklik, denge, koordinasyon, güç, reaksiyon zamanı ve sürat beceriyle ilgilidir."],
+["Dünya Sağlık Örgütü (2020) 5–17 yaş grubundaki çocuklar için günde ortalama en az ne kadar orta-şiddetli fiziksel aktivite önerir?",["60 dakika","30 dakika","20 dakika","90 dakika","120 dakika"],"Öneri günde ortalama en az 60 dakikadır."],
+// Öğretmen
+["Beden eğitimi dersinde öğretmenin ilk ve en temel sorumluluğu aşağıdakilerden hangisidir?",["Güvenli öğrenme ortamı sağlamak","Okul takımı için sporcu seçmek","Tüm öğrencilere aynı görevi vermek","Ders boyunca yarışma düzenlemek","Yalnızca yetenekli öğrencilerle ilgilenmek"],"Güvenlik sağlanmadan diğer hedeflere ulaşılamaz."],
+["Farklı beceri düzeyleri ve engel durumları için görev, malzeme, alan ve grup boyutunun değiştirilmesi hangi ilkenin gereğidir?",["Kapsayıcılık","Seçicilik","Uzmanlaşma","Performans odaklılık","Standartlaşma"],"Kapsayıcı beden eğitimi her öğrencinin anlamlı katılımını hedefler."],
+["Öğretmenin kendi derslerini sistemli biçimde gözden geçirip geliştirmesine ne ad verilir?",["Yansıtıcı öğretmenlik","Komut stili","Örtük program","Eleme yöntemi","Sabit uygulama"],"Yansıtıcı öğretmen kendi uygulamalarını değerlendirerek gelişir."],
+// Spor ve toplum
+["Türkiye'de spor hizmetlerinin yürütülmesinden sorumlu bakanlık hangisidir?",["Gençlik ve Spor Bakanlığı","Millî Eğitim Bakanlığı","Kültür ve Turizm Bakanlığı","Aile ve Sosyal Hizmetler Bakanlığı","Sağlık Bakanlığı"],"Spor hizmetlerinden Gençlik ve Spor Bakanlığı sorumludur."],
+["Türkiye'de olimpiyat hareketini temsil eden ve olimpiyat oyunlarına katılımı organize eden kuruluş hangisidir?",["Türkiye Millî Olimpiyat Komitesi","Gençlik ve Spor Bakanlığı","Türkiye Futbol Federasyonu","Yükseköğretim Kurulu","Spor Genel Müdürlüğü"],"TMOK olimpik hareketin ülkedeki temsilcisidir."],
+["Spor piramidinin tabanında yer alan ve tüm öğrencilere ulaşan katman hangisidir?",["Okul beden eğitimi dersi","Elit spor","Profesyonel lig","Milli takım","Olimpiyat kampı"],"Taban ne kadar genişse elit spor o kadar güçlü olur."],
+// Olimpik/paralimpik
+["Uluslararası Olimpiyat Komitesi'nin (IOC) merkezi hangi kenttedir?",["Lozan","Paris","Atina","Cenevre","Londra"],"IOC'nin merkezi İsviçre'nin Lozan kentindedir."],
+["Paralimpik hareketin kökeni olan oyunları 1948'de Stoke Mandeville Hastanesi'nde düzenleyen kişi kimdir?",["Ludwig Guttmann","Pierre de Coubertin","Avery Brundage","Thomas Arnold","Rudolf Laban"],"Ludwig Guttmann paralimpik hareketin kurucusu kabul edilir."],
+["Dünya Dopingle Mücadele Ajansı (WADA) hangi yıl kurulmuştur?",["1999","1989","1960","2004","1976"],"WADA 1999'da kurulmuş ve yasaklı maddeler listesini yayımlar."],
+// Programlar ve modeller
+["Türkiye'de ilkokul 1–4. sınıflarda okutulan beden eğitimi dersinin adı nedir?",["Oyun ve Fiziki Etkinlikler","Beden Eğitimi ve Spor","Spor ve Sağlık","Hareket ve Oyun","Beden Terbiyesi"],"Ortaokul ve lisede ders “Beden Eğitimi ve Spor” adını alır."],
+["Sezon, takım üyeliği, resmî karşılaşmalar ve şenlik öğelerini içeren öğretim modeli hangisidir?",["Spor Eğitimi Modeli","Oyun Yoluyla Öğretim","Komut stili","Kişisel ve Sosyal Sorumluluk Modeli","İstasyon modeli"],"Spor Eğitimi Modeli Daryl Siedentop tarafından geliştirilmiştir."],
+["Tekniği öğretmeden önce oyunu ve taktik farkındalığı öne alan yaklaşım (TGfU) kimlerle ilişkilidir?",["Bunker ve Thorpe","Bowles ve Gintis","Fitts ve Posner","Rosenthal ve Jacobson","Anderson ve Krathwohl"],"Oyun Yoluyla Öğretim 1982'de Bunker ve Thorpe tarafından önerilmiştir."],
+// Çağdaş sorunlar
+["Performansı artırmak amacıyla yasaklı madde veya yöntem kullanılmasına ne ad verilir?",["Doping","Holiganizm","Fanatizm","Ticarileşme","Erken uzmanlaşma"],"Doping hem sağlığa zarar verir hem fair play ilkesini çiğner."],
+["Tribünlerde taraftarlar arasında yaşanan organize şiddete ne ad verilir?",["Holiganizm","Doping","Amatörlük","Rekreasyon","Olimpizm"],"Holiganizm sporun önemli işlev bozukluklarındandır."],
+["Sponsorluk, yayın gelirleri ve transferlerle sporun ekonomik bir sektöre dönüşmesine ne ad verilir?",["Ticarileşme","Amatörleşme","Kurumsallaşmama","Rekreasyon","Demokratikleşme"],"Ticarileşme sporun eğitsel değerlerini geri plana itebilir."]
+],
+ank:[
+// Kemik dokusu
+["Kemik dokusunda yeni kemik yapımından sorumlu hücreler hangileridir?",["Osteoblastlar","Osteoklastlar","Osteositler","Kondrositler","Miyositler"],"Osteoblastlar yapar, osteoklastlar yıkar."],
+["Kemiğin üzerine binen yüklere uyum sağlayarak yeniden şekillendiğini ifade eden ilke hangisidir?",["Wolff yasası","Hep ya da hiç ilkesi","Newton'un üçüncü yasası","Kayan filamentler kuramı","Bernoulli ilkesi"],"Yük taşıyan egzersizler kemik yoğunluğunu artırır."],
+["Uzun kemiklerin boyuna büyümesini sağlayan yapı hangisidir?",["Epifiz plağı (büyüme plağı)","Periost","Kemik iliği","Diyafiz","Eklem kıkırdağı"],"Büyüme tamamlandığında epifiz plağı kemikleşerek kapanır."],
+// Üst ekstremite
+["Kolun abdüksiyonunu sağlayan temel kas hangisidir?",["Deltoid","Latissimus dorsi","Pectoralis major","Biceps brachii","Triceps brachii"],"Deltoid omuzu örter ve kolu yana kaldırır."],
+["Barfiks hareketinde kolu aşağı ve geri çeken ana kas hangisidir?",["Latissimus dorsi","Deltoid","Pectoralis minor","Trapezius","Serratus anterior"],"Latissimus dorsi kolun ekstansiyon, addüksiyon ve iç rotasyonunu yapar."],
+["Dirseğin ekstansiyonunu sağlayan kas hangisidir?",["Triceps brachii","Biceps brachii","Brachialis","Brachioradialis","Deltoid"],"Triceps dirseği açar; biceps ve brachialis büker."],
+// Alt ekstremite
+["Kalça ekleminin en güçlü fleksörü hangi kastır?",["İliopsoas","Gluteus maximus","Gluteus medius","Biceps femoris","Adductor magnus"],"İliopsoas kalçayı büker; gluteus maximus açar."],
+["Tek ayak üzerinde dururken pelvisi dengede tutan ve kalçanın abdüksiyonunu yapan kas hangisidir?",["Gluteus medius","Gluteus maximus","İliopsoas","Adductor longus","Rectus femoris"],"Gluteus medius zayıflığı koşuda kalçanın yana düşmesine yol açabilir."],
+["Ayak bileğinin dorsifleksiyonunu sağlayan kas hangisidir?",["Tibialis anterior","Gastrocnemius","Soleus","Peroneus longus","Plantaris"],"Gastrocnemius ve soleus plantar fleksiyon yapar; tibialis anterior dorsifleksiyon yapar."],
+// Omurga ve postür
+["Omurganın yana doğru eğriliği hangi postür bozukluğudur?",["Skolyoz","Kifoz","Lordoz","Hiperlordoz","Spondiloz"],"Skolyoz frontal düzlemdeki eğriliktir."],
+["Omurganın lomber (bel) bölgesindeki doğal eğriliğe ne ad verilir?",["Lordoz","Kifoz","Skolyoz","Torsiyon","Fleksiyon"],"Servikal ve lomber bölgede lordoz, torakal ve sakral bölgede kifoz vardır."],
+["Karın içi basıncı artırarak gövdeyi bir korse gibi sabitleyen kas hangisidir?",["Transversus abdominis","Rectus abdominis","Erector spinae","Latissimus dorsi","Psoas minor"],"Transversus abdominis en derin karın kasıdır."],
+// Sinir-kas
+["Bir motor nöron ve bu nöronun uyardığı tüm kas liflerine birlikte ne ad verilir?",["Motor ünite","Sarkomer","Kas iğciği","Miyofibril","Sinaps"],"Motor ünite, sinir-kas sisteminin işlevsel birimidir."],
+["Yavaş kasılan, oksidatif ve yorgunluğa en dirençli kas lifi tipi hangisidir?",["Tip I","Tip IIa","Tip IIx","Tip IIb","Tip III"],"Tip I lifler dayanıklılık sporcularında baskındır."],
+["Tendondaki gerilimi algılayarak kası gevşetici (inhibe edici) etki yapan duyu organı hangisidir?",["Golgi tendon organı","Kas iğciği","Pacini cisimciği","Retina","Koklea"],"Kas iğciği gerilmeyi algılar ve germe refleksini başlatır; Golgi tendon organı gerilimi algılar."],
+// Biyomekanik
+["“Her etkiye eşit ve zıt yönde bir tepki vardır” ifadesi Newton'un hangi yasasıdır?",["Üçüncü yasa","Birinci yasa","İkinci yasa","Eylemsizlik yasası","Kütle çekim yasası"],"Koşucunun yere uyguladığı kuvvete yer eşit ve zıt bir tepki kuvveti uygular."],
+["Aşağıdakilerden hangisi dengeyi artırır?",["Destek yüzeyini genişletmek ve ağırlık merkezini alçaltmak","Destek yüzeyini daraltmak","Ağırlık merkezini yükseltmek","Tek ayak üzerinde durmak","Ağırlık merkezini destek yüzeyinin dışına taşımak"],"Güreşçinin geniş ve alçak duruşu bu ilkeye dayanır."],
+["Kütle ile hızın çarpımı hangi büyüklüğü verir?",["Momentum","Tork","İvme","Kuvvet","İş"],"Momentum = kütle × hız; tork = kuvvet × moment kolu."],
+// Hareket analizi
+["Normal yürüme döngüsünde duruş evresi yaklaşık yüzde kaçtır?",["%60","%40","%50","%80","%25"],"Duruş yaklaşık %60, salınım yaklaşık %40'tır."],
+["Koşuyu yürümeden ayıran temel özellik hangisidir?",["Uçuş evresinin bulunması","Çift destek evresinin bulunması","Kolların kullanılması","Duruş evresinin olması","Topuk teması"],"Koşuda iki ayağın da yerden kesildiği bir evre vardır; çift destek evresi yoktur."],
+["Dikey sıçramada kalça, diz ve ayak bileğinin eş zamanlı ekstansiyonuna ne ad verilir?",["Üçlü ekstansiyon","Kinetik zincir kırılması","Hiperekstansiyon","Sirkümdüksiyon","Çift destek"],"Üçlü ekstansiyon sıçramada kuvvetin temel kaynağıdır."]
+],
+hrk:[
+// Algısal-motor
+["Vücut parçalarını tanıma, adlandırma ve ne yapabileceklerini bilme hangi algısal-motor beceridir?",["Vücut farkındalığı","Alan farkındalığı","Zamansal farkındalık","Yönsellik","Ritim"],"Vücut farkındalığı algısal-motor gelişimin temelidir."],
+["Lateralitenin dış dünyaya uygulanması, örneğin “koninin soluna geç” komutunu doğru yerine getirme hangi kavramla ifade edilir?",["Yönsellik","Vücut farkındalığı","Kinestezi","Statik denge","Tempo"],"Lateralite içsel, yönsellik dış dünyaya yönelik yön bilgisidir."],
+["Bir topu doğru anda yakalayabilmek en çok hangi algısal-motor beceriyle ilgilidir?",["Zamansal farkındalık","Vücut farkındalığı","Lateralite","Esneklik","Kas dayanıklılığı"],"Zamansal farkındalık ritim, tempo ve zamanlamayı kapsar."],
+// Lokomotor öğretimi
+["Olgun koşunun ayırt edici özelliği aşağıdakilerden hangisidir?",["Belirgin uçuş evresi ve kol-bacak çapraz koordinasyonu","Kolların yanda sabit tutulması","Düz ayakla basma","Gövdenin geriye yaslanması","Adımların çok kısa olması"],"Olgun koşuda kollar dirsekten bükülü ve bacaklarla karşıt çalışır."],
+["Olgun yatay atlamada kollar kalkış sırasında nasıl kullanılır?",["Güçlü biçimde öne ve yukarı savrulur","Gövdenin yanında sabit tutulur","Geride bırakılır","Yalnızca dengede kullanılır","Başın üzerinde tutulur"],"Kol salınımı atlama mesafesine önemli katkı sağlar."],
+["Aşağıdaki lokomotor becerilerden hangisi genellikle diğerlerine göre daha geç olgunlaşır?",["Galop","Yürüme","Koşma","İki ayakla atlama","Emekleme"],"Sekme, galop ve kayma gibi tek taraflı ritmik beceriler daha geç olgunlaşır."],
+// Nesne kontrol öğretimi
+["Olgun üstten atışta öğrenci hangi ayakla öne adım atar?",["Atan kolun karşı tarafındaki ayakla","Atan kolla aynı taraftaki ayakla","Adım atmaz","İki ayakla sıçrar","Geriye adım atar"],"Karşı ayakla adım, gövde rotasyonuna olanak sağlar."],
+["Olgun yakalamanın özelliği aşağıdakilerden hangisidir?",["Top yalnızca ellerle karşılanır ve kollar bükülerek hızı emilir","Top göğse bastırılarak tutulur","Kollar düz ve gergin tutulur","Gözler kapatılır","Top gelirken baş çevrilir"],"Topu göğse bastırmak ilkel yakalama biçimidir."],
+["Nesne kontrol becerilerinin öğretimine başlarken hangi malzeme seçimi uygundur?",["Büyük, yumuşak ve yavaş hareket eden nesneler","Küçük ve sert toplar","Ağır sağlık topları","Hızlı fırlatılan tenis topları","Düzensiz sekip zıplayan toplar"],"Başarı duygusu ve güven için kolaydan zora gidilir."],
+// Denge ve jimnastik
+["Denge tahtası üzerinde yürümek hangi denge türüne örnektir?",["Dinamik denge","Statik denge","Refleksif denge","Pasif denge","Nesne dengesi"],"Hareket sırasında dengeyi korumak dinamik dengedir."],
+["Aşağıdakilerden hangisi denge görevini zorlaştırır?",["Gözleri kapatmak","Destek yüzeyini genişletmek","Ağırlık merkezini alçaltmak","Kolları yana açıp alçak durmak","İki ayak üzerinde durmak"],"Görsel bilgiyi azaltmak dengeyi zorlaştırır."],
+["Jimnastik etkinliklerinde öğrenciye el ile güvenlik desteği verilmesine ne ad verilir?",["Yardım (spot)","Geri bildirim","Model olma","Isınma","Eleme"],"Uygun yardım ve minder jimnastikte güvenliğin temelidir."],
+// Ritim ve dans
+["Ritmik etkinliklerde hareketin hızını ifade eden kavram hangisidir?",["Tempo","Vurgu","Akış","Düzey","Yol"],"Tempo hızdır; vurgu ise güçlü vuruştur."],
+["Öğrencinin bir duyguyu ya da imgeyi kendi hareketleriyle ifade ettiği dans türüne ne ad verilir?",["Yaratıcı dans","Halk dansı","Halat dansı","Aerobik dans","Kare dans"],"Yaratıcı dansta Laban çerçevesi tasarımı destekler."],
+["Horon, zeybek ve halay gibi yöresel oyunların derste kullanılması öncelikle hangi amaca hizmet eder?",["Kültürel mirasın aktarılması ile ritim ve koordinasyon gelişimi","Maksimal kuvvet gelişimi","Yalnızca esneklik gelişimi","Rekabet becerisinin artırılması","Bireysel performans ölçümü"],"Halk dansları hem kültürel hem motor kazanımlar sağlar."],
+// Oyun öğretimi
+["Oyun seçiminde öncelikli ilke aşağıdakilerden hangisidir?",["Tüm öğrencilerin aktif katılımı","Yalnızca yetenekli öğrencilerin oynaması","Eleme kurallarının bulunması","Tek bir topla oynanması","Kuralların karmaşık olması"],"İyi bir oyun herkesi hareket halinde tutar."],
+["Oyuncu sayısını azaltıp alanı küçülterek her öğrencinin topa daha çok dokunmasını sağlayan oyunlara ne ad verilir?",["Küçük alan oyunları","Eleme oyunları","Bayrak yarışları","Resmî maçlar","Gösteri oyunları"],"Üçe üç gibi küçük alan oyunları etkileşimi artırır."],
+["Oyun Yoluyla Öğretim yaklaşımında teknik ne zaman öğretilir?",["Oyunda ihtiyaç duyulduğunda","Oyundan tamamen ayrı ve önce","Hiç öğretilmez","Sadece dönem sonunda","Yalnızca yetenekli öğrencilere"],"Önce oyun, sonra ihtiyaç duyulan teknik."],
+// Öğretim stilleri ve değerlendirme
+["Mosston'ın yelpazesinde öğretmenin tüm kararları verdiği stil hangisidir?",["Komut stili (A)","Alıştırma stili (B)","Eşli stil (C)","Katılım stili (E)","Iraksak buluş stili (H)"],"Komut stilinde kararların tamamı öğretmendedir."],
+["Öğrencilerin birbirine ölçüt kartına göre geri bildirim verdiği öğretim stili hangisidir?",["Eşli (karşılıklı) stil (C)","Komut stili (A)","Alıştırma stili (B)","Kendini denetleme stili (D)","Yönlendirilmiş buluş stili (F)"],"Eşli stilde bir öğrenci uygular, diğeri gözlemci olarak geri bildirim verir."],
+["Lokomotor ve nesne kontrol becerilerini kritik öğelere göre puanlayan test hangisidir?",["Kaba Motor Gelişim Testi (TGMD)","Mekik koşusu testi","Otur-uzan testi","Wingate testi","Cooper testi"],"TGMD süreç odaklı bir motor gelişim testidir."]
+],
+egt:[
+// Psikolojik temeller
+["Piaget'ye göre somut işlemler dönemi yaklaşık hangi yaş aralığını kapsar?",["7–11 yaş","0–2 yaş","2–7 yaş","11–15 yaş","15–18 yaş"],"Somut işlemler döneminde çocuk somut nesneler üzerinde mantıklı düşünebilir."],
+["Çocuğun tek başına yapabildiği ile yardımla yapabildiği arasındaki alana Vygotsky ne ad vermiştir?",["Yakınsak (yakın) gelişim alanı","Kritik dönem","Bilişsel denge","Özümleme","Örtük program"],"Bu alanda verilen geçici desteğe iskele kurma denir."],
+["Öğrenmenin model alma ve gözlem yoluyla da gerçekleştiğini savunan kuramcı kimdir?",["Albert Bandura","Ivan Pavlov","B. F. Skinner","Jean Piaget","Erik Erikson"],"Bandura'nın sosyal öğrenme kuramı gösterinin önemini açıklar."],
+// Sosyal-ekonomik temeller
+["Eğitim harcamalarının bir yatırım olduğunu savunan kuram hangisidir?",["İnsan sermayesi kuramı","Kültürel gecikme kuramı","Çatışma kuramı","Sembolik etkileşimcilik","Davranışçılık"],"Kuram Theodore Schultz ve Gary Becker ile özdeşleşmiştir."],
+["Aşağıdakilerden hangisi eğitimin toplumsal getirisine örnektir?",["Ekonomik büyüme ve demokratik katılımın artması","Bireyin daha yüksek maaş alması","Bireyin iş bulma şansının artması","Kişinin özel ders alması","Bireysel diploma sahibi olunması"],"Toplumsal getiriler tüm topluma yayılan yararlardır."],
+["“Eğitim toplumsal değişmenin hem aracı hem sonucudur” ifadesi eğitimin hangi temeliyle ilgilidir?",["Sosyolojik temel","Psikolojik temel","Hukuki temel","Biyolojik temel","Fizyolojik temel"],"Eğitim ile toplum arasındaki karşılıklı ilişki sosyolojik temelin konusudur."],
+// Türk eğitim tarihi
+["Osmanlı'da saray yönetimi için seçilmiş gençlerin yetiştirildiği okul hangisidir?",["Enderun","Sıbyan mektebi","Rüştiye","Darülmuallimin","Millet Mektebi"],"Enderun'da binicilik ve okçuluk gibi sporlara da önem verilirdi."],
+["Öğretmen yetiştirmek amacıyla 1848'de kurulan okul hangisidir?",["Darülmuallimin","Enderun","Mekteb-i Harbiye","Darülfünun","Köy Enstitüsü"],"Darülmuallimin Türkiye'de öğretmen yetiştiren ilk kurumdur."],
+["Köy Enstitülerinin kuruluşunda öncü rol oynayan eğitimciler kimlerdir?",["İsmail Hakkı Tonguç ve Hasan Ali Yücel","Ziya Gökalp ve Satı Bey","Selim Sırrı Tarcan ve Ziya Gökalp","John Dewey ve Hasan Ali Yücel","Mustafa Necati ve Satı Bey"],"Köy Enstitüleri 1940'ta kurulmuştur."],
+// Sistem yapısı
+["Yükseköğretim Kurulu (YÖK) hangi kanunla kurulmuştur?",["2547 sayılı Kanun","1739 sayılı Kanun","6287 sayılı Kanun","7354 sayılı Kanun","430 sayılı Kanun"],"YÖK 1981'de 2547 sayılı Kanun ile kurulmuştur."],
+["İl ve ilçe millî eğitim müdürlükleri Millî Eğitim Bakanlığı'nın hangi örgüt yapısında yer alır?",["Taşra örgütü","Merkez örgütü","Yurt dışı teşkilatı","Bağlı kuruluşlar","Danışma birimleri"],"MEB merkez, taşra ve yurt dışı teşkilatından oluşur."],
+["Halk eğitim merkezleri Türk eğitim sisteminin hangi bölümünde yer alır?",["Yaygın eğitim","Örgün eğitim","Yükseköğretim","Okul öncesi eğitim","Ortaöğretim"],"Yaygın eğitim örgün eğitim dışındaki esnek eğitimdir."],
+// Eğitim bilimleri ve araştırma
+["Öğretmenin kendi sınıfındaki bir sorunu sistemli biçimde inceleyip çözüm geliştirdiği araştırma türü hangisidir?",["Eylem araştırması","Tarama araştırması","Meta-analiz","Boylamsal araştırma","Doküman analizi"],"Eylem araştırması öğretmeni araştırmacı konumuna getirir."],
+["Görüşme ve gözlemle bir olguyu derinlemesine anlamaya çalışan araştırma yaklaşımı hangisidir?",["Nitel araştırma","Nicel araştırma","Deneysel araştırma","İlişkisel tarama","Betimsel istatistik"],"Nitel araştırma anlam ve süreçlere odaklanır."],
+["Araştırmaya katılanların araştırma hakkında bilgilendirilip gönüllü onay vermesine ne ad verilir?",["Bilgilendirilmiş onam","Örneklem","Geçerlik","Hipotez","Güvenirlik"],"Bilgilendirilmiş onam araştırma etiğinin temel ilkelerindendir."],
+// Öğretim ilke ve yöntemleri
+["Bloom'un yenilenmiş taksonomisinde en üst basamak hangisidir?",["Yaratma","Değerlendirme","Sentez","Analiz etme","Uygulama"],"2001 revizyonunda en üst basamak yaratmadır."],
+["Önce duran topla pas, sonra hareketli pas, sonra oyun içinde pas çalışılması hangi öğretim ilkesine örnektir?",["Basitten karmaşığa","Yakından uzağa","Bilinenden bilinmeyene","Hayatilik","Ekonomiklik"],"Görevler basit olandan karmaşık olana doğru sıralanır."],
+["Öğretmenin hareketi gösterip açıkladığı, öğrencinin uyguladığı ve öğretmenin geri bildirim verdiği yöntem hangisidir?",["Gösterip yaptırma","Anlatım","Tartışma","Örnek olay","Beyin fırtınası"],"Beden eğitiminde en sık kullanılan yöntemlerdendir."],
+// Sınıf yönetimi
+["Kuralların ve rutinlerin sorun çıkmadan önce, yılın başında belirlenmesine dayanan sınıf yönetimi yaklaşımı hangisidir?",["Önleyici yaklaşım","Tepkisel yaklaşım","Cezalandırıcı yaklaşım","Serbest bırakıcı yaklaşım","Otoriter yaklaşım"],"Önleyici yaklaşım sorunları ortaya çıkmadan azaltır."],
+["Öğretmenin sınıfta olan her şeyden haberdar olduğunu öğrencilere hissettirmesi Kounin'in hangi kavramıdır?",["Ortamdan haberdar olma","Ben dili","İskele kurma","Pekiştirme","Örtük program"],"Beden eğitiminde öğretmenin herkesi görebileceği bir konumda durması bu kavramla ilgilidir."],
+["“Konuşurken sözüm kesilince açıklamayı tamamlayamıyorum” ifadesi hangi iletişim tekniğine örnektir?",["Ben dili","Sen dili","Emir verme","Etiketleme","Gizli program"],"Ben dili suçlamak yerine davranışın etkisini anlatır."]
+],
+sos:[
+// Aile
+["Anne, baba ve çocuklardan oluşan aile tipine ne ad verilir?",["Çekirdek aile","Geniş aile","Tek ebeveynli aile","Koruyucu aile","Ataerkil aile"],"Kentleşmeyle çekirdek aile yaygınlaşmıştır."],
+["Aşağıdakilerden hangisi çocuğun okul başarısıyla en güçlü ilişkili aile özelliklerinden biridir?",["Ailenin sosyoekonomik düzeyi","Ailenin yaşadığı evin rengi","Ailenin tuttuğu takım","Ebeveynin doğduğu ay","Ailenin araba markası"],"Gelir, ebeveyn eğitimi ve evdeki öğrenme olanakları başarıyla ilişkilidir."],
+["Okul ile ailenin iş birliği hangi kanunda temel ilke olarak yer alır?",["1739 sayılı Millî Eğitim Temel Kanunu","2547 sayılı Yükseköğretim Kanunu","7354 sayılı Öğretmenlik Meslek Kanunu","6287 sayılı Kanun","430 sayılı Tevhid-i Tedrisat Kanunu"],"Okul ile ailenin iş birliği 1739 sayılı kanunun temel ilkelerindendir."],
+// Okulun sosyolojisi
+["Kendiliğinden oluşan, ortak ilgi ve arkadaşlığa dayanan gruplara ne ad verilir?",["Informal gruplar","Formal gruplar","Resmî kurullar","Toplumsal sınıflar","Statü grupları"],"Sınıf ve okul takımı formal, arkadaş grupları informal gruplardır."],
+["Ergenlik döneminde etkisi belirgin biçimde artan sosyalleşme aracı hangisidir?",["Akran grubu","Aile","Okul öncesi eğitim","Yaygın eğitim","Kreş"],"Ergenler için akran onayı çok önemlidir."],
+["Okulu kendine özgü bir toplumsal yapı olarak inceleyen “Öğretimin Sosyolojisi” eserinin yazarı kimdir?",["Willard Waller","James Coleman","Pierre Bourdieu","Talcott Parsons","William Ogburn"],"Willard Waller okulu ayrı bir sosyal organizma olarak ele almıştır."],
+// Toplumsal değişme
+["Dünya ölçeğinde ekonomik, kültürel ve iletişimsel bütünleşmeyi anlatan kavram hangisidir?",["Küreselleşme","Kültürlenme","Tabakalaşma","Sosyalleşme","Yatay hareketlilik"],"Küreselleşme okulun hedeflerini de dönüştürmüştür."],
+["Geleneksel toplumdan sanayi ve bilgi toplumuna geçiş sürecine ne ad verilir?",["Modernleşme","Kültür şoku","Kültürel gecikme","Asimilasyon","Sosyalleşme"],"Modernleşme toplumsal değişmenin önemli bir biçimidir."],
+["Aşağıdakilerden hangisi toplumsal değişmenin kaynaklarından biridir?",["Teknolojik gelişmeler","Kemik yoğunluğu","Kas lifi tipi","Motor ünite sayısı","Eklem tipi"],"Teknoloji, nüfus hareketleri, ekonomi ve ideolojiler değişmenin kaynaklarıdır."],
+// Fırsat eşitliği
+["1966'da yayımlanan ve aile arka planının başarı üzerindeki etkisinin okul kaynaklarından daha belirleyici olduğunu gösteren rapor hangisidir?",["Coleman Raporu","Dewey Raporu","Bologna Raporu","PISA Raporu","Delors Raporu"],"Coleman Raporu fırsat eşitliği tartışmalarını başlatmıştır."],
+["Herkese ihtiyacı kadar kaynak sağlayarak eşit fırsat yaratmaya ne ad verilir?",["Hakkaniyet","Eşitlik","Tabakalaşma","Seçicilik","Standartlaşma"],"Eşitlik herkese aynı, hakkaniyet herkese ihtiyacı kadar vermektir."],
+["Görme engelli bir öğrenciye sesli top verilmesi hangi kavrama örnektir?",["Hakkaniyet","Eleme","Etiketleme","Kültürel yayılma","Kültürel gecikme"],"İhtiyaca göre uyarlama hakkaniyetin gereğidir."],
+// Toplumsal cinsiyet
+["Toplumun kadın ve erkeğe yüklediği roller, beklentiler ve davranış kalıplarına ne ad verilir?",["Toplumsal cinsiyet","Biyolojik cinsiyet","Statü","Kültürel sermaye","Habitus"],"Biyolojik cinsiyet doğuştan gelen özelliklerdir."],
+["“Futbol erkek sporudur” ifadesi aşağıdakilerden hangisine örnektir?",["Toplumsal cinsiyet kalıp yargısı","Bilimsel genelleme","Biyolojik zorunluluk","Kültürel yayılma","Fair play"],"Kalıp yargılar çocukların etkinlik tercihlerini sınırlar."],
+["Kız öğrencilerin beden eğitimine katılımını artırmaya yönelik uygun bir uygulama hangisidir?",["Seçenek çeşitliliği ve kadın rol modeller sunmak","Kızlara yalnızca kolay görevler vermek","“Kız gibi atma” uyarısını kullanmak","Sadece erkek sporculardan örnek vermek","Kızları gözlemci yapmak"],"Güvenli ortam, seçenek ve rol modeller katılımı artırır."],
+// Spor sosyolojisi
+["Bireyin spora katılmaya aile, akran, okul ve medya tarafından nasıl yönlendirildiğini inceleyen kavram hangisidir?",["Spora sosyalleşme","Spor yoluyla sosyalleşme","Kültürel gecikme","Ticarileşme","Holiganizm"],"Spor yoluyla sosyalleşme ise sporun bireye kazandırdıklarını inceler."],
+["Bir öğrencinin takımında sorumluluk ve işbirliği öğrenmesi hangi kavrama örnektir?",["Spor yoluyla sosyalleşme","Spora sosyalleşme","Kültür şoku","Tabakalaşma","Asimilasyon"],"Spora katılım bireye değer ve beceri kazandırır."],
+["Medyanın spor üzerindeki etkilerinden biri aşağıdakilerden hangisidir?",["Ticarileşmeyi ve gösteri boyutunu artırması","Sporun kurallarını ortadan kaldırması","Sporu yalnızca yerel düzeyde tutması","Sporcuların görünürlüğünü azaltması","Taraftarlığı yok etmesi"],"Medya sporu geniş kitlelere ulaştırırken ticarileşmeyi hızlandırır."],
+// Kültürel çeşitlilik
+["Farklı kültürel kökenlerden gelen öğrencilerin eşit fırsatlara sahip olmasını ve farklılıkların zenginlik olarak görülmesini amaçlayan eğitim anlayışı hangisidir?",["Çokkültürlü eğitim","Esasicilik","Daimicilik","Asimilasyoncu eğitim","Elit eğitim"],"Çokkültürlü eğitim farklılıklara saygıyı temel alır."],
+["Bilgi ve iletişim teknolojilerine erişim ve bunları kullanma becerisindeki eşitsizliğe ne ad verilir?",["Dijital uçurum","Kültürel gecikme","Kültür şoku","Yatay hareketlilik","Kültürlenme"],"Dijital uçurum uzaktan eğitim dönemlerinde belirgin biçimde görülmüştür."],
+["Engelli öğrenciler dâhil tüm öğrencilerin aynı ortamda, gereksinimlerine uygun destekle eğitim almasını savunan anlayış hangisidir?",["Kapsayıcı eğitim","Ayrıştırıcı eğitim","Seçici eğitim","Elit eğitim","Yaygın eğitim"],"Kapsayıcı eğitim kimsenin geride kalmamasını hedefler."]
+]
+};
+COURSES.forEach(c=>{if(EXTRA2[c.id])c.test.push(...EXTRA2[c.id])});
+
 </script>
 <script>
 {
