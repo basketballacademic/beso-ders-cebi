@@ -72,7 +72,7 @@ details.qa .ans{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px;pa
 .player button{min-height:44px;min-width:44px;border-radius:12px;border:0;background:rgba(127,127,127,.25);color:inherit;padding:0 12px;font-weight:600}
 .player .prog{height:5px;background:rgba(127,127,127,.35);border-radius:3px;margin-top:10px}.player .prog i{display:block;height:100%;background:var(--lime);border-radius:3px}
 .line{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;cursor:pointer}
-.spon{background:color-mix(in srgb,var(--lime) 35%,transparent);border-radius:8px}.seek{cursor:pointer}.pcur{margin:8px 0 0;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.mini{border:1px solid var(--line);background:var(--bg);border-radius:99px;min-height:36px;padding:0 14px;font-weight:600;font-size:14px}
+.spon{background:color-mix(in srgb,var(--lime) 35%,transparent);border-radius:8px}.seek{cursor:pointer}.pcur{margin:8px 0 0;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.toc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}.topic{scroll-margin-top:70px}.mini{border:1px solid var(--line);background:var(--bg);border-radius:99px;min-height:36px;padding:0 14px;font-weight:600;font-size:14px}
 .q{font-size:18px;font-weight:600;margin:10px 0 14px}
 .opt{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:2px solid transparent;border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:52px}
 .opt .l{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font:700 17px "Barlow Condensed",sans-serif;background:var(--bg);border:1px solid var(--line)}
@@ -662,6 +662,660 @@ sos:[
 };
 COURSES.forEach(c=>{if(EXTRA[c.id])c.test.push(...EXTRA[c.id])});
 
+function ADD(id,x){const c=COURSES.find(c=>c.id===id);c.podcast.forEach((p,i)=>p.k=x.podOrder[i]);c.konular.push(...x.konular);c.podcast.push(...x.podcast);c.podcast.sort((a,b)=>a.k-b.k);c.sc.push(...x.sc)}
+ADD("bes",{
+podOrder:[0,2,3],
+konular:[
+{b:"Felsefi temeller", m:[
+"İdealizm beden eğitimini zihin ve karakter eğitiminin aracı olarak görür; öğretmen model, değerler (dürüstlük, sorumluluk) ön plandadır.",
+"Realizm bilimsel bilgiye ve gözlenebilir sonuçlara önem verir; fiziksel uygunluk ölçümleri, sistemli ve sıralı beceri öğretimi bu bakışa uygundur.",
+"Pragmatizm deneyimi ve problem çözmeyi merkeze alır; öğrencinin oyun kurallarını ve stratejileri birlikte geliştirmesi, işbirlikli etkinlikler öne çıkar.",
+"Varoluşçuluk bireysel seçim ve sorumluluğu vurgular; öğrencinin kendi hedefini koyması, farklı etkinlikler arasından seçim yapması desteklenir.",
+"Bütüncül (holistik) yaklaşım: İnsan beden-zihin-duygu bütünüdür; beden eğitimi yalnızca bedeni değil bütün kişiliği eğitir."]},
+{b:"Fiziksel uygunluk ve sağlık", m:[
+"Sağlıkla ilgili fiziksel uygunluk bileşenleri: kardiyorespiratuvar dayanıklılık, kas kuvveti, kas dayanıklılığı, esneklik ve vücut kompozisyonu.",
+"Beceriyle ilgili bileşenler: çeviklik, denge, koordinasyon, güç (patlayıcı kuvvet), reaksiyon zamanı ve sürat.",
+"Dünya Sağlık Örgütü (2020) 5–17 yaş için günde ortalama en az 60 dakika orta-şiddetli fiziksel aktivite ve haftada en az 3 gün kas-kemik güçlendirici etkinlik önerir.",
+"Yetişkinler için öneri haftada 150–300 dakika orta şiddette veya 75–150 dakika yüksek şiddette aerobik aktivite ve haftada en az 2 gün kas güçlendirmedir.",
+"Hareketsiz yaşam; obezite, tip 2 diyabet, kalp-damar hastalıkları ve bazı kanser türleri için önemli bir risk etmenidir."]},
+{b:"Beden eğitimi öğretmeni", m:[
+"Beden eğitimi öğretmeni hem öğretmen hem antrenör hem de sağlıklı yaşam modelidir; davranışları güçlü bir örtük program oluşturur.",
+"Güvenli öğrenme ortamı: malzeme ve alan kontrolü, ısınma, uygun zorluk düzeyi, ilk yardım farkındalığı ve acil durum planı.",
+"Kapsayıcılık: Farklı beceri düzeyleri, cinsiyetler ve engel durumları için etkinliği uyarlama; kimseyi dışlamayan oyunlar seçme.",
+"Etkili iletişim: kısa ve net açıklama, iyi bir gösteri (model), olumlu ve özgül geri bildirim.",
+"Mesleki gelişim: Alan bilgisinin güncellenmesi, hizmet içi eğitimler, kendi derslerini değerlendiren yansıtıcı öğretmenlik."]},
+{b:"Spor ve toplum, spor örgütlenmesi", m:[
+"Sporun toplumsal işlevleri: sosyalleşme, toplumsal bütünleşme, kimlik ve aidiyet, sağlık, eğlence ve ekonomik katkı.",
+"Türkiye'de spor hizmetlerinin yürütülmesinden Gençlik ve Spor Bakanlığı sorumludur; spor dalları spor federasyonları tarafından yönetilir.",
+"Türkiye Millî Olimpiyat Komitesi (TMOK) olimpiyat hareketini ülkede temsil eder ve olimpiyat oyunlarına katılımı organize eder.",
+"Okul sporları, kulüp sporları, rekreasyonel spor ve elit (yüksek performans) sporu sporun farklı katmanlarıdır.",
+"Beden eğitimi ile okul sporları birbirini tamamlar: Ders herkes içindir; okul takımları ilgili ve yetenekli öğrencilere ek fırsat sunar."]},
+{b:"Olimpik ve uluslararası spor hareketi", m:[
+"Uluslararası Olimpiyat Komitesi (IOC) merkezi İsviçre'nin Lozan kentindedir; Olimpiyat Şartı olimpik hareketin temel kurallarını belirler.",
+"Paralimpik hareketin kökeni, Ludwig Guttmann'ın 1948'de İngiltere'deki Stoke Mandeville Hastanesi'nde düzenlediği oyunlara dayanır; ilk Paralimpik Oyunlar 1960'ta Roma'da yapılmıştır.",
+"Uluslararası Paralimpik Komite (IPC) 1989'da kurulmuştur.",
+"Uluslararası spor federasyonları her spor dalının kurallarını belirler (ör. FIFA futbol, FIBA basketbol, World Athletics atletizm).",
+"Dünya Dopingle Mücadele Ajansı (WADA) 1999'da kurulmuştur ve yasaklı maddeler listesini yayımlar."]},
+{b:"Okul beden eğitimi programları ve modeller", m:[
+"Türkiye'de ilkokul 1–4. sınıflarda “Oyun ve Fiziki Etkinlikler”, ortaokul ve lisede “Beden Eğitimi ve Spor” dersi okutulur.",
+"Spor Eğitimi Modeli (Siedentop): Sezon, takım üyeliği, resmî karşılaşmalar, kayıt tutma, final etkinliği ve şenlik öğeleriyle gerçek spor deneyimi sunar.",
+"Oyun Yoluyla Öğretim (TGfU – Bunker ve Thorpe, 1982): Teknikten önce oyunu ve taktik farkındalığı öğretir; “ne yapmalı?” sorusu “nasıl yapmalı?”dan önce gelir.",
+"Kişisel ve Sosyal Sorumluluk Modeli (Hellison): Saygı, katılım, öz yönetim, yardım ve liderlik ile bunların okul dışına aktarılması düzeylerini hedefler.",
+"Programlar öğrenci merkezli, yaşa ve gelişim düzeyine uygun, ölçme-değerlendirmesi süreç odaklı olacak biçimde tasarlanır."]},
+{b:"Sporda çağdaş sorunlar", m:[
+"Doping: Performansı artırmak için yasaklı madde veya yöntem kullanımı; sağlığa zarar verir ve fair play ilkesini çiğner.",
+"Şiddet ve holiganizm: Saha içi saldırganlık ve tribün şiddeti; eğitim, cezai yaptırım ve fair play kampanyalarıyla mücadele edilir.",
+"Ticarileşme: Sponsorluk, yayın gelirleri ve sporcu transferleri sporu ekonomik bir sektöre dönüştürmüştür; amatör ruh ve eğitsel değerler zarar görebilir.",
+"Toplumsal cinsiyet eşitsizliği: Kadınların spora katılımı, medyada görünürlüğü ve yöneticilikteki temsili hâlâ düşüktür.",
+"Hareketsizlik salgını: Ekran süresinin artması ve kentleşme çocukların fiziksel aktivite düzeyini düşürmektedir; okul beden eğitimi bu soruna karşı en geniş kapsamlı müdahaledir."]}
+],
+podcast:[
+{k:1,t:"Neden beden eğitimi?", d:"Dört gelişim alanı", s:[
+["H","Bu bölümde beden eğitiminin amaçlarını konuşacağız. Bir veliye “Beden eğitimi neden önemli?” diye sorulduğunda ne cevap verirsiniz?"],
+["Ö","Sağlık için hocam, çocuk hareket etsin, kilo almasın."],
+["H","Bu doğru ama eksik. Bu sadece bedensel, yani organik gelişim. Bir de nöromüsküler gelişim var: koşma, atma, yakalama gibi becerilerin kazanılması."],
+["Ö","Bilişsel gelişim de vardı. Oyunun kurallarını ve stratejiyi öğrenmek."],
+["H","Evet. Bir hücum planı kurmak, rakibin boş bıraktığı alanı görmek problem çözmedir. Dördüncü alan duyuşsal ve sosyal gelişim: işbirliği, saygı, kaybetmeyi kabullenme, liderlik."],
+["Ö","Hocam bunların hepsini tek bir derste nasıl hedefleyebiliriz?"],
+["H","Aslında tek bir etkinlik dördüne birden hizmet eder. Bir bayrak yarışı kalbi çalıştırır, koşu becerisini geliştirir, strateji gerektirir ve takım ruhu kazandırır. Önemli olan bunu bilinçli planlamak."],
+["H","Ve en büyük hedefi unutmayın: yaşam boyu fiziksel aktivite. Öğrenciniz okuldan çıktıktan sonra da hareket etmeyi seviyorsa başarılı olmuşsunuz demektir."]]},
+{k:4,t:"Bilimin ışığında spor", d:"Fizyolojik, psikolojik, sosyolojik temeller ve Olimpizm", s:[
+["H","Beden eğitimi bir bilim dalına dayanır mı, yoksa sadece deneyim mi?"],
+["Ö","Spor bilimleri dediğimize göre bilime dayanıyor olmalı."],
+["H","Kesinlikle. Fizyoloji bize egzersize vücudun nasıl tepki verdiğini anlatır. Tek bir antrenmanda kalp atımı yükselir; buna akut yanıt denir. Haftalarca düzenli çalışınca kalp güçlenir; buna kronik uyum denir."],
+["Ö","Psikoloji de motivasyon ve kaygı gibi konuları inceliyor."],
+["H","Evet. Öğrencinin neden derse katılmak istemediğini anlamak için psikolojiye ihtiyacınız var. Sosyoloji ise sporun toplumdaki yerine bakar: aidiyet, kimlik, eşitsizlik."],
+["Ö","Olimpizm bu temellerin neresinde?"],
+["H","Olimpizm bu bilimsel temelleri bir değerler sistemiyle birleştirir. Beden, irade ve zihnin dengeli gelişimini; dostluğu, saygıyı ve mükemmelliği hedefler. Yani bilim bize nasıl yapacağımızı, Olimpizm neden yapacağımızı söyler."]]},
+{k:5,t:"Felsefe sahaya iniyor", d:"Beden eğitiminin felsefi temelleri", s:[
+["H","Bugün dört felsefi akımın bir beden eğitimi dersine nasıl yansıdığını konuşacağız. İdealist bir öğretmen düşünün."],
+["Ö","Değerlere önem veren, karakter eğitimini öne çıkaran bir öğretmen olur herhalde."],
+["H","Doğru. Onun için spor dürüstlük ve sorumluluk öğretmenin aracıdır, kendisi de öğrencilere model olur. Realist öğretmen ise ölçmeye, bilimsel bilgiye ve sistemli beceri öğretimine önem verir."],
+["Ö","Pragmatist öğretmen de öğrencilere problem verir, çözümü onlar bulur."],
+["H","Evet, mesela “Bu oyunu herkesin katılabileceği şekilde nasıl değiştiririz?” diye sorar. Varoluşçu öğretmen ise öğrencinin kendi seçimini yapmasına alan açar."],
+["Ö","Hangisi doğru hocam?"],
+["H","Tek bir doğru yok. İyi öğretmen duruma göre bu bakışlardan yararlanır. Ama hangi felsefeyle hareket ettiğinizin farkında olmalısınız; çünkü bu, öğrencilerinize ne öğrettiğinizi belirler."]]},
+{k:6,t:"Hareket bir ilaçtır", d:"Fiziksel uygunluk ve öneriler", s:[
+["H","Fiziksel uygunluk denince aklınıza ne geliyor?"],
+["Ö","Kondisyon hocam. Yorulmadan koşabilmek."],
+["H","Bu kardiyorespiratuvar dayanıklılık. Sağlıkla ilgili beş bileşen vardır: kardiyorespiratuvar dayanıklılık, kas kuvveti, kas dayanıklılığı, esneklik ve vücut kompozisyonu."],
+["Ö","Çeviklik ve denge nerede?"],
+["H","Onlar beceriyle ilgili bileşenler: çeviklik, denge, koordinasyon, güç, reaksiyon zamanı ve sürat. Bir sporcu için çok önemlidir ama halk sağlığı açısından ilk beş öncelik taşır."],
+["Ö","Çocuklar ne kadar hareket etmeli?"],
+["H","Dünya Sağlık Örgütü'nün 2020 önerisine göre 5 ile 17 yaş arası çocuklar günde ortalama en az 60 dakika orta ya da yüksek şiddette aktivite yapmalı, haftada en az üç gün de kas ve kemiği güçlendiren etkinliklere katılmalı. Haftada iki saatlik beden eğitimi dersi tek başına yetmez; bu yüzden öğrencilere ders dışında da hareket alışkanlığı kazandırmalıyız."]]},
+{k:7,t:"Sahadaki öğretmen", d:"Beden eğitimi öğretmeninin rolleri", s:[
+["H","Bu bölüm doğrudan sizinle ilgili: beden eğitimi öğretmeni olmak. Sizce en önemli sorumluluğunuz nedir?"],
+["Ö","Öğrencilere spor dallarını öğretmek."],
+["H","O da önemli, ama ilk sorumluluk güvenliktir. Kale direklerinin sabitlenmesi, zeminin kayganlığı, ısınma, uygun zorluk düzeyi ve bir acil durum planı. Ders güvenli değilse diğer hiçbir hedefe ulaşamazsınız."],
+["Ö","Kapsayıcılık da çok vurgulanıyor."],
+["H","Evet. Sınıfınızda tekerlekli sandalye kullanan bir öğrenci, hiç top oynamamış bir kız öğrenci ve lisanslı bir basketbolcu aynı anda olabilir. Görev, malzeme, alan ve grup boyutunu uyarlayarak herkesin başarılı olabileceği bir ortam kurmalısınız."],
+["Ö","Bir de model olmak var."],
+["H","Kesinlikle. Sigara içen, hakeme bağıran ya da sadece yetenekli öğrencilerle ilgilenen bir öğretmen, programda ne yazarsa yazsın, öğrencilerine yanlış mesaj verir. Sizin davranışınız en güçlü dersinizdir."]]},
+{k:8,t:"Sporun toplumdaki yeri", d:"İşlevler ve örgütlenme", s:[
+["H","Spor neden bu kadar çok insanı bir araya getiriyor?"],
+["Ö","Bence aidiyet duygusu yüzünden. Bir takımı tutmak insanı bir topluluğun parçası yapıyor."],
+["H","Çok doğru. Sporun toplumsal işlevleri arasında sosyalleşme, bütünleşme, kimlik ve aidiyet, sağlık ve eğlence var. Ekonomik açıdan da büyük bir sektör."],
+["Ö","Türkiye'de spor nasıl örgütleniyor?"],
+["H","Spor hizmetlerinden Gençlik ve Spor Bakanlığı sorumludur. Her spor dalını bir federasyon yönetir. Olimpiyat hareketini ise Türkiye Millî Olimpiyat Komitesi temsil eder."],
+["Ö","Okul sporları bunun neresinde?"],
+["H","Sporun katmanlarını bir piramit gibi düşünün: tabanda herkesin katıldığı beden eğitimi dersi ve rekreasyonel spor, ortada okul ve kulüp sporları, tepede elit spor. Taban ne kadar genişse tepe o kadar sağlam olur. Sizin işiniz o tabanı genişletmek."]]},
+{k:9,t:"Halkalar ve ötesi", d:"Olimpik ve paralimpik hareket", s:[
+["H","IOC'nin merkezi nerede, biliyor musunuz?"],
+["Ö","İsviçre'de, Lozan'da hocam."],
+["H","Doğru. Olimpik hareketin anayasası ise Olimpiyat Şartı'dır. Bugün de paralimpik hareketten bahsedelim. Kökeni 1948'e, İngiltere'deki Stoke Mandeville Hastanesi'ne dayanır. Doktor Ludwig Guttmann omurilik yaralanması yaşayan hastalar için spor oyunları düzenledi."],
+["Ö","İlk Paralimpik Oyunlar ne zaman yapıldı?"],
+["H","1960'ta Roma'da. Uluslararası Paralimpik Komite ise 1989'da kuruldu. Bu hareket, sporun herkes için olduğunu dünyaya gösterdi."],
+["Ö","WADA da uluslararası bir kuruluş, değil mi?"],
+["H","Evet, Dünya Dopingle Mücadele Ajansı 1999'da kuruldu ve her yıl yasaklı maddeler listesini yayımlar. Ayrıca her spor dalının kurallarını uluslararası federasyonlar belirler: futbolda FIFA, basketbolda FIBA, atletizmde World Athletics gibi."]]},
+{k:10,t:"Programdan sınıfa", d:"Okul programları ve öğretim modelleri", s:[
+["H","Okullarımızda beden eğitimi dersinin adı her kademede aynı mı?"],
+["Ö","Hayır hocam, ilkokulda Oyun ve Fiziki Etkinlikler, ortaokul ve lisede Beden Eğitimi ve Spor."],
+["H","Doğru. Şimdi üç model konuşalım. Siedentop'un Spor Eğitimi Modeli'nde öğrenciler bir sezon boyunca aynı takımda kalır; kaptan, hakem, istatistikçi gibi roller üstlenir, sezon bir şenlikle biter."],
+["Ö","Oyun Yoluyla Öğretim de tekniği değil oyunu öne alıyor."],
+["H","Evet, Bunker ve Thorpe'un modeli. Önce küçük bir oyun oynanır, öğrenci “ne yapmalıyım?” sorusunu düşünür; teknik ihtiyaç duyulduğunda öğretilir. Böylece öğrenci tekniğin neden gerekli olduğunu anlar."],
+["Ö","Hellison'un modeli de sorumlulukla ilgiliydi."],
+["H","Kişisel ve Sosyal Sorumluluk Modeli; saygıdan başlayıp katılım, öz yönetim, yardım ve liderliğe uzanır. Son hedef bu değerleri okul dışına taşımaktır. Özellikle davranış sorunu olan gruplarda çok etkilidir."]]},
+{k:11,t:"Sporun gölgeleri", d:"Doping, şiddet, ticarileşme ve eşitsizlik", s:[
+["H","Sporun her zaman parlak bir yüzü yok. Aklınıza gelen sorunlar neler?"],
+["Ö","Doping hocam. Bir de stadyumlardaki şiddet."],
+["H","Doping hem sağlığa zarar verir hem fair play ilkesini çiğner. Şiddetle mücadelede ise cezalar kadar eğitim de önemlidir. Fair play bilinci ilk olarak sizin derslerinizde kazanılır."],
+["Ö","Ticarileşme de bir sorun mu?"],
+["H","Sponsorluk ve yayın gelirleri sporu büyüttü, ama çocuk yaşta erken uzmanlaşma, kazanma baskısı ve eğitimsel değerlerin geri plana düşmesi gibi yan etkileri var."],
+["Ö","Kızların spora katılımı da hâlâ düşük."],
+["H","Evet. Kadın sporcular medyada daha az görünür, yöneticilikte daha az temsil edilir. Belki de en büyük sorun hareketsizlik: çocuklar ekran başında giderek daha fazla zaman geçiriyor. Okul beden eğitimi her çocuğa ulaşan tek spor ortamıdır. Bu sorunlara karşı en güçlü aracınız sizsiniz."]]}
+],
+sc:[
+["İdealist ve realist beden eğitimi öğretmeni arasında nasıl bir fark görürüm?","İdealist öğretmen sporu karakter ve değer eğitiminin aracı olarak görür, kendisini model olarak öne çıkarır. Realist öğretmen ise ölçülebilir sonuçlara, bilimsel bilgiye ve sistemli, sıralı beceri öğretimine odaklanır; fiziksel uygunluk testleri onun için önemlidir."],
+["Sağlıkla ilgili ve beceriyle ilgili fiziksel uygunluk neden ayrı sınıflandırılıyor?","Sağlıkla ilgili bileşenler (kardiyorespiratuvar dayanıklılık, kas kuvveti ve dayanıklılığı, esneklik, vücut kompozisyonu) hastalık riskini doğrudan etkiler ve herkes için önemlidir. Beceriyle ilgili bileşenler (çeviklik, denge, koordinasyon, güç, reaksiyon, sürat) daha çok sportif performansla ilişkilidir."],
+["Bir derste güvenliği sağlamak için nelere dikkat etmeliyim?","Ders öncesi alan ve malzeme kontrolü, uygun ısınma, öğrencinin düzeyine uygun görev, net kurallar ve sinyaller, öğrencileri sürekli görebileceğin bir konum ve önceden hazırlanmış bir acil durum ve ilk yardım planı."],
+["Paralimpik ve olimpik oyunlar aynı kuruluş tarafından mı yönetilir?","Hayır. Olimpiyat Oyunları'nı Uluslararası Olimpiyat Komitesi (IOC), Paralimpik Oyunlar'ı Uluslararası Paralimpik Komite (IPC) yönetir. İki kuruluş iş birliği yapar ve oyunlar genellikle aynı ev sahibi şehirde art arda düzenlenir."],
+["Spor Eğitimi Modeli ile klasik ünite öğretimi arasındaki fark nedir?","Klasik ünitede birkaç hafta teknik öğretilir ve kısa bir oyunla biter. Spor Eğitimi Modeli'nde öğrenciler bir sezon boyunca aynı takımda kalır, resmî maçlar oynar, hakemlik ve istatistik tutma gibi roller üstlenir, sezon bir şenlikle tamamlanır. Böylece sporun kültürü de öğrenilir."],
+["Doping neden sadece bir kural ihlali olarak görülmemeli?","Çünkü doping sporcunun sağlığını ciddi biçimde tehdit eder, rakiplere karşı adaletsizlik yaratır ve sporun eğitsel değerini zedeler. Bu nedenle mücadele yalnızca testlerle değil, değer eğitimiyle ve gençlerde erken yaşta oluşturulan fair play bilinciyle yürütülmelidir."]
+]
+});
+
+ADD("ank",{
+podOrder:[0,2,3],
+konular:[
+{b:"Kemik dokusu ve kemik gelişimi", m:[
+"Kemik dokusunda üç temel hücre bulunur: osteoblastlar kemik yapar, osteoklastlar kemiği yıkar (rezorbe eder), osteositler olgun kemik hücreleridir.",
+"Kemik dokusu dışta yoğun kompakt (sıkı) kemik, içte süngerimsi (trabeküler) kemikten oluşur; kemiğin dış yüzeyini periost adlı zar örter.",
+"Uzun kemikler boyuna büyümesini epifiz plağı (büyüme plağı) sayesinde sürdürür; büyüme tamamlandığında bu plak kemikleşerek kapanır.",
+"Wolff yasası: Kemik, üzerine binen yüklere uyum sağlayarak yeniden şekillenir; yük taşıyan egzersizler kemik yoğunluğunu artırır, hareketsizlik azaltır.",
+"Çocukluk ve ergenlikte yapılan düzenli fiziksel aktivite, yaşamın ilerleyen dönemlerinde osteoporoz riskini azaltan yüksek tepe kemik kütlesine katkı sağlar."]},
+{b:"Üst ekstremite kasları", m:[
+"Deltoid omuzu örten kastır; temel işlevi kolun abdüksiyonudur (ön lifleri fleksiyona, arka lifleri ekstansiyona da katılır).",
+"Pectoralis major kolun horizontal addüksiyonu ve iç rotasyonunu sağlar; şınav ve bench press hareketlerinin ana kasıdır.",
+"Latissimus dorsi kolun ekstansiyonu, addüksiyonu ve iç rotasyonunu yapar; barfiks ve kürek çekme hareketlerinde ana kastır.",
+"Biceps brachii dirsek fleksiyonu ve önkolun supinasyonunu; triceps brachii dirsek ekstansiyonunu sağlar.",
+"Trapezius skapulayı (kürek kemiğini) yükseltir, geri çeker ve döndürür; serratus anterior skapulayı göğüs kafesine sabitler ve öne çeker."]},
+{b:"Alt ekstremite kasları", m:[
+"İliopsoas kalçanın en güçlü fleksörüdür; gluteus maximus kalça ekstansiyonu ve dış rotasyonunu sağlar.",
+"Gluteus medius kalçanın abdüksiyonunu yapar ve tek ayak üzerinde dururken pelvisi dengede tutar.",
+"Adduktor kas grubu (adductor longus, brevis, magnus) bacağı orta hatta yaklaştırır.",
+"Quadriceps dizin ekstansiyonunu sağlar; rectus femoris iki eklemli olduğu için kalça fleksiyonuna da katılır. Hamstringler dizi büker ve kalçayı ekstansiyona getirir.",
+"Gastrocnemius ve soleus (triceps surae) aşil tendonu ile ayağın plantar fleksiyonunu; tibialis anterior dorsifleksiyonunu sağlar."]},
+{b:"Gövde, omurga ve postür", m:[
+"Omurganın yandan bakışta dört doğal eğriliği vardır: servikal ve lomber bölgede lordoz (öne doğru), torakal ve sakral bölgede kifoz (arkaya doğru).",
+"Postür bozuklukları: skolyoz (omurganın yana eğriliği), hiperkifoz (sırtta aşırı kamburluk) ve hiperlordoz (belde aşırı çukurluk).",
+"Karın kasları: rectus abdominis gövdeyi öne büker; dış ve iç oblikler gövde rotasyonu ve yana eğilmeyi; transversus abdominis karın içi basıncı artırarak gövdeyi sabitler.",
+"Erector spinae omurga boyunca uzanır ve gövdeyi ekstansiyona getirir; postürün korunmasında temel rol oynar.",
+"Gövde (core) stabilitesi, kol ve bacaklarda üretilen kuvvetin etkin aktarılması ve bel sakatlıklarının önlenmesi için önemlidir."]},
+{b:"Sinir-kas sistemi", m:[
+"Motor ünite: Bir motor nöron ve bu nöronun uyardığı tüm kas liflerinden oluşur; ince hareket gerektiren kaslarda (göz, el) bir motor ünite az sayıda lif içerir.",
+"Hep ya da hiç ilkesi: Bir motor ünite uyarıldığında bağlı tüm kas lifleri tam olarak kasılır; kuvvet, devreye giren motor ünite sayısı ve uyarı sıklığıyla ayarlanır.",
+"Kas lifi tipleri: Tip I (yavaş kasılan, oksidatif, yorgunluğa dirençli), Tip IIa (hızlı oksidatif-glikolitik) ve Tip IIx (hızlı glikolitik, çabuk yorulan).",
+"Kasılmanın kayan filamentler kuramına göre aktin ve miyozin filamentleri birbiri üzerinde kayar; sarkomer, kasın en küçük kasılma birimidir.",
+"Kas iğciği kasın gerilme miktarını algılar ve germe refleksini başlatır; Golgi tendon organı tendondaki gerilimi algılar ve kası gevşetici (inhibe edici) etki yapar."]},
+{b:"Biyomekaniğin temel ilkeleri", m:[
+"Newton'un birinci yasası (eylemsizlik): Bir cisim, üzerine dış kuvvet etki etmedikçe durumunu korur.",
+"Newton'un ikinci yasası (ivme): Kuvvet, kütle ile ivmenin çarpımına eşittir (F = m × a).",
+"Newton'un üçüncü yasası (etki-tepki): Her etkiye eşit ve zıt yönde bir tepki vardır; koşucu yere kuvvet uygular, yer tepki kuvveti onu ileri iter.",
+"Denge: Ağırlık merkezi alçaldıkça ve destek yüzeyi genişledikçe denge artar; ağırlık merkezinin izdüşümü destek yüzeyinin içinde kalmalıdır.",
+"Tork (döndürme momenti) kuvvet ile moment kolunun çarpımıdır; momentum ise kütle ile hızın çarpımıdır."]},
+{b:"Temel hareketlerin kinesiyolojik analizi", m:[
+"Yürüme döngüsü duruş (yaklaşık %60) ve salınım (yaklaşık %40) evrelerinden oluşur; her iki ayağın yerde olduğu çift destek evresi vardır.",
+"Koşuyu yürümeden ayıran özellik, iki ayağın da yerden kesildiği uçuş evresinin bulunması ve çift destek evresinin olmamasıdır.",
+"Dikey sıçramada kalça, diz ve ayak bileğinin eş zamanlı ekstansiyonu (üçlü ekstansiyon) kuvvetin temel kaynağıdır.",
+"Üstten atışta kuvvet kinetik zincir boyunca proksimalden distale aktarılır: bacaklar → kalça ve gövde rotasyonu → omuz → dirsek → bilek.",
+"Hareket analizi; hareketin evrelere ayrılması, her evrede çalışan eklemlerin, düzlemlerin, kasların ve kasılma türlerinin belirlenmesiyle yapılır."]}
+],
+podcast:[
+{k:1,t:"İskeletin sırları", d:"Kemikler, omurga ve işlevler", s:[
+["H","Bugün iskeleti konuşuyoruz. Yetişkinde kaç kemik vardı?"],
+["Ö","206 hocam. Aksiyal ve apendiküler iskelet olarak ikiye ayrılıyor."],
+["H","Doğru. Aksiyal iskelet kafatası, omurga ve göğüs kafesidir; apendiküler iskelet ise kol ve bacak kemikleri ile omuz ve kalça kuşaklarıdır."],
+["Ö","Kemik tiplerini nasıl hatırlayabilirim?"],
+["H","Şekline bak. Femur ve humerus uzun kemik, el bileğindeki karpal kemikler kısa kemik, kürek kemiği ve kafatası kemikleri yassı kemik, omurlar düzensiz kemik. Patella ise tendon içinde gelişen sesamoid kemiktir."],
+["Ö","İskeletin görevi sadece destek mi?"],
+["H","Hayır. Destek, organları koruma, kaslara kaldıraç olma, kemik iliğinde kan hücresi yapımı ve kalsiyum gibi mineralleri depolama. Yani iskelet canlı ve sürekli çalışan bir sistemdir."]]},
+{k:4,t:"Hareketin dili", d:"Hareket terimleri ve kaldıraçlar", s:[
+["H","Anatomi bir dildir. Hareketleri doğru adlandırmazsanız meslektaşınızla anlaşamazsınız. Dizi bükmek ne?"],
+["Ö","Fleksiyon. Düzeltmek ekstansiyon."],
+["H","Kolu yana açmak?"],
+["Ö","Abdüksiyon, geri getirmek addüksiyon."],
+["H","Çok iyi. Ayak bileği için dört terim var: ayak sırtını kaval kemiğine yaklaştırmak dorsifleksiyon, parmak ucuna basmak plantar fleksiyon, ayak tabanını içe çevirmek inversiyon, dışa çevirmek eversiyon. Bilek burkulmalarının çoğu inversiyonla olur."],
+["Ö","Kaldıraçlarda en çok hangisi var demiştik?"],
+["H","Üçüncü sınıf, kuvvet ortada. Biceps ile dirsek fleksiyonu buna örnek. İkinci sınıfta yük ortadadır, parmak ucunda yükselme gibi. Birinci sınıfta destek ortadadır, başın ileri geri hareketi gibi. Sırayı hatırlamak için ortadakine bakın: destek, yük, kuvvet; bir, iki, üç."]]},
+{k:5,t:"Kemik yaşıyor", d:"Kemik dokusu ve Wolff yasası", s:[
+["H","Kemiği sert ve cansız bir yapı gibi düşünürüz. Oysa kemik sürekli yıkılıp yeniden yapılır."],
+["Ö","Osteoblast ve osteoklast hücreleri sayesinde, değil mi?"],
+["H","Evet. Osteoblast yapar, osteoklast yıkar. Bunu hatırlamak için bir ipucu: blast ile başlayan yapar. Osteositler ise olgun kemik hücreleridir."],
+["Ö","Wolff yasası da kemiğin yüke uyum sağlaması."],
+["H","Doğru. Tenisçilerin raket tutan kolundaki kemikler diğer kola göre daha yoğundur. Astronotlar ise yerçekimsiz ortamda kemik kaybı yaşar. Yük yoksa kemik zayıflar."],
+["Ö","Çocuklarda büyüme nasıl oluyor?"],
+["H","Uzun kemiklerin uçlarına yakın epifiz plakları sayesinde. Büyüme bitince bu plaklar kapanır. Çocukluk ve ergenlikte sıçrama, koşu gibi yük taşıyan etkinlikler kemik kütlesini artırır; bu da ileride osteoporoza karşı bir birikimdir. Yani beden eğitimi dersi aynı zamanda bir kemik bankasıdır."]]},
+{k:6,t:"Omuzdan parmaklara", d:"Üst ekstremite kasları", s:[
+["H","Bir şınav düşünelim. Hangi kaslar çalışıyor?"],
+["Ö","Göğüs kası, yani pectoralis major ve triceps."],
+["H","Doğru, bir de deltoidin ön lifleri. Pectoralis major kolu gövdenin önünde birleştirir; buna horizontal addüksiyon deriz. Triceps dirseği açar."],
+["Ö","Barfiks çekerken de latissimus dorsi çalışıyor."],
+["H","Evet, sırtın en geniş kası. Kolu aşağı ve geri çeker. Biceps de dirseği büker. Biceps'in bir görevi daha var: önkolu supinasyona getirir. Tornavidayı sıkıştırırken güçlü olmamızın nedeni budur."],
+["Ö","Deltoidin ana görevi abdüksiyondu."],
+["H","Evet. Skapulayı da unutmayın; trapezius ve serratus anterior kürek kemiğini kontrol eder. Omuz hareketleri aslında kolun ve kürek kemiğinin birlikte çalışmasıyla gerçekleşir."]]},
+{k:7,t:"Bacakların gücü", d:"Alt ekstremite kasları", s:[
+["H","Squat yaparken kalkış evresinde hangi kaslar çalışır?"],
+["Ö","Quadriceps dizi açıyor, gluteus maximus da kalçayı açıyor."],
+["H","Mükemmel. Gluteus maximus vücudun en büyük kasıdır. Kalçayı büken en güçlü kas ise iliopsoastır. Koşarken dizi öne kaldırdığınızda çalışan odur."],
+["Ö","Gluteus medius neden önemli?"],
+["H","Tek ayak üzerinde dururken pelvisi dengede tutar. Zayıfsa koşarken kalça yana düşer ve diz içe kaçar; bu da diz sakatlıklarına yol açabilir."],
+["Ö","Baldır kasları da plantar fleksiyon yapıyor."],
+["H","Evet, gastrocnemius ve soleus aşil tendonu üzerinden. Karşıt kas tibialis anteriordur, ayağı yukarı kaldırır. Rectus femoris'i de unutmayın: hem dizi açar hem kalçayı büker. Bu yüzden iki eklemli kas deriz."]]},
+{k:8,t:"Dik durmanın anatomisi", d:"Omurga, gövde kasları ve postür", s:[
+["H","Omurgaya yandan bakarsanız düz bir çizgi mi görürsünüz?"],
+["Ö","Hayır, dört eğrilik var. Boyun ve belde lordoz, sırtta ve sakrumda kifoz."],
+["H","Doğru. Bu eğrilikler omurganın yükleri yaylanarak taşımasını sağlar. Sorun, eğrilikler aşırı olduğunda başlar. Sırtta aşırı kamburluk hiperkifoz, belde aşırı çukurluk hiperlordozdur."],
+["Ö","Skolyoz da yana eğrilik."],
+["H","Evet. Beden eğitimi öğretmeni olarak öğrencinin öne eğilmesini isteyip sırtına baktığınızda bir taraf daha yüksekse aileyi bir uzmana yönlendirmelisiniz. Erken fark etmek çok önemlidir."],
+["Ö","Core kasları bunun neresinde?"],
+["H","Transversus abdominis bir korse gibi gövdeyi sarar, erector spinae omurgayı dik tutar, rectus abdominis ve oblikler gövdeyi büker ve döndürür. Güçlü bir gövde, kollar ve bacaklar arasında kuvvetin kayıpsız aktarılmasını sağlar."]]},
+{k:9,t:"Beyinden kasa", d:"Motor ünite ve kas lifi tipleri", s:[
+["H","Bir bardak suyu kaldırmakla ağır bir halteri kaldırmak arasında sinir sistemi ne fark yapar?"],
+["Ö","Daha fazla kas lifi çalıştırıyordur herhalde."],
+["H","Tam olarak. Bir motor nöron ve uyardığı kas lifleri bir motor ünitedir. Her motor ünite hep ya da hiç ilkesine göre çalışır. Daha fazla kuvvet için daha fazla motor ünite devreye girer ve uyarı sıklığı artar."],
+["Ö","Kas lifi tipleri de farklı mıydı?"],
+["H","Evet. Tip I lifler yavaş kasılır ama yorulmaz; maratoncularda çoktur. Tip IIx lifler çok hızlı ve güçlüdür ama çabuk yorulur; sprinterlerde baskındır. Tip IIa ikisinin arasındadır."],
+["Ö","Kas iğciği ile Golgi tendon organı karışıyor."],
+["H","Kas iğciği kasın uzunluğunu izler; kas hızla gerilirse kasılarak korur, buna germe refleksi deriz. Golgi tendon organı gerilimi izler; gerilim çok artarsa kası gevşetir. Biri fren, diğeri emniyet supabı gibi düşünebilirsiniz."]]},
+{k:10,t:"Newton spor salonunda", d:"Biyomekaniğin temel ilkeleri", s:[
+["H","Newton'un üç yasası spor salonunda her an karşımıza çıkar. Birincisi?"],
+["Ö","Eylemsizlik. Duran cisim durur, hareket eden hareket eder."],
+["H","Doğru, bir dış kuvvet etki etmedikçe. Duran bir topa vurmadıkça hareket etmez. İkinci yasa: kuvvet eşittir kütle çarpı ivme. Hafif bir topu aynı kuvvetle daha hızlı fırlatırsınız."],
+["Ö","Üçüncüsü etki-tepki."],
+["H","Evet. Koşucu yeri geriye iter, yer de onu ileri iter. Buna yer tepki kuvveti deriz. Yüzücü suyu geriye iter, su onu ileri iter."],
+["Ö","Denge de biyomekaniğin konusu mu?"],
+["H","Elbette. Ağırlık merkeziniz ne kadar alçak, destek yüzeyiniz ne kadar genişse o kadar dengedesiniz. Güreşçinin geniş ve alçak duruşu bu yüzdendir. Ağırlık merkezinin izdüşümü destek yüzeyinin dışına çıktığında dengenizi kaybedersiniz."]]},
+{k:11,t:"Hareketi parçalara ayırmak", d:"Yürüme, koşu, sıçrama ve atış analizi", s:[
+["H","Bir hareketi analiz etmek, onu evrelere bölüp her evrede neyin çalıştığını bulmaktır. Yürümeden başlayalım."],
+["Ö","Duruş ve salınım evreleri vardı."],
+["H","Evet, duruş yaklaşık yüzde altmış, salınım yüzde kırk. İki ayağın da yerde olduğu kısa bir çift destek evresi de vardır. Koşuda ise bu evre kaybolur, yerine iki ayağın da havada olduğu uçuş evresi gelir."],
+["Ö","Dikey sıçramada üçlü ekstansiyon diyorduk."],
+["H","Kalça, diz ve ayak bileğinin aynı anda açılması. Kuvvetin büyük kısmı buradan gelir. Kolların yukarı savrulması da katkı sağlar."],
+["Ö","Atışta kinetik zincir nasıl işliyor?"],
+["H","Kuvvet bacaklardan başlar, kalça ve gövde döner, ardından omuz, dirsek ve bilek gelir. Her halka bir öncekinin hızını devralıp artırır. Yalnızca kolla atan bir öğrenci zincirin ilk halkalarını kullanmıyor demektir. Öğretmen olarak bunu görmek ve düzeltmek sizin işiniz."]]}
+],
+sc:[
+["Osteoblast ve osteoklastı nasıl karıştırmam?","“Blast” yapıcı, “klast” kırıcı olarak düşün. Osteoblast yeni kemik dokusu üretir, osteoklast eski kemiği yıkar. Sağlıklı kemik bu iki sürecin dengesiyle sürekli yenilenir."],
+["İki eklemli kas ne demek, sınavda örnek verebilir miyim?","İki eklemi birden geçen ve her ikisinde de hareket oluşturabilen kastır. Örneğin rectus femoris hem kalçayı büker hem dizi açar; hamstringler hem dizi büker hem kalçayı açar; gastrocnemius hem diz fleksiyonuna hem plantar fleksiyona katılır."],
+["Skolyozu derste fark edebilir miyim?","Öğrenciden dizlerini bükmeden öne eğilmesini istediğinde sırtın bir tarafında belirgin bir yükseklik (kaburga kamburu) görülebilir; omuz veya kalça yükseklikleri farklı olabilir. Bu durumda tanı koymadan aileyi bir hekime yönlendirmelisin."],
+["Sprinterlerde neden hızlı kasılan lifler baskın?","Tip II (özellikle IIx) lifler daha hızlı kasılır ve daha fazla kuvvet üretir; kısa süreli patlayıcı etkinlikler için uygundur. Lif tipi dağılımı büyük ölçüde kalıtsaldır, ancak antrenman liflerin özelliklerini bir ölçüde değiştirebilir."],
+["Yer tepki kuvveti neden önemli?","Newton'un üçüncü yasasına göre sporcunun yere uyguladığı kuvvete eşit ve zıt bir kuvvet yerden sporcuya etki eder. Koşma, sıçrama ve yön değiştirme bu kuvvetle mümkündür; aynı kuvvet inişlerde eklemlere yük bindirdiği için doğru iniş tekniği sakatlık önlemede önemlidir."],
+["Bir hareketi analiz ederken hangi sırayı izlemeliyim?","1) Hareketi evrelere ayır (hazırlık, uygulama, takip). 2) Her evrede çalışan eklemleri ve hareket düzlemlerini belirle. 3) Eklem hareketlerini adlandır (fleksiyon, abdüksiyon vb.). 4) Bu hareketleri yapan kasları ve kasılma türlerini (konsantrik, eksantrik, izometrik) yaz."]
+]
+});
+
+ADD("hrk",{
+podOrder:[1,2,3],
+konular:[
+{b:"Algısal-motor gelişim", m:[
+"Algısal-motor gelişim, duyusal bilgilerin algılanıp yorumlanması ve bu bilgiye uygun hareket yanıtının üretilmesi sürecidir.",
+"Vücut farkındalığı: Vücut parçalarını tanıma, adlandırma ve ne yapabileceklerini bilme.",
+"Alan farkındalığı: Vücudun alanda nerede olduğunu ve ne kadar yer kapladığını bilme; kişisel ve genel alanı ayırt etme.",
+"Yön farkındalığı: Lateralite (vücudun iki yanını ayırt etme) ve yönsellik (sağ-sol, ileri-geri, yukarı-aşağı kavramlarını dış dünyaya uygulama).",
+"Zamansal farkındalık: Ritim, tempo ve zamanlama; topu doğru anda yakalamak ya da müziğe uygun hareket etmek bu beceriye dayanır.",
+"Görsel, işitsel ve kinestetik (dokunsal-devinsel) algı hareketin planlanmasında birlikte çalışır."]},
+{b:"Lokomotor becerilerin öğretimi", m:[
+"Olgun koşuda belirgin bir uçuş evresi vardır; kollar dirsekten bükülü olarak bacaklarla çapraz (karşıt) koordinasyonla salınır, gövde hafif öne eğiktir.",
+"Olgun yatay atlamada hazırlıkta dizler bükülür, kollar geriye alınır; kalkışta kollar güçlü biçimde öne-yukarı savrulur ve iniş iki ayakla, dizler bükülerek yapılır.",
+"Sekme, galop ve kayma gibi beceriler tek taraflı ve ritmik becerilerdir; koşma ve atlamadan sonra, genellikle daha geç olgunlaşır.",
+"Öğretim ipuçları kısa ve akılda kalıcı olmalıdır: “Kollar çapraz”, “Hafif ayak ucu”, “Kollarını savur, yumuşak in.”",
+"Farklı yönler, düzeyler, hızlar ve yollarla yapılan çalışmalar lokomotor becerilerin çok yönlü gelişmesini sağlar."]},
+{b:"Nesne kontrol becerilerinin öğretimi", m:[
+"Olgun üstten atışta atıcı hedefe yan durur, atan kolun karşı tarafındaki ayakla öne adım atar, kalça ve gövde döner, kol geniş bir yay çizerek takip hareketiyle biter.",
+"Olgun yakalamada eller topa doğru uzanır, gözler topu takip eder, top yalnızca ellerle karşılanır ve kollar bükülerek topun hızı emilir.",
+"Tekme atmada destek ayağı topun yanına basar, vuran bacak geriye bükülür ve kalçadan başlayan bir salınımla topa vurur.",
+"Başlangıçta büyük, yumuşak ve yavaş hareket eden nesneler (balon, köpük top) kullanılmalı; beceri geliştikçe nesne küçültülüp hızlandırılmalıdır.",
+"Atma ve yakalama birlikte öğretildiğinde öğrenciler hem gönderici hem alıcı rolünü deneyimler."]},
+{b:"Dengeleme becerileri ve temel jimnastik", m:[
+"Statik denge hareketsiz bir pozisyonu koruma (tek ayak üzerinde durma), dinamik denge hareket sırasında dengeyi koruma (denge tahtasında yürüme) becerisidir.",
+"Destek yüzeyi genişledikçe ve ağırlık merkezi alçaldıkça denge kolaylaşır; zorluk bu iki değişkenle ayarlanır.",
+"Ağırlık aktarımı, yuvarlanmalar (öne-yana), destekli duruşlar ve iniş teknikleri temel jimnastik becerilerinin çekirdeğidir.",
+"Güvenli iniş: Dizler ve kalça bükülerek kuvvet emilir; düşerken eller yerine vücudun geniş yüzeyleriyle yuvarlanmak öğretilir.",
+"Jimnastik etkinliklerinde minder, uygun yardım (spot) ve öğrencinin düzeyine uygun sıralama güvenliğin temelidir."]},
+{b:"Ritim ve dans eğitimi", m:[
+"Ritim; hareketin zaman içinde düzenli tekrarıdır. Tempo (hız), vuruş (beat) ve vurgu ritmik eğitimin temel kavramlarıdır.",
+"Ritmik etkinlikler el çırpma, ayak vurma ve basit adım kalıplarıyla başlar; müzik ve vurmalı çalgılarla zenginleştirilir.",
+"Halk dansları kültürel mirası aktarır; horon, zeybek ve halay gibi yöresel oyunlar hem ritim hem koordinasyon geliştirir.",
+"Yaratıcı dansta öğrenci bir duyguyu, olayı ya da imgeyi kendi hareketleriyle ifade eder; Laban'ın vücut-alan-çaba-ilişki çerçevesi bu tasarımda kullanılır.",
+"Ritim becerisi, top sürme ve koşu gibi spor becerilerinin zamanlamasını da olumlu etkiler."]},
+{b:"Oyun ve oyun öğretimi", m:[
+"Oyun çocuğun doğal öğrenme biçimidir; bedensel, bilişsel, duygusal ve sosyal gelişimi aynı anda destekler.",
+"Oyun türleri: geleneksel çocuk oyunları (ör. yakar top, mendil kapmaca), eğitsel oyunlar, küçük alan oyunları ve işbirlikli oyunlar.",
+"Oyun seçiminde ilkeler: Yaşa ve beceri düzeyine uygunluk, güvenlik, herkesin aktif katılımı (eleme yerine çok canlı oyunlar), açık kurallar ve öğrenme hedefine hizmet.",
+"Oyunu değiştirme: Alan boyutu, oyuncu sayısı, kurallar, malzeme ve puanlama değiştirilerek oyun zorlaştırılır ya da kolaylaştırılır.",
+"Oyun Yoluyla Öğretim yaklaşımında oyun önce gelir; teknik, oyunda ihtiyaç duyulduğunda öğretilir."]},
+{b:"Öğretim stilleri, değerlendirme ve kapsayıcılık", m:[
+"Mosston'ın öğretim stilleri yelpazesi öğretmen merkezliden öğrenci merkezliye uzanır: komut (A), alıştırma (B), eşli (karşılıklı) (C), kendini denetleme (D), katılım (E), yönlendirilmiş buluş (F), yakınsak buluş (G), ıraksak buluş (H) ve sonraki stiller.",
+"Temel hareket becerileri, süreç odaklı testlerle değerlendirilebilir; Kaba Motor Gelişim Testi (TGMD) lokomotor ve nesne kontrol (top) becerilerini ölçüt davranışlarla puanlar.",
+"Kontrol listeleri ve gözlem formları, becerinin kritik öğelerinin (ör. “karşı ayakla adım”) var olup olmadığını kaydeder.",
+"Kapsayıcı uyarlama için alan, görev, malzeme ve kişiler (grup düzeni) değiştirilebilir; böylece özel gereksinimli öğrenciler de etkinliğe anlamlı biçimde katılır.",
+"Değerlendirme not vermekten çok öğrenmeyi desteklemelidir; öğrenciye hangi öğeyi geliştirmesi gerektiğini gösteren geri bildirimle birlikte kullanılır."]}
+],
+podcast:[
+{k:0,t:"Hareketin dört sorusu", d:"Hareket eğitiminin kapsamı ve Laban çerçevesi", s:[
+["H","Rudolf Laban adlı bir dans kuramcısı hareketi dört soruyla anlatmış. İlki: ne hareket ediyor?"],
+["Ö","Bu vücut öğesi. Hangi vücut parçası hareket ediyor, vücut hangi şekli alıyor."],
+["H","Doğru. İkincisi: nerede? Bu da alan öğesi: kişisel ya da genel alan, yönler, alçak-orta-yüksek düzeyler, düz, eğri ya da zikzak yollar."],
+["Ö","Üçüncüsü nasıl, yani çaba."],
+["H","Evet. Zaman: hızlı mı yavaş mı? Ağırlık: güçlü mü hafif mi? Alan: doğrudan mı dolaylı mı? Akış: serbest mi kontrollü mü? Dördüncüsü ilişki: kiminle ya da neyle? Eşle, grupla, bir topla, bir engelle."],
+["Ö","Bunu derste nasıl kullanırız?"],
+["H","Basit bir yürüme görevini bile bu sorularla onlarca farklı göreve dönüştürebilirsiniz. “Alçak düzeyde, zikzak yolda, yavaş ve hafif yürü, sonra eşinin aynası ol.” Çocuk hem hareket dağarcığını genişletir hem de hareket üzerine düşünmeyi öğrenir."]]},
+{k:4,t:"Kondisyon ve koordinasyon", d:"Motorik özellikler ve ders planlama", s:[
+["H","Bir çocuk hızlı koşuyor ama topu sürerken sürekli kaçırıyor. Hangi özelliği güçlü, hangisi zayıf?"],
+["Ö","Sürat iyi, ama koordinasyon zayıf olabilir."],
+["H","Çok iyi. Sürat, kuvvet, dayanıklılık ve esneklik kondisyonel özelliklerdir. Denge, ritim, reaksiyon, oryantasyon, ayrımlaştırma gibi özellikler ise koordinatiftir; sinir sisteminin hareketi düzenleme becerisine dayanır."],
+["Ö","Çocuklarda hangisine öncelik vermeliyiz?"],
+["H","Koordinatif özelliklerin hızla geliştiği çocukluk yıllarında zengin ve çeşitli hareket deneyimleri çok değerlidir. Ama tek taraflı düşünmeyin; oyun içinde hepsi birlikte gelişir."],
+["Ö","Bir ders planı nasıl olmalı?"],
+["H","Isınma, ana bölüm ve soğuma-değerlendirme. Ana bölümde önce keşfetme, sonra uygulama, en sonda oyun. Ve en önemlisi: öğrencilerin dersin büyük bölümünde aktif olması. Uzun sıralar, tek top, eleme oyunları; bunlar hareket eğitiminin düşmanıdır."]]},
+{k:5,t:"Duyulardan harekete", d:"Algısal-motor gelişim", s:[
+["H","Bir topu yakalamak için önce ne yapmamız gerekir?"],
+["Ö","Topu görmemiz lazım hocam."],
+["H","Görmek, topun hızını ve yönünü kestirmek, ellerimizi doğru zamanda doğru yere götürmek. İşte buna algısal-motor süreç diyoruz: algıla, yorumla, hareket et."],
+["Ö","Vücut farkındalığı da bunun bir parçası mı?"],
+["H","Evet. Vücut parçalarını tanımak ve ne yapabileceklerini bilmek. Alan farkındalığı da başkalarına çarpmadan hareket edebilmektir. Küçük çocuklar genel alanda koşarken sık sık çarpışır; bu, alan farkındalığının henüz gelişmediğini gösterir."],
+["Ö","Lateralite ve yönsellik arasındaki fark nedir?"],
+["H","Lateralite vücudun iki yanını içsel olarak ayırt etmektir. Yönsellik bu bilgiyi dış dünyaya uygulamaktır, mesela “topun sağına geç.” Zamansal farkındalık da ritim ve zamanlamadır. Bunların hepsi oyunlarla eğlenceli biçimde geliştirilebilir."]]},
+{k:6,t:"Koşmayı öğretmek", d:"Lokomotor becerilerin öğretimi", s:[
+["H","Herkes koşabiliyor, o zaman koşmayı öğretmeye gerek var mı?"],
+["Ö","Bence var hocam. Bazı çocuklar kollarını hiç kullanmadan ya da düz ayak koşuyor."],
+["H","Çok doğru gözlem. Olgun koşuda bir uçuş evresi vardır, kollar dirsekten bükülüdür ve bacaklarla çapraz çalışır. Gövde hafifçe öne eğiktir."],
+["Ö","Ipuçlarını nasıl vermeliyiz?"],
+["H","Kısa ve tek odaklı: “Kollar çapraz”, “Hafif ayak.” Aynı anda beş şey söylerseniz öğrenci hiçbirini uygulayamaz."],
+["Ö","Yatay atlamada kollar çok önemli diye biliyorum."],
+["H","Evet. Kollar önce geriye alınır, sonra güçlü bir şekilde öne ve yukarı savrulur. İniş iki ayakla ve dizler bükülerek yapılır. Sekme, galop ve kayma ise daha geç olgunlaşır; çünkü vücudun iki yanının farklı işler yapmasını gerektirir. Bu becerileri müzik ve ritimle çalışmak çok etkilidir."]]},
+{k:7,t:"At, yakala, vur", d:"Nesne kontrol becerilerinin öğretimi", s:[
+["H","Bir çocuk topu atarken atan kolun tarafındaki ayakla adım atıyor. Bu hangi düzeyi gösterir?"],
+["Ö","Henüz olgun düzeyde değil. Olgun atışta karşı ayakla adım atılır."],
+["H","Doğru. Olgun üstten atışta atıcı hedefe yan durur, karşı ayakla adım atar, kalça ve gövde döner, kol geniş bir yay çizer ve takip hareketiyle biter. Kinetik zinciri hatırlayın."],
+["Ö","Yakalamada çocuklar topu göğüslerine bastırıyor."],
+["H","Bu ilkel bir biçimdir. Olgun yakalamada eller topa doğru uzanır ve topu yalnızca ellerle alır, sonra kollar bükülerek topun hızı emilir. Gözler topu sonuna kadar takip eder."],
+["Ö","Korkan çocuklar için ne yapabiliriz?"],
+["H","Büyük, yumuşak ve yavaş nesnelerle başlayın: balon, köpük top, eşarp. Başarı duygusu korkuyu yener. Beceri geliştikçe nesneyi küçültün, hızı ve mesafeyi artırın."]]},
+{k:8,t:"Dengede kalmak", d:"Dengeleme becerileri ve temel jimnastik", s:[
+["H","Tek ayak üzerinde durmak ile denge tahtasında yürümek arasındaki fark nedir?"],
+["Ö","Biri statik denge, diğeri dinamik denge."],
+["H","Doğru. Dengeyi zorlaştırmak için iki değişkeni kullanırız: destek yüzeyini daraltmak ve ağırlık merkezini yükseltmek. İki ayaktan tek ayağa geçmek, kolları yukarı kaldırmak, gözleri kapatmak zorluğu artırır."],
+["Ö","Temel jimnastikte nelerle başlamalıyız?"],
+["H","Ağırlık aktarımı, öne ve yana yuvarlanma, destekli duruşlar ve güvenli iniş. Özellikle düşmeyi öğretmek çok önemli: eller yerine vücudun geniş yüzeyleriyle yuvarlanmak sakatlığı önler."],
+["Ö","Güvenlik için başka nelere dikkat etmeliyiz?"],
+["H","Uygun minder, öğrencinin düzeyine uygun sıralama ve gerektiğinde yardım, yani spot. Bir öğrenciyi hazır olmadığı bir hareketi yapmaya zorlamayın. Jimnastikte cesaret, adım adım kazanılan başarıyla gelir."]]},
+{k:9,t:"Ritmi hisset", d:"Ritim ve dans eğitimi", s:[
+["H","Ritim eğitimini sadece dans dersi olarak mı görmeliyiz?"],
+["Ö","Bence hayır. Top sürerken bile ritim var."],
+["H","Kesinlikle. Ritim hareketin zamanlamasıdır. Tempo hızdır, vuruş düzenli nabızdır, vurgu da güçlü vuruştur. Önce el çırpma ve ayak vurmayla vuruşu hissettiririz, sonra basit adım kalıplarına geçeriz."],
+["Ö","Halk danslarını derste kullanabilir miyiz?"],
+["H","Mutlaka. Horon, zeybek, halay; hem kültürel mirası aktarır hem koordinasyon ve ritim geliştirir. Bir de yaratıcı dans var: öğrenci bir duyguyu ya da bir imgeyi, mesela rüzgârda savrulan bir yaprağı, kendi hareketleriyle ifade eder."],
+["Ö","Utangaç öğrenciler katılmak istemezse?"],
+["H","Bireysel gösteri yerine grup halinde, herkesin aynı anda hareket ettiği etkinliklerle başlayın. Kimse izlenmediğini hissettiğinde daha rahat katılır."]]},
+{k:10,t:"Oyunun gücü", d:"Oyun ve oyun öğretimi", s:[
+["H","Yakar top oynatırken çoğu öğrenci kısa sürede vurulup kenarda bekliyor. Bu oyunda ne sorun var?"],
+["Ö","Eleme var hocam. En çok hareket etmesi gereken çocuklar ilk elenenler."],
+["H","Tam olarak. Oyun seçerken ilk soru şu olmalı: herkes aktif mi? Yakar topu değiştirebiliriz: vurulan oyuncu bir görev yapıp geri dönebilir ya da karşı takıma geçebilir."],
+["Ö","Oyunu başka nasıl değiştirebiliriz?"],
+["H","Alanı büyütüp küçültebilir, oyuncu sayısını, kuralları, malzemeyi ve puanlamayı değiştirebilirsiniz. Üçe üç küçük alan oyunları her öğrencinin topa daha çok dokunmasını sağlar."],
+["Ö","Geleneksel oyunların yeri nedir?"],
+["H","Mendil kapmaca, saklambaç, çelik çomak; bunlar hem kültürümüzü yaşatır hem de temel hareket becerilerini doğal biçimde geliştirir. Oyun çocuğun dilidir. O dili iyi konuşan öğretmen, öğrencisine her şeyi öğretebilir."]]},
+{k:11,t:"Öğretmenin araç çantası", d:"Öğretim stilleri, değerlendirme ve kapsayıcılık", s:[
+["H","Mosston'ın öğretim stillerini bir yelpaze gibi düşünün. Bir ucunda öğretmen her kararı verir. Bu hangi stil?"],
+["Ö","Komut stili, A stili."],
+["H","Evet. Alıştırma stilinde öğrenci kendi hızında çalışır, eşli stilde öğrenciler birbirine geri bildirim verir, katılım stilinde herkes kendi zorluk düzeyini seçer. Buluş stillerinde öğrenci çözümü kendisi bulur."],
+["Ö","Hangisini kullanmalıyız?"],
+["H","Hedefe göre seçin. Güvenlik gerektiren bir jimnastik hareketinde komut stili, yaratıcılık istenen bir dans etkinliğinde ıraksak buluş stili uygundur."],
+["Ö","Becerileri nasıl değerlendireceğiz?"],
+["H","Kaba Motor Gelişim Testi, yani TGMD, lokomotor ve top becerilerini kritik öğelere göre puanlar. Siz de kendi kontrol listelerinizi hazırlayabilirsiniz. Son olarak kapsayıcılık: alanı, görevi, malzemeyi ve grup düzenini değiştirerek her öğrencinin anlamlı biçimde katılmasını sağlayın. Hareket eğitimi herkes içindir."]]}
+],
+sc:[
+["Lateralite ile yönsellik aynı şey mi?","Hayır. Lateralite, kişinin vücudunun iki yanını içsel olarak ayırt edebilmesidir. Yönsellik ise bu farkındalığı dış dünyaya uygulamasıdır; örneğin “koninin soluna geç” komutunu doğru uygulamak. Lateralite genellikle yönsellikten önce gelişir."],
+["Olgun üstten atışın en kolay gözlenen ölçütü hangisi?","Atan kolun karşı tarafındaki ayakla öne adım atılması. Bu öğe yoksa gövde rotasyonu da genellikle zayıftır. Gözlemde ayrıca hedefe yan durma, kalça-gövde rotasyonu ve takip hareketine bakılır."],
+["Denge çalışmalarını nasıl kademelendiririm?","Destek yüzeyini daraltarak (iki ayak → tek ayak → ayak ucu), ağırlık merkezini yükselterek (kolları yukarı kaldırma), görsel bilgiyi azaltarak (gözleri kapama) ve hareket ekleyerek (statikten dinamiğe) zorluğu adım adım artırabilirsin."],
+["Eleme oyunları tamamen yasak mı?","Yasak değil ama dikkatli kullanılmalı. Elenen öğrenci hareket etmez ve genellikle en çok pratiğe ihtiyacı olan öğrencidir. Elenenlerin kısa bir görevle oyuna dönmesi veya karşı takıma geçmesi gibi değişikliklerle oyun hem eğlenceli hem kapsayıcı olur."],
+["Katılım (E) stilini bir örnekle açıklar mısınız?","Yüksek atlama için ip farklı yüksekliklerde eğik gerilir. Her öğrenci kendine uygun yüksekliği seçer ve başarılı oldukça zorluğu artırır. Böylece farklı beceri düzeylerindeki öğrenciler aynı etkinlikte başarılı olabilir."],
+["TGMD neyi ölçer?","Kaba Motor Gelişim Testi, çocukların lokomotor becerilerini (koşma, galop, sekme, atlama vb.) ve nesne kontrol/top becerilerini (atma, yakalama, tekme, top sürme vb.) her beceriye ait kritik öğelerin gözlenip gözlenmediğine göre puanlar. Süreç odaklı bir testtir."]
+]
+});
+
+ADD("egt",{
+podOrder:[0,2,3],
+konular:[
+{b:"Eğitimin psikolojik temelleri", m:[
+"Piaget'nin bilişsel gelişim evreleri: duyusal-motor (0–2 yaş), işlem öncesi (2–7), somut işlemler (7–11) ve soyut işlemler (11 yaş ve sonrası).",
+"Vygotsky'ye göre öğrenme sosyal etkileşimle gerçekleşir; yakınsak (yakın) gelişim alanı, çocuğun tek başına yapabildiği ile yardımla yapabildiği arasındaki alandır. Bu alanda verilen geçici desteğe iskele kurma denir.",
+"Erikson'ın psikososyal gelişim kuramında her dönemin bir krizi vardır; ergenlikteki temel kriz kimlik kazanmaya karşı rol karmaşasıdır.",
+"Davranışçı kuramlar: Pavlov'un klasik koşullanması ve Skinner'ın edimsel koşullanması (pekiştirme ve ceza ile davranışın biçimlenmesi).",
+"Bandura'nın sosyal öğrenme kuramı: Öğrenme, model alma ve gözlem yoluyla da gerçekleşir; beden eğitimi öğretmeninin gösterisi bu nedenle çok etkilidir.",
+"Bilişsel ve yapılandırmacı yaklaşımlar öğrencinin bilgiyi zihninde aktif olarak yapılandırdığını savunur."]},
+{b:"Eğitimin sosyal ve ekonomik temelleri", m:[
+"Eğitimin toplumsal işlevleri: kültürün aktarılması, sosyalleşme, toplumsal bütünleşme, toplumsal değişmeye öncülük ve bireylerin mesleklere hazırlanması.",
+"Eğitim hem toplumu değiştiren bir araç hem de toplumsal değişmenin etkilediği bir kurumdur.",
+"İnsan sermayesi kuramı (Theodore Schultz, Gary Becker): Eğitime yapılan harcama bir tüketim değil, bireyin ve toplumun üretkenliğini artıran bir yatırımdır.",
+"Eğitimin bireysel getirileri (daha yüksek gelir, istihdam) ve toplumsal getirileri (ekonomik büyüme, sağlık, demokratik katılım) vardır.",
+"Eğitim finansmanında kamu kaynakları temel olmakla birlikte, ailelerin eğitim harcamaları fırsat eşitsizliği yaratabilir."]},
+{b:"Türk eğitim tarihi", m:[
+"Osmanlı'da sıbyan mektepleri temel eğitimi, medreseler yükseköğretimi, Enderun ise saray yönetimi için seçilmiş gençlerin eğitimini üstlenmiştir.",
+"Tanzimat döneminde rüştiyeler açılmış, 1848'de öğretmen yetiştirmek için Darülmuallimin kurulmuş, Batı tarzı okullar yaygınlaşmıştır.",
+"Cumhuriyet'in ilk yıllarında 3 Mart 1924'te Tevhid-i Tedrisat Kanunu kabul edilmiş; aynı yıl John Dewey Türkiye'ye davet edilerek eğitim üzerine bir rapor hazırlamıştır.",
+"1 Kasım 1928'de Harf İnkılabı kabul edilmiş; yetişkinlere okuma-yazma öğretmek için 1929'da Millet Mektepleri açılmıştır.",
+"Köy Enstitüleri 1940'ta, İsmail Hakkı Tonguç ve Millî Eğitim Bakanı Hasan Ali Yücel öncülüğünde, köylere öğretmen ve öncü yetiştirmek amacıyla kurulmuştur."]},
+{b:"Türk eğitim sisteminin yapısı", m:[
+"Millî Eğitim Bakanlığı merkez örgütü, taşra örgütü (il ve ilçe millî eğitim müdürlükleri) ve yurt dışı teşkilatından oluşur.",
+"Örgün eğitim kademeleri: okul öncesi, ilkokul (4 yıl), ortaokul (4 yıl), ortaöğretim (4 yıl) ve yükseköğretim.",
+"Ortaöğretimde Anadolu, fen, sosyal bilimler, mesleki ve teknik, imam hatip, güzel sanatlar ve spor liseleri gibi farklı okul türleri vardır.",
+"Yükseköğretim, 1981'de 2547 sayılı Kanun ile kurulan Yükseköğretim Kurulu (YÖK) tarafından planlanır ve denetlenir.",
+"Yaygın eğitim; halk eğitim merkezleri, mesleki eğitim merkezleri ve açık öğretim kurumları aracılığıyla verilir."]},
+{b:"Eğitim bilimleri ve araştırma", m:[
+"Eğitim bilimlerinin başlıca alt alanları: eğitim programları ve öğretim, eğitim yönetimi, ölçme ve değerlendirme, rehberlik ve psikolojik danışmanlık, eğitim psikolojisi, eğitim felsefesi ve eğitim sosyolojisi.",
+"Bilimsel yöntem; problemin belirlenmesi, hipotez kurma, veri toplama, analiz ve sonuca ulaşma basamaklarından oluşur.",
+"Nicel araştırmalar sayısal verilerle çalışır (deneysel, tarama, ilişkisel); nitel araştırmalar görüşme, gözlem ve doküman incelemesiyle derinlemesine anlamaya çalışır; karma yöntemler ikisini birleştirir.",
+"Eylem araştırması, öğretmenin kendi sınıfındaki bir sorunu sistemli biçimde inceleyip çözüm geliştirmesine dayanır.",
+"Araştırma etiği: gönüllü katılım, bilgilendirilmiş onam, gizlilik ve verilerin dürüst raporlanması."]},
+{b:"Öğretim ilke ve yöntemleri", m:[
+"Bloom taksonomisinin bilişsel alan basamakları (1956): bilgi, kavrama, uygulama, analiz, sentez, değerlendirme. Yenilenmiş taksonomide (Anderson ve Krathwohl, 2001): hatırlama, anlama, uygulama, analiz etme, değerlendirme, yaratma.",
+"Hedefler bilişsel, duyuşsal ve devinişsel (psikomotor) alanlarda sınıflandırılır; beden eğitimi her üç alana da hitap eder.",
+"Temel öğretim ilkeleri: öğrenciye görelik, somuttan soyuta, bilinenden bilinmeyene, yakından uzağa, basitten karmaşığa, aktif katılım ve hayatilik.",
+"Öğretim yöntemleri: anlatım, gösterip yaptırma, soru-cevap, tartışma, örnek olay, problem çözme, proje ve işbirlikli öğrenme.",
+"Beden eğitiminde gösterip yaptırma yöntemi sık kullanılır: öğretmen gösterir ve açıklar, öğrenci uygular, öğretmen geri bildirim verir."]},
+{b:"Sınıf yönetimi ve etkili öğretmen", m:[
+"Sınıf yönetimi; öğrenme için uygun fiziksel, sosyal ve duygusal ortamın oluşturulması ve sürdürülmesidir.",
+"Önleyici yaklaşım: Kuralların ve rutinlerin yılın başında öğrencilerle birlikte belirlenmesi, sorun çıkmadan önlem alınması.",
+"Kounin'in “ortamdan haberdar olma” kavramı, öğretmenin sınıfta olan her şeyden haberdar olduğunu öğrencilere hissettirmesini anlatır; beden eğitiminde öğretmenin tüm sınıfı görebileceği bir konumda durması bu nedenle önemlidir.",
+"Etkili iletişimde “ben dili” (Gordon), suçlamak yerine davranışın öğretmen üzerindeki etkisini anlatır: “Konuşurken sözüm kesilince açıklamayı tamamlayamıyorum.”",
+"Etkili öğretmen; açık hedefler koyar, öğrenme zamanını verimli kullanır, yüksek ve olumlu beklenti taşır, öğrencilerine adil ve saygılı davranır."]}
+],
+podcast:[
+{k:1,t:"Eğitimin dayanakları", d:"Felsefi, psikolojik, sosyal ve diğer temeller", s:[
+["H","Bir bina temelsiz durmaz. Eğitimin temelleri nelerdir?"],
+["Ö","Felsefi, psikolojik, sosyolojik, tarihî, ekonomik ve hukuki temeller hocam."],
+["H","Çok iyi. Felsefi temel “nasıl bir insan yetiştirmeliyiz?” sorusunu sorar. Psikolojik temel “bu insan nasıl gelişir ve öğrenir?” sorusunu."],
+["Ö","Sosyolojik temel de eğitim ile toplum ilişkisi."],
+["H","Evet. Tarihî temel bugünkü sistemin nereden geldiğini, ekonomik temel eğitime ne kadar kaynak ayrıldığını ve getirisini, hukuki temel ise eğitimi düzenleyen anayasa ve yasaları inceler."],
+["Ö","Beden eğitimi öğretmeni bunları neden bilmeli?"],
+["H","Çünkü bir ders planı bile bu temellere dayanır. Hangi değeri öğreteceğiniz felsefeden, çocuğun hangi yaşta neyi yapabileceği psikolojiden, kızların spora katılımını nasıl artıracağınız sosyolojiden, ders saatinin ne kadar olacağı da yasal düzenlemelerden gelir."]]},
+{k:4,t:"Öğretmen olmak", d:"Mesleğin nitelikleri ve kariyer", s:[
+["H","Öğretmenlik bir meslek mi, yoksa bir sanat mı?"],
+["Ö","İkisi de olabilir hocam."],
+["H","Güzel cevap. Öğretmenlik alan bilgisi, pedagojik formasyon ve genel kültür gerektiren bir uzmanlık mesleğidir. Ama sınıfta her gün yeni bir durumla karşılaştığınız için sanatsal bir yanı da vardır."],
+["Ö","Öğretmenlik Meslek Kanunu'nda kariyer basamakları vardı."],
+["H","2022 tarihli 7354 sayılı kanuna göre öğretmen, uzman öğretmen ve başöğretmen. Bu basamaklar mesleki gelişimi teşvik etmeyi amaçlar."],
+["Ö","Beden eğitimi öğretmeninden farklı olarak beklenenler var mı?"],
+["H","Evet. Güvenli öğrenme ortamı, ilk yardım farkındalığı, kapsayıcı etkinlik tasarımı ve sağlıklı yaşam modeli olmak. Öğrencileriniz sizi yalnızca derste değil, okul koridorunda, turnuvada, hatta sosyal medyada da izler."]]},
+{k:5,t:"Çocuk nasıl öğrenir?", d:"Eğitimin psikolojik temelleri", s:[
+["H","Piaget'ye göre yedi yaşındaki bir çocuk hangi evrededir?"],
+["Ö","Somut işlemler evresine geçiyor hocam. Yedi ile on bir yaş arası."],
+["H","Doğru. Bu evrede çocuk somut nesneler üzerinde mantıklı düşünebilir ama soyut kavramlarda zorlanır. Bu yüzden ilkokulda kuralları uzun açıklamalarla değil, göstererek ve oynayarak öğretiriz."],
+["Ö","Vygotsky'nin yakınsak gelişim alanı da önemliydi."],
+["H","Evet. Çocuğun tek başına yapamadığı ama yardımla yapabildiği alan. Öğretmen burada geçici destek verir, buna iskele kurma denir. Mesela takla atmayı öğrenen çocuğa önce el ile destek olursunuz, sonra yavaş yavaş çekilirsiniz."],
+["Ö","Bandura da model almadan bahsediyordu."],
+["H","Sosyal öğrenme kuramı. Çocuklar gördüklerini taklit eder. İyi bir gösteri, bin kelimelik bir açıklamadan daha etkilidir. Skinner'ı da unutmayın: olumlu pekiştirme, istenen davranışın tekrarlanma olasılığını artırır. Yerinde ve özgül bir övgü çok güçlü bir araçtır."]]},
+{k:6,t:"Eğitim bir yatırımdır", d:"Sosyal ve ekonomik temeller", s:[
+["H","Eğitime harcanan para bir masraf mı, yoksa yatırım mı?"],
+["Ö","Yatırım hocam. İnsan sermayesi kuramı böyle söylüyor."],
+["H","Evet. Theodore Schultz ve Gary Becker'ın geliştirdiği bu kurama göre eğitim bireyin üretkenliğini artırır. Bireysel olarak daha yüksek gelir ve iş bulma şansı, toplumsal olarak da ekonomik büyüme demektir."],
+["Ö","Sosyal işlevleri de var."],
+["H","Kültürün aktarılması, sosyalleşme, toplumsal bütünleşme ve değişmeye öncülük. Eğitim toplumu değiştirir, ama toplumdaki değişmelerden de etkilenir. Dijitalleşme okulu nasıl dönüştürdü, bunu hepimiz yaşadık."],
+["Ö","Ailelerin eğitim harcamaları eşitsizlik yaratıyor mu?"],
+["H","Evet. Özel ders, kurs ve spor kulübü masraflarını karşılayabilen aileler çocuklarına ek avantaj sağlar. Bu yüzden kamu okulunun ve okul beden eğitiminin niteliği, fırsat eşitliği açısından çok önemlidir."]]},
+{k:7,t:"Mektepten enstitüye", d:"Türk eğitim tarihi", s:[
+["H","Osmanlı'da temel eğitimi hangi kurumlar verirdi?"],
+["Ö","Sıbyan mektepleri. Medreseler ise yükseköğretim kurumlarıydı."],
+["H","Doğru. Bir de Enderun vardı; sarayda devlet yönetimi için seçilmiş gençlerin yetiştirildiği okul. Enderun'da beden eğitimine, binicilik ve okçuluk gibi sporlara da önem verilirdi."],
+["Ö","Tanzimat'ta neler değişti?"],
+["H","Rüştiyeler açıldı, 1848'de öğretmen yetiştirmek için Darülmuallimin kuruldu. Cumhuriyet'le birlikte 1924'te Tevhid-i Tedrisat geldi, aynı yıl John Dewey davet edildi ve bir rapor hazırladı. 1928'de Harf İnkılabı, 1929'da Millet Mektepleri."],
+["Ö","Köy Enstitüleri de önemli bir deneyim."],
+["H","1940'ta İsmail Hakkı Tonguç ve Hasan Ali Yücel'in öncülüğünde kuruldu. Köyden gelen gençler hem öğretmen hem de tarım, sağlık ve zanaat alanlarında öncü olarak yetiştirildi. İş içinde eğitim anlayışı, Dewey'in yaparak öğrenme düşüncesine yakındır."]]},
+{k:8,t:"Sistemin haritası", d:"Türk eğitim sisteminin yapısı", s:[
+["H","Millî Eğitim Bakanlığı nasıl örgütlenmiştir?"],
+["Ö","Merkez örgütü, taşra örgütü ve yurt dışı teşkilatı."],
+["H","Doğru. Taşrada il ve ilçe millî eğitim müdürlükleri vardır. Örgün eğitimde okul öncesi, dört yıl ilkokul, dört yıl ortaokul, dört yıl ortaöğretim ve yükseköğretim."],
+["Ö","Spor liseleri de ortaöğretimde yer alıyor."],
+["H","Evet, Anadolu, fen, sosyal bilimler, mesleki ve teknik, imam hatip, güzel sanatlar ve spor liseleri. Yetenekli öğrencilerinizi spor liselerine yönlendirebilirsiniz; bu, yöneltme ilkesinin bir uygulamasıdır."],
+["Ö","Üniversiteleri kim yönetiyor?"],
+["H","1981'de 2547 sayılı Kanun ile kurulan Yükseköğretim Kurulu, yani YÖK. Yaygın eğitim ise halk eğitim merkezleri, mesleki eğitim merkezleri ve açık öğretim kurumlarıyla sürdürülür. Sistem bir bütündür; siz de bu bütünün bir parçası olacaksınız."]]},
+{k:9,t:"Öğretmen araştırmacı", d:"Eğitim bilimleri ve araştırma", s:[
+["H","Eğitim bilimleri denince tek bir alan mı anlamalıyız?"],
+["Ö","Hayır, birçok alt alanı var: eğitim programları, ölçme-değerlendirme, rehberlik, eğitim yönetimi, eğitim psikolojisi."],
+["H","Doğru. Bu alanların hepsi bilimsel yöntemi kullanır: problem, hipotez, veri, analiz, sonuç."],
+["Ö","Nicel ve nitel araştırma arasındaki fark nedir?"],
+["H","Nicel araştırma sayılarla çalışır. Örneğin bir programın öğrencilerin dayanıklılığını artırıp artırmadığını ölçersiniz. Nitel araştırma ise derinlemesine anlamaya çalışır; kız öğrencilerin neden derse katılmak istemediğini görüşmelerle anlamak gibi."],
+["Ö","Öğretmen de araştırma yapabilir mi?"],
+["H","Kesinlikle. Eylem araştırması tam olarak budur: kendi sınıfınızdaki bir sorunu belirler, bir çözüm dener, sonuçlarını sistemli biçimde izlersiniz. Araştıran öğretmen, sürekli gelişen öğretmendir. Tabii etik ilkeleri unutmadan: gönüllülük, onam ve gizlilik."]]},
+{k:10,t:"Hedeften yönteme", d:"Bloom taksonomisi ve öğretim ilkeleri", s:[
+["H","Bloom'un yenilenmiş taksonomisinin basamaklarını sayabilir misiniz?"],
+["Ö","Hatırlama, anlama, uygulama, analiz etme, değerlendirme, yaratma."],
+["H","Mükemmel. Beden eğitiminden örnek verelim: Voleybol kurallarını sayabilmek hatırlama, bir oyun durumunu analiz etmek analiz etme, kendi oyununu tasarlamak yaratmadır."],
+["Ö","Öğretim ilkeleri de somuttan soyuta, basitten karmaşığa gibi ilkeler."],
+["H","Evet. Önce basit bir pasla başlar, sonra hareketli pas, sonra oyun içinde pasa geçersiniz. Bilinenden bilinmeyene: futbolu bilen öğrenciye hentbolda alan savunmasını futboldan örnekle anlatırsınız."],
+["Ö","Beden eğitiminde en çok hangi yöntemi kullanırız?"],
+["H","Gösterip yaptırma: gösteririz, açıklarız, öğrenci uygular, geri bildirim veririz. Ama tek yönteme bağlı kalmayın. Soru-cevap, problem çözme ve işbirlikli öğrenme de derslerinizi zenginleştirir."]]},
+{k:11,t:"Sınıfı yönetmek", d:"Sınıf yönetimi ve etkili öğretmen", s:[
+["H","Spor salonunda sınıf yönetimi, normal sınıftan daha zor mu sizce?"],
+["Ö","Bence evet hocam. Alan büyük, öğrenciler hareket halinde, ses yankılanıyor."],
+["H","Bu yüzden önleyici yaklaşım çok önemli. Yılın ilk dersinde kuralları ve rutinleri öğrencilerle birlikte belirleyin: düdük sesinde dur, top yerde, gözler öğretmende."],
+["Ö","Kounin'in ortamdan haberdar olma kavramı neydi?"],
+["H","Öğretmenin sınıftaki her şeyden haberdar olduğunu hissettirmesi. Spor salonunda sırtınızı sınıfa dönmeyin; alanın kenarında, herkesi görebileceğiniz bir yerde durun."],
+["Ö","Bir öğrenci sürekli sözümüzü keserse?"],
+["H","Ben dilini kullanın: “Sözüm kesildiğinde açıklamamı bitiremiyorum ve arkadaşların ne yapacağını anlamıyor.” Suçlamak yerine etkiyi anlatırsınız. Ve unutmayın: adil, tutarlı ve yüksek beklentili bir öğretmen, cezadan çok daha etkilidir."]]}
+],
+sc:[
+["Piaget'nin evrelerini beden eğitimi dersine nasıl yansıtırım?","İşlem öncesi dönemdeki (2–7 yaş) çocuklara uzun kurallı oyunlar yerine basit, hayal gücüne dayalı ve keşfetmeye yönelik etkinlikler; somut işlemler dönemindekilere (7–11) kuralları göstererek öğretilen oyunlar; soyut işlemler dönemindekilere (11+) taktik ve strateji tartışmaları uygundur."],
+["İnsan sermayesi kuramı neyi savunur?","Eğitim harcamalarının bir tüketim değil yatırım olduğunu; eğitimin bireyin bilgi, beceri ve üretkenliğini artırarak hem bireysel gelire hem de toplumsal kalkınmaya katkı sağladığını savunur. Kuram Theodore Schultz ve Gary Becker ile özdeşleşmiştir."],
+["Köy Enstitülerinin temel özelliği neydi?","Köyden seçilen gençlerin, iş içinde eğitim anlayışıyla hem öğretmen hem de tarım, sağlık ve zanaat alanlarında köyün öncüsü olarak yetiştirilmesi. 1940'ta kurulmuş, İsmail Hakkı Tonguç ve Hasan Ali Yücel ile özdeşleşmiştir."],
+["Eylem araştırmasını bir örnekle açıklar mısınız?","Bir öğretmen derslerinde öğrencilerin uzun süre beklediğini fark eder (problem). İstasyon çalışmasına geçmeye karar verir (çözüm). Dört hafta boyunca aktif kalma süresini kaydeder (veri). Sonuçlara göre uygulamasını düzenler. Öğretmen kendi sınıfının araştırmacısı olur."],
+["Bloom'un eski ve yeni taksonomisi arasındaki fark nedir?","1956 taksonomisi bilgi, kavrama, uygulama, analiz, sentez, değerlendirme basamaklarını içerir. 2001'de yenilenmiş taksonomide adlar fiile dönüştürülmüş (hatırlama, anlama, uygulama, analiz etme, değerlendirme, yaratma) ve en üst basamak olarak sentez yerine yaratma konmuştur."],
+["Spor salonunda kural koymanın en etkili yolu nedir?","Kuralları az, açık ve olumlu ifadeyle belirlemek (“Düdükte dur ve topu yere koy”), ilk derslerde öğrencilerle birlikte konuşup prova etmek ve tutarlı biçimde uygulamak. Kurallar öğrencilerin katılımıyla oluşturulduğunda sahiplenme artar."]
+]
+});
+
+ADD("sos",{
+podOrder:[1,2,3],
+konular:[
+{b:"Aile ve eğitim", m:[
+"Aile, bireyin ilk sosyalleşme ortamıdır; dil, değerler, alışkanlıklar ve beklentiler önce ailede kazanılır.",
+"Aile tipleri: çekirdek aile (anne, baba, çocuklar), geniş aile (birden fazla kuşak) ve tek ebeveynli aile; kentleşmeyle çekirdek aile yaygınlaşmıştır.",
+"Ailenin işlevleri: biyolojik, ekonomik, eğitsel, koruyucu, duygusal ve kültür aktarma işlevleri.",
+"Ailenin sosyoekonomik düzeyi, ebeveynin eğitim düzeyi ve evdeki öğrenme olanakları çocuğun okul başarısıyla güçlü biçimde ilişkilidir.",
+"Ailenin okula katılımı ve okul-aile iş birliği öğrencinin başarısını, devamını ve tutumlarını olumlu etkiler; bu iş birliği 1739 sayılı kanunun temel ilkelerindendir."]},
+{b:"Okulun sosyolojisi ve akran grupları", m:[
+"Okul, kendine özgü amaçları, rolleri, normları ve kültürü olan bir sosyal sistemdir; Willard Waller okulu kendine özgü bir toplumsal yapı olarak incelemiştir.",
+"Okulda formal gruplar (sınıf, okul takımı, öğrenci meclisi) ve informal gruplar (arkadaş grupları) birlikte bulunur.",
+"Sınıf bir sosyal gruptur; öğretmen-öğrenci ve öğrenci-öğrenci etkileşimi öğrenmeyi ve sınıf iklimini belirler.",
+"Akran grubu özellikle ergenlikte güçlü bir sosyalleşme aracıdır; giyimden spor tercihine kadar birçok davranışı etkiler.",
+"Okul takımları ve kulüpler öğrencilere aidiyet, statü ve olumlu akran ilişkileri kazandırabilir; dışlayıcı bir yapıya dönüşmemeleri için öğretmen rehberliği gerekir."]},
+{b:"Toplumsal değişme ve eğitim", m:[
+"Toplumsal değişme; toplumun yapısında, kurumlarında, değerlerinde ve ilişkilerinde zaman içinde ortaya çıkan farklılaşmadır.",
+"Değişmenin kaynakları: teknolojik gelişmeler, nüfus hareketleri (göç, kentleşme), ekonomik dönüşümler, ideolojiler ve kültürel etkileşim.",
+"Modernleşme geleneksel toplumdan sanayi ve bilgi toplumuna geçişi; küreselleşme ise dünya ölçeğinde ekonomik, kültürel ve iletişimsel bütünleşmeyi anlatır.",
+"Eğitim toplumsal değişmenin hem aracı (yeni bilgi ve değerleri yayar) hem de sonucudur (değişen toplumun ihtiyaçlarına göre yeniden düzenlenir).",
+"Bilgi toplumunda yaşam boyu öğrenme, dijital okuryazarlık ve uyum yeteneği eğitimin temel hedefleri arasına girmiştir."]},
+{b:"Eğitimde fırsat eşitliği", m:[
+"Fırsat eşitliği, bireylerin cinsiyet, sosyoekonomik düzey, bölge, engel durumu ve kökenlerine bakılmaksızın eğitim olanaklarından eşit biçimde yararlanabilmesidir.",
+"Coleman Raporu (ABD, 1966), öğrencinin aile arka planının akademik başarı üzerindeki etkisinin okulların maddi kaynaklarından daha belirleyici olduğunu ortaya koymuştur.",
+"Eşitsizlik kaynakları: bölgesel farklar (kent-kır), gelir farkları, cinsiyet, dil, engel durumu ve okullar arası nitelik farkları.",
+"Eşitlik (herkese aynı) ile hakkaniyet (herkese ihtiyacı kadar) farklı kavramlardır; dezavantajlı öğrencilere ek destek hakkaniyetin gereğidir.",
+"Beden eğitiminde fırsat eşitliği; tesis ve malzemeye erişim, kız öğrencilerin ve engelli öğrencilerin katılımı ve beceri düzeyinden bağımsız olarak herkese oynama fırsatı verilmesiyle ilgilidir."]},
+{b:"Toplumsal cinsiyet, eğitim ve spor", m:[
+"Biyolojik cinsiyet doğuştan gelen fizyolojik özellikleri, toplumsal cinsiyet ise toplumun kadın ve erkeğe yüklediği rolleri, beklentileri ve davranış kalıplarını ifade eder.",
+"Toplumsal cinsiyet kalıp yargıları (ör. “futbol erkek sporudur”, “dans kızlara göredir”) çocukların etkinlik tercihlerini ve özgüvenini sınırlayabilir.",
+"Kız öğrencilerin ergenlikle birlikte fiziksel aktiviteden uzaklaşma eğilimi daha yüksektir; uygun ortam, rol modeller ve seçenek çeşitliliği katılımı artırır.",
+"Okulun örtük programı (öğretmenin dili, takım kurma biçimi, örnek verilen sporcular) toplumsal cinsiyet rollerini pekiştirebilir ya da dönüştürebilir.",
+"Kapsayıcı beden eğitimi her öğrenciye tüm etkinlikleri deneme fırsatı tanır ve cinsiyete dayalı ayrımcı söylemlerden kaçınır."]},
+{b:"Spor sosyolojisi", m:[
+"Spor sosyolojisi sporu bir toplumsal olgu ve kurum olarak inceler: sporun toplumla, kültürle, ekonomiyle ve siyasetle ilişkisi.",
+"Spora sosyalleşme, bireyin spora katılmaya nasıl yönlendirildiğini (aile, akran, okul, medya); spor yoluyla sosyalleşme ise spora katılımın bireye kazandırdığı değer, norm ve becerileri anlatır.",
+"Medya ve spor: Medya sporu geniş kitlelere ulaştırır, sporcuları ünlü yapar, ama aynı zamanda ticarileşmeyi ve gösteri boyutunu artırır.",
+"Spor ve kimlik: Takım taraftarlığı yerel, bölgesel ve ulusal kimliklerin ifade edildiği bir alan hâline gelebilir.",
+"Sporun işlev bozuklukları: şiddet ve holiganizm, fanatizm, doping, ayrımcılık ve aşırı ticarileşme."]},
+{b:"Kültürel çeşitlilik ve kapsayıcı eğitim", m:[
+"Çokkültürlü eğitim, farklı kültürel, dilsel, etnik ve dinî kökenlerden gelen öğrencilerin eşit öğrenme fırsatlarına sahip olmasını ve farklılıkların zenginlik olarak görülmesini amaçlar.",
+"Göç; dil engeli, uyum güçlüğü, kültür şoku ve ayrımcılık gibi sorunlar doğurabilir; okul uyum sürecinde kilit bir role sahiptir.",
+"Kapsayıcı eğitim, engelli öğrenciler dâhil tüm öğrencilerin aynı ortamda, gereksinimlerine uygun destekle birlikte eğitim almasını savunur.",
+"Dijital uçurum, bilgi ve iletişim teknolojilerine erişim ve bunları kullanma becerisindeki eşitsizliktir; uzaktan eğitim dönemlerinde belirgin biçimde görülmüştür.",
+"Spor ve oyun, dil engelini aşan ortak bir iletişim alanı sunduğu için göçmen ve dezavantajlı öğrencilerin okula uyumunda güçlü bir araçtır."]}
+],
+podcast:[
+{k:0,t:"Toplumu okumak", d:"Sosyoloji ve eğitim sosyolojisine giriş", s:[
+["H","Sosyoloji ne inceler?"],
+["Ö","Toplumu hocam. Toplumsal ilişkileri, grupları ve kurumları."],
+["H","Doğru, bunu bilimsel yöntemle yapar. Sosyoloji terimini Auguste Comte kullanmıştır. Ama daha önce İbn Haldun Mukaddime'de toplumsal olayları sistemli biçimde incelemişti."],
+["Ö","Eğitim sosyolojisinin kurucusu da Durkheim'dı."],
+["H","Evet. Durkheim eğitimi, yetişkin kuşağın genç kuşak üzerindeki sistemli etkisi olarak tanımlar ve buna metodik sosyalleşme der. Ona göre okul, toplumun ortak değerlerini genç kuşaklara aktararak toplumu bir arada tutar."],
+["Ö","Türkiye'de ilk sosyoloji kürsüsü de Ziya Gökalp ile kuruldu."],
+["H","1914'te Darülfünun'da. Eğitim sosyolojisi bize şunu öğretir: Sınıfınıza gelen her öğrenci bir ailenin, bir mahallenin, bir kültürün izlerini taşır. Öğrenciyi anlamak için toplumu anlamak gerekir."]]},
+{k:4,t:"Okul, öğretmen ve spor", d:"Okulun toplumsal rolü", s:[
+["H","Okulu bir sosyal sistem olarak düşündüğümüzde öğretmenin rolleri nelerdir?"],
+["Ö","Öğretmek, rehberlik etmek, model olmak."],
+["H","Evet, bir de lider olmak ve okulla toplum arasında köprü kurmak. Beden eğitimi öğretmeni bu köprüyü en sık kuran öğretmendir; turnuvalar, şenlikler ve okul takımlarıyla veliler ve çevre okula gelir."],
+["Ö","Spor bir sosyalleşme aracı olarak da çok güçlü."],
+["H","Kural, işbirliği, rekabet ve aidiyet kazandırır. Ama aynı spor, yanlış yönetilirse şiddet, fanatizm ve dışlama da üretebilir. Sporun kendisi iyi ya da kötü değildir, onu nasıl kullandığımız belirleyicidir."],
+["Ö","Eşitsizlikler de spora katılımı etkiliyor."],
+["H","Evet. Cinsiyet, gelir, engel durumu ve yaşanılan yer spora erişimi belirler. Kulübe gidemeyen bir çocuğun spor yapabildiği tek yer okuldur. Bu yüzden beden eğitimi dersi sosyal adaletin de bir aracıdır."]]},
+{k:5,t:"Evden okula", d:"Aile ve eğitim", s:[
+["H","Bir çocuğun okul başarısını en çok ne etkiler sizce?"],
+["Ö","Öğretmen ve okulun kalitesi hocam."],
+["H","Onlar önemli, ama araştırmalar ailenin de çok güçlü bir etkisi olduğunu gösteriyor. Ailenin geliri, ebeveynlerin eğitim düzeyi, evdeki kitaplar, ailenin eğitime verdiği değer."],
+["Ö","Aile tipleri de değişti, değil mi?"],
+["H","Evet. Kentleşmeyle geniş aileden çekirdek aileye geçiş yaşandı, tek ebeveynli aileler de arttı. Ailenin biyolojik, ekonomik, koruyucu, duygusal ve eğitsel işlevleri var; bunların bir kısmını okul da üstlenmeye başladı."],
+["Ö","Beden eğitimi öğretmeni ailelerle nasıl iş birliği yapabilir?"],
+["H","Ailelere çocuklarının fiziksel aktivite düzeyi hakkında bilgi vermek, aile katılımlı şenlikler düzenlemek, evde yapılabilecek hareket önerileri sunmak. Hareketli bir aile, hareketli bir çocuk yetiştirir."]]},
+{k:6,t:"Sınıfın içindeki toplum", d:"Okulun sosyolojisi ve akran grupları", s:[
+["H","Bir sınıf sadece yan yana oturan öğrencilerden mi oluşur?"],
+["Ö","Hayır hocam, içinde arkadaş grupları, liderler, dışlananlar var."],
+["H","Çok doğru. Okulda formal gruplar vardır: sınıf, takım, öğrenci meclisi. Bir de informal gruplar vardır: arkadaş grupları. İkisi birlikte okulun sosyal dokusunu oluşturur."],
+["Ö","Akran grubu ergenlikte daha etkili oluyor."],
+["H","Evet. Ergen için akranların onayı çoğu zaman öğretmenin ve ailenin onayından daha önemlidir. Bir sporu sevmek ya da derse katılmamak bile akran grubunun normlarından etkilenir."],
+["Ö","Takım seçerken hep aynı öğrencilerin son seçilmesi de bununla ilgili."],
+["H","Kesinlikle. Kaptanların takım seçtiği yöntem, sınıftaki statü hiyerarşisini herkesin önünde sergiler. Takımları öğretmenin kurması ya da rastgele yöntemler kullanılması, kimsenin değersiz hissetmemesini sağlar. Sınıf iklimi, öğrenmenin zeminidir."]]},
+{k:7,t:"Değişen toplum, değişen okul", d:"Toplumsal değişme ve eğitim", s:[
+["H","Dedelerimizin okulu ile bugünkü okul arasında neler değişti?"],
+["Ö","Teknoloji, ders içerikleri, öğretmen-öğrenci ilişkisi."],
+["H","Evet. Toplumsal değişmenin kaynakları teknoloji, nüfus hareketleri, ekonomi, ideolojiler ve kültürel etkileşimdir. Kentleşme ve göç sınıflarımızın yapısını değiştirdi, internet bilginin yerini değiştirdi."],
+["Ö","Eğitim değişmenin aracı mı, sonucu mu?"],
+["H","İkisi birden. Okul yeni bilgi ve değerleri yayarak toplumu değiştirir. Ama toplum değişince okul da kendini yeniden düzenlemek zorunda kalır. Modernleşme ve küreselleşme okulun hedeflerini dönüştürdü."],
+["Ö","Bilgi toplumunda öne çıkan beceriler neler?"],
+["H","Yaşam boyu öğrenme, dijital okuryazarlık, uyum sağlama ve işbirliği. Hareketsizleşen bir toplumda ise beden eğitimi, insanın en temel ihtiyaçlarından birini, yani hareketi, eğitimin merkezinde tutar."]]},
+{k:8,t:"Herkese eşit şans mı?", d:"Eğitimde fırsat eşitliği", s:[
+["H","1966'da ABD'de yayımlanan Coleman Raporu çarpıcı bir sonuca ulaştı. Biliyor musunuz?"],
+["Ö","Aile arka planının başarıda okul kaynaklarından daha etkili olduğu sonucu mu?"],
+["H","Evet. Bu, okulun eşitsizlikleri tek başına ortadan kaldıramayacağını gösterdi. Ama okulun hiçbir şey yapamayacağı anlamına gelmez; tam tersine, dezavantajlı öğrencilere ek destek vermek gerektiğini gösterir."],
+["Ö","Eşitlik ve hakkaniyet arasındaki fark burada önemli."],
+["H","Çok doğru. Eşitlik herkese aynı şeyi vermektir. Hakkaniyet herkese ihtiyacı kadar vermektir. Herkese aynı boyda basamak verirseniz kısa olan yine duvarın arkasını göremez."],
+["Ö","Beden eğitiminde bunu nasıl uygularız?"],
+["H","Malzemesi olmayan öğrenciye malzeme sağlarız, engelli öğrenci için etkinliği uyarlarız, hiç top oynamamış öğrenciye daha fazla deneme fırsatı veririz. Fırsat eşitliği büyük politikalarla olduğu kadar, sizin ders içindeki küçük kararlarınızla da gerçekleşir."]]},
+{k:9,t:"Kız topu, erkek topu yok", d:"Toplumsal cinsiyet, eğitim ve spor", s:[
+["H","Biyolojik cinsiyet ile toplumsal cinsiyet arasındaki fark nedir?"],
+["Ö","Biyolojik cinsiyet doğuştan gelen fiziksel özellikler, toplumsal cinsiyet ise toplumun yüklediği roller."],
+["H","Doğru. “Futbol erkek sporudur” ya da “dans kızlara göredir” gibi kalıp yargılar biyolojiden değil toplumdan gelir. Ve bu yargılar çocukların neyi deneyeceğini sınırlar."],
+["Ö","Kızlar ergenlikte spordan daha çok uzaklaşıyor."],
+["H","Evet. Beden imajı kaygısı, uygun soyunma ortamı eksikliği, rol model azlığı ve rekabet ağırlıklı dersler bunun nedenleri arasında. Seçenek çeşitliliği, güvenli bir ortam ve kadın sporcu örnekleri katılımı artırır."],
+["Ö","Örtük program da etkili oluyor."],
+["H","Kesinlikle. “Kız gibi atma” demek, sadece erkek sporculardan örnek vermek, kızlara hep daha kolay görevler vermek; bunların hepsi bir mesaj taşır. Sizin dilinizi ve tercihlerinizi gözden geçirmek, kapsayıcı bir beden eğitiminin ilk adımıdır."]]},
+{k:10,t:"Sporun toplumsal yüzü", d:"Spor sosyolojisi", s:[
+["H","Spor sosyolojisi iki kavramı ayırır: spora sosyalleşme ve spor yoluyla sosyalleşme. Farkı nedir?"],
+["Ö","Spora sosyalleşme, kişinin spora nasıl başladığı. Spor yoluyla sosyalleşme, sporun kişiye ne kazandırdığı."],
+["H","Mükemmel. Bir çocuk babası basketbol izlediği için basketbola başlıyorsa bu spora sosyalleşmedir. Takımında sorumluluk ve işbirliği öğreniyorsa bu spor yoluyla sosyalleşmedir."],
+["Ö","Medyanın rolü nedir?"],
+["H","Medya sporu milyonlara ulaştırır, sporcuları ünlü yapar ve sporu bir gösteriye dönüştürür. Bu ticarileşmeyi de hızlandırır. Medya hangi sporları ve hangi sporcuları gösterirse, gençler de onları örnek alır."],
+["Ö","Taraftarlık da bir kimlik meselesi."],
+["H","Evet, takım yerel ya da ulusal kimliğin sembolü olabilir. Bu aidiyet güzel bir duygudur, ama fanatizme dönüştüğünde şiddet doğurabilir. Spor sosyolojisi, sporun bu iki yüzünü birlikte görmemizi sağlar."]]},
+{k:11,t:"Farklılık bir zenginliktir", d:"Kültürel çeşitlilik ve kapsayıcı eğitim", s:[
+["H","Sınıfınızda Türkçeyi henüz iyi konuşamayan bir öğrenci olduğunu düşünün. Beden eğitimi dersi onun için ne ifade eder?"],
+["Ö","Belki de kendini en rahat ifade edebildiği ders olur hocam."],
+["H","Kesinlikle. Oyun ve spor ortak bir dildir. Bir pas, bir gülümseme, bir gol sevinci dil engelini aşar. Göçle gelen öğrencilerin uyumunda beden eğitimi güçlü bir araçtır."],
+["Ö","Çokkültürlü eğitim de farklılıkları zenginlik olarak görmek."],
+["H","Evet. Farklı kültürlerin oyunlarını ve danslarını derslerinize taşıyabilirsiniz. Böylece hem o öğrenci değerli hisseder hem de diğer öğrenciler yeni bir kültür tanır."],
+["Ö","Kapsayıcı eğitim engelli öğrencileri de kapsıyor."],
+["H","Tüm öğrencilerin aynı ortamda, ihtiyacına uygun destekle eğitim almasını savunur. Bir de dijital uçurum var; uzaktan eğitim döneminde internete ve cihaza erişimi olmayan öğrenciler geride kaldı. Kapsayıcılık, kimsenin geride kalmaması demektir. Bu dersin son mesajı da bu olsun."]]}
+],
+sc:[
+["Ailenin sosyoekonomik düzeyi başarıyı neden bu kadar etkiliyor?","Gelir düzeyi yüksek aileler çocuklarına daha fazla kitap, kurs, spor kulübü ve sessiz çalışma ortamı sağlayabilir; ebeveynlerin eğitim düzeyi de dil gelişimini ve okula ilişkin beklentileri etkiler. Bourdieu'nun kültürel sermaye kavramı bu etkinin bir kısmını açıklar."],
+["Formal ve informal grup arasındaki fark nedir?","Formal gruplar resmî olarak kurulmuş, amaçları ve rolleri belirlenmiş gruplardır (sınıf, okul takımı, öğrenci meclisi). Informal gruplar ise kendiliğinden oluşan, ortak ilgi ve arkadaşlığa dayanan gruplardır (arkadaş grupları). İkisi de öğrencinin davranışını etkiler."],
+["Coleman Raporu okulların önemsiz olduğunu mu söyledi?","Hayır. Rapor, aile arka planının başarı üzerindeki etkisinin okulların maddi kaynaklarından daha güçlü olduğunu gösterdi. Bu bulgu, okulun dezavantajlı öğrencileri destekleyecek biçimde düzenlenmesi ve öğretimin niteliğinin artırılması gerektiği tartışmalarını başlattı."],
+["Eşitlik ile hakkaniyet arasındaki fark nedir?","Eşitlik herkese aynı kaynak ve muameleyi sağlamaktır. Hakkaniyet ise herkese ihtiyacına göre kaynak sağlayarak sonuçta eşit fırsat yaratmaktır. Örneğin herkese aynı topu vermek eşitlik, görme engelli öğrenciye sesli top vermek hakkaniyettir."],
+["Spora sosyalleşme ile spor yoluyla sosyalleşme nasıl ayırt edilir?","Spora sosyalleşme, bireyi spora katılmaya yönelten etkenleri (aile, akran, okul, medya) inceler. Spor yoluyla sosyalleşme ise spora katılımın bireye kazandırdığı değer, norm, rol ve becerileri (işbirliği, sorumluluk, kural bilinci) inceler."],
+["Göçmen bir öğrencinin derse uyumu için neler yapabilirim?","Dil gerektirmeyen gösteri ağırlıklı açıklamalar kullanmak, ona bir akran rehberi (eş) atamak, takım kurarken dışlanmasını önlemek, kendi kültüründen bir oyunu sınıfa tanıtmasına fırsat vermek ve başarılarını görünür kılmak uyumu kolaylaştırır."]
+]
+});
+
 </script>
 <script>
 {
@@ -707,7 +1361,7 @@ function course(){
   const T=[["konu","Konular"],["pod","Podcast"],["sc","Soru-Cevap"],["test","Test"]];
   let body="";
   const P=tab==="test"?"":(sp.key&&sp.key.split(":")[0]===tab&&sp.key.split(":")[1]===c.id?playerHTML():"");
-  if(tab==="konu"){let g=0;body=P+`<div class="btns"><button class="btn" data-pl="konu" data-st="0">▶ Tüm konuları dinle</button></div><p class="muted">Bir maddeye dokunarak oradan dinlemeye başlayabilirsin. Ekran kilitlenince bazı telefonlarda okuma durabilir.</p>`+c.konular.map((k,i)=>{const t=g++;return `<div class="card topic"><div class="qhead"><span class="chip">Konu ${i+1}</span><button class="mini" data-pl="konu" data-st="${t}" aria-label="Konu ${i+1}'i dinle">▶ Dinle</button></div><h3 class="seek" style="margin-top:8px" data-l="konu:${c.id}|${t}">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li class="seek" data-l="konu:${c.id}|${g++}">${esc(m)}</li>`).join("")}</ul></div>`}).join("")}
+  if(tab==="konu"){let g=0;body=P+`<div class="btns"><button class="btn" data-pl="konu" data-st="0">▶ Tüm konuları dinle</button></div><p class="muted">Bir maddeye dokunarak oradan dinlemeye başlayabilirsin. Ekran kilitlenince bazı telefonlarda okuma durabilir.</p><div class="toc">${c.konular.map((k,i)=>`<button class="mini" data-jump="${i}">${i+1}. ${esc(k.b)}</button>`).join("")}</div>`+c.konular.map((k,i)=>{const t=g++;return `<div class="card topic" id="t${i}"><div class="qhead"><span class="chip">Konu ${i+1}</span><button class="mini" data-pl="konu" data-st="${t}" aria-label="Konu ${i+1}'i dinle">▶ Dinle</button></div><h3 class="seek" style="margin-top:8px" data-l="konu:${c.id}|${t}">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li class="seek" data-l="konu:${c.id}|${g++}">${esc(m)}</li>`).join("")}</ul></div>`}).join("")}
   if(tab==="pod"){const ep=sp.key&&sp.key.startsWith("pod:"+c.id+":")?+sp.key.split(":")[2]:-1;body=P+(ep>=0?`<div class="card" style="padding:8px">${c.podcast[ep].s.map((l,i)=>`<div class="line seek" data-l="pod:${c.id}:${ep}|${i}"><span class="av ${l[0]==="H"?"h":""}">${l[0]}</span><div><b>${NM[l[0]]}:</b> ${esc(l[1])}</div></div>`).join("")}</div>`:`<p class="muted">Bölümler hoca ve öğrenci arasında geçen sohbet biçimindedir. Cihazının Türkçe sesiyle okunur; internet gerekmez. Metne dokunarak istediğin yerden başlatabilirsin.</p>`)+c.podcast.map((e,i)=>`<div class="card ep"><button class="play" data-pl="pod" data-ep="${i}" aria-label="${esc(e.t)} bölümünü oynat">▶</button><div><span class="chip">Bölüm ${i+1} · ~${Math.max(2,Math.round(e.s.reduce((a,l)=>a+l[1].split(" ").length,0)/130))} dk</span><h3 style="margin-top:6px">${esc(e.t)}</h3><span class="muted">${esc(e.d)}</span></div></div>`).join("")}
   if(tab==="sc")body=P+`<div class="btns"><button class="btn" data-pl="sc" data-st="0">▶ Tüm soru-cevapları dinle</button></div><p class="muted">Öğrencilerin sık sorduğu sorular ve hocanın cevapları. Kendi sorunu “Sorularım” bölümüne not edip derste sorabilirsin.</p>`+c.sc.map((q,i)=>`<details class="qa"><summary data-l="sc:${c.id}|${i*2}"><span class="av">Ö</span><span>${esc(q[0])}</span></summary><div class="ans" data-l="sc:${c.id}|${i*2+1}"><span class="av h">H</span><div>${esc(q[1])}<div><button class="mini" data-pl="sc" data-st="${i*2}">▶ Dinle</button></div></div></div></details>`).join("")+`<button class="btn alt" data-go2="mine" data-cid="${c.id}">Hocaya soracağım soruyu not al</button>`;
   if(tab==="test"){const w=c.test.filter((_,i)=>S.r[c.id+":"+i]===0).length;body=`<div class="card"><h3>${c.test.length} soru · 5 şık</h3><p>Her cevaptan sonra doğru şık ve açıklama gösterilir. Şıkların sırası her denemede karışır.</p><p class="muted">Şu ana kadar ${p.done} soru çözdün, ${p.ok} doğru.</p><div class="btns"><button class="btn" data-start="all">Testi başlat</button>${w?`<button class="btn alt" data-start="wrong">Sadece yanlışlarım (${w})</button>`:""}</div></div>`}
@@ -779,6 +1433,7 @@ function bind(){
   app.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{const[c,i]=b.dataset.daily.split(":");startQuiz([makeQ(c,+i)],"test","Günün sorusu")});
   const qi=$("#q");if(qi){qi.addEventListener("keydown",e=>{if(e.key==="Enter"){nav("search",{t:qi.value})}});qi.addEventListener("search",()=>{if(qi.value)nav("search",{t:qi.value})});if(view.name==="search"){qi.focus();qi.setSelectionRange(qi.value.length,qi.value.length)}}
   app.querySelectorAll("[data-res]").forEach(b=>b.onclick=()=>{const r=search.res[+b.dataset.res];nav("course",Object.assign({id:r.c.id},r.go))});
+  app.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>{const t=document.getElementById("t"+b.dataset.jump);if(t)t.scrollIntoView({behavior:"smooth",block:"start"})});
   app.querySelectorAll("[data-pl]").forEach(b=>b.onclick=e=>{e.stopPropagation();startPl(b.dataset.pl,+(b.dataset.ep||0),+(b.dataset.st||0))});
   app.querySelectorAll(".seek[data-l]").forEach(b=>b.onclick=()=>{const[k,i]=b.dataset.l.split("|");const pr=k.split(":");startPl(pr[0],+(pr[2]||0),+i)});
   app.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{const a=b.dataset.pc,n=sp.lines.length;if(a==="toggle"){if(sp.on){stopSpeech();uiSp()}else speakFrom(sp.i)}if(a==="next")speakFrom(Math.min(sp.i+1,n-1));if(a==="prev")speakFrom(Math.max(0,sp.i-1));if(a==="rate"){sp.rate=sp.rate===1?1.25:sp.rate===1.25?1.5:sp.rate===1.5?0.85:1;if(sp.on)speakFrom(sp.i);else uiSp()}if(a==="close"){stopSpeech();sp.key=null;render()}});
