@@ -72,7 +72,7 @@ details.qa .ans{display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px;pa
 .player button{min-height:44px;min-width:44px;border-radius:12px;border:0;background:rgba(127,127,127,.25);color:inherit;padding:0 12px;font-weight:600}
 .player .prog{height:5px;background:rgba(127,127,127,.35);border-radius:3px;margin-top:10px}.player .prog i{display:block;height:100%;background:var(--lime);border-radius:3px}
 .line{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;cursor:pointer}
-.spon{background:color-mix(in srgb,var(--lime) 35%,transparent);border-radius:8px}.seek{cursor:pointer}.pcur{margin:8px 0 0;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.toc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}.topic{scroll-margin-top:70px}.mini{border:1px solid var(--line);background:var(--bg);border-radius:99px;min-height:36px;padding:0 14px;font-weight:600;font-size:14px}
+.spon{background:color-mix(in srgb,var(--lime) 35%,transparent);border-radius:8px}.seek{cursor:pointer}.pcur{margin:8px 0 0;font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.parts{margin:8px 0 0;padding-left:20px;color:var(--mute);font-size:15px}.week.now{outline:3px solid var(--track)}.wk{margin-top:10px;border-top:1px solid var(--line);padding-top:6px}.toc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}.topic{scroll-margin-top:70px}.mini{border:1px solid var(--line);background:var(--bg);border-radius:99px;min-height:36px;padding:0 14px;font-weight:600;font-size:14px}
 .q{font-size:18px;font-weight:600;margin:10px 0 14px}
 .opt{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:2px solid transparent;border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:52px}
 .opt .l{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font:700 17px "Barlow Condensed",sans-serif;background:var(--bg);border:1px solid var(--line)}
@@ -1471,14 +1471,42 @@ sos:[
 };
 COURSES.forEach(c=>{if(EXTRA2[c.id])c.test.push(...EXTRA2[c.id])});
 
+// Soru-cevapları haftalara (konu sırasına) bağla ve boş kalan haftalar için yeni soru-cevaplar ekle
+const SCK={bes:[0,0,2,4,1,2,5,6,7,9,10,11],ank:[0,3,4,4,4,1,5,7,8,9,10,11],hrk:[1,2,3,0,4,4,5,7,8,10,11,11],egt:[0,0,0,2,3,2,5,6,7,9,10,11],sos:[0,1,1,2,3,4,5,6,8,8,10,11]};
+const SCNEW={
+bes:[
+[3,"Selim Sırrı Tarcan'ın Türk beden eğitimine katkısı nedir?","Selim Sırrı Tarcan, Türkiye'de modern beden eğitiminin öncülerindendir. İsveç jimnastiğini tanıtmış, okullarda beden eğitiminin yaygınlaşması için çalışmış ve olimpiyat hareketinin Türkiye'de tanınmasına katkı sağlamıştır. Ayrıca halk oyunlarının derlenip okullara taşınmasına önem vermiştir."],
+[8,"Beden eğitimi dersi ile okul sporları arasındaki fark nedir?","Beden eğitimi dersi programın zorunlu bir parçasıdır ve tüm öğrencilere yöneliktir; amacı herkesin çok yönlü gelişimidir. Okul sporları ise ders dışında, ilgili ve yetenekli öğrencilerin takım hâlinde yarışmalara katıldığı etkinliklerdir. İkisi birbirini tamamlar ama okul takımı hiçbir zaman dersin yerini tutmaz."]
+],
+ank:[
+[2,"Omuz eklemi neden diğer eklemlere göre daha kolay çıkar?","Omuz bir top-yuva eklemidir ama yuvası (glenoid çukur) sığdır ve humerus başının yalnızca küçük bir bölümünü karşılar. Bu yapı çok geniş bir hareket açıklığı sağlar, fakat stabilite büyük ölçüde bağlara ve rotator manşet kaslarına bağlı kalır. Kalça ise derin bir yuvaya oturduğu için çok daha stabildir."],
+[6,"Biceps brachii neden hem dirsek fleksiyonu hem de supinasyon yapar?","Biceps'in tendonu önkolda radius kemiğine yapışır. Kas kasıldığında dirseği büker; önkol pronasyondaysa radiusu döndürerek önkolu supinasyona getirir. Bu yüzden biceps, önkol supinasyondayken dirsek fleksiyonunda en etkili çalışır."]
+],
+hrk:[
+[6,"Koşmayı öğretirken hangi ipuçlarını kullanmalıyım?","Kısa ve tek odaklı ipuçları kullan: “Kollar çapraz”, “Dirsekler bükük”, “Hafif ayak ucu”, “Dizleri kaldır”. Aynı anda tek bir öğeye odaklan, öğrencinin uygulamasını gözle, sonra bir sonraki öğeye geç. İpuçlarını oyunlarla ve farklı hızlarda koşu görevleriyle pekiştir."],
+[9,"Ritim çalışmaları spor becerilerine nasıl katkı sağlar?","Spor becerilerinin çoğu zamanlamaya dayanır: top sürme, turnike adımları, ip atlama, yüzmede kulaç ve nefes. Ritim çalışmaları hareketin zamanlamasını ve akıcılığını geliştirir, koordinasyonu güçlendirir. Müzikle yapılan çalışmalar ayrıca motivasyonu artırır."]
+],
+egt:[
+[1,"Eğitimin hukuki temeli neleri kapsar?","Eğitimi düzenleyen yasal metinleri kapsar: Anayasa'nın 42. maddesi (eğitim ve öğrenim hakkı ve ödevi), 1739 sayılı Millî Eğitim Temel Kanunu, 222 sayılı İlköğretim ve Eğitim Kanunu, 2547 sayılı Yükseköğretim Kanunu ve 7354 sayılı Öğretmenlik Meslek Kanunu gibi. Bu metinler eğitimin amaçlarını, hak ve yükümlülükleri belirler."],
+[4,"Öğretmenlik neden bir uzmanlık mesleği sayılır?","Çünkü öğretmenlik; özel alan bilgisi, pedagojik formasyon (öğrenme, öğretim, ölçme-değerlendirme, sınıf yönetimi bilgisi), uzun süreli bir hazırlık eğitimi, meslek etiği ve sürekli mesleki gelişim gerektirir. Bu nitelikler öğretmenliği herkesin yapabileceği bir iş olmaktan çıkarır."],
+[8,"Örgün eğitimin kademeleri nelerdir ve zorunlu eğitim kaç yıldır?","Örgün eğitim okul öncesi, ilkokul (4 yıl), ortaokul (4 yıl), ortaöğretim (4 yıl) ve yükseköğretimden oluşur. 2012'deki 6287 sayılı Kanun ile ilkokul, ortaokul ve ortaöğretimi kapsayan 12 yıllık zorunlu eğitim (4+4+4) uygulamasına geçilmiştir."]
+],
+sos:[
+[7,"Eğitim toplumsal değişmenin hem aracı hem sonucu ne demek?","Aracıdır, çünkü okul yeni bilgi, beceri ve değerleri yayarak toplumu dönüştürür (ör. okuryazarlığın yaygınlaşması). Sonucudur, çünkü teknoloji, ekonomi ve nüfus yapısı değiştikçe okul da hedeflerini ve programlarını bu değişime göre yeniden düzenler (ör. dijital okuryazarlığın programlara girmesi)."],
+[9,"Takım kurarken toplumsal cinsiyet eşitliğine nasıl dikkat ederim?","Takımları kaptan seçimiyle değil, öğretmen tarafından dengeli ya da rastgele yöntemlerle kur. Karma takımlarda tüm öğrencilerin topa dokunmasını sağlayan kurallar ekle, kızlara ve erkeklere farklı beklenti dili kullanma, kaptanlık ve hakemlik gibi rolleri dönüşümlü ver."]
+]
+};
+COURSES.forEach(c=>{const k=SCK[c.id];c.sc.forEach((q,i)=>{q[2]=k[i]});(SCNEW[c.id]||[]).forEach(n=>c.sc.push([n[1],n[2],n[0]]));c.sc.sort((a,b)=>a[2]-b[2])});
+
 </script>
 <script>
 {
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const KEY="beso-ders-cebi-v1";
-let S={r:{},mine:[],seen:{}};
+let S={r:{},mine:[],seen:{},pos:{}};
 try{const v=JSON.parse(localStorage.getItem(KEY));if(v)S=Object.assign(S,v)}catch(e){}
+if(!S.pos)S.pos={};
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const toast=t=>{const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1800)};
 const LET="ABCDE";
@@ -1507,15 +1535,18 @@ function home(){
   <div class="stats"><div class="stat"><b>${done}/${tot}</b><span>çözülen soru</span></div><div class="stat"><b>%${done?Math.round(ok/done*100):0}</b><span>başarı</span></div><div class="stat"><b>${Object.values(S.r).filter(v=>v===0).length}</b><span>tekrar edilecek</span></div></div>
   <input type="search" id="q" placeholder="Konu, kavram veya soru ara (ör. kaldıraç, Dewey)" aria-label="Ara">
   <div class="sec"><h2>Günün sorusu</h2><button class="card" data-daily="${dq.c.id}:${dq.i}"><span class="chip">${esc(dq.c.kisa)}</span><p class="q" style="margin:10px 0 4px">${esc(dq.t[0])}</p><span class="muted">Cevaplamak için dokun</span></button></div>
+  <div class="sec"><h2>Kesintisiz dinle</h2>${sp.key==="hepsi"?playerHTML():""}<p class="muted">Beş dersin 12'şer haftası sırayla okunur: her haftada konu anlatımı, podcast ve soru-cevaplar. Toplam yaklaşık ${Math.round(allAudio().lines.reduce((a,l)=>a+l[1].split(" ").length,0)/130/60*10)/10} saat.</p><div class="btns"><button class="btn" data-pl="hepsi" data-st="0">▶ Tüm dersleri baştan dinle</button>${S.pos.hepsi?(()=>{const m=allAudio().marks[S.pos.hepsi];return m?`<button class="btn alt" data-pl="hepsi" data-st="${S.pos.hepsi}">Devam et · ${esc(C(m[0]).kisa)}, Hafta ${m[1]+1}</button>`:""})():""}</div></div>
   <div class="sec"><h2>Hızlı başla</h2><div class="btns"><button class="btn" data-go2="exam">25 soruluk deneme sınavı</button><button class="btn alt" data-go2="wrong">Yanlışlarımı tekrar et</button></div></div>
   <p class="muted">İçerik derslerin genel müfredatına göre hazırlanmış çalışma materyalidir; hocanızın ders notları ve kaynakları esastır. Uygulama internet olmadan çalışır; ilerlemen bu cihazda saklanır.</p></div>`;
 }
 
 function course(){
-  const c=C(view.id),tab=view.tab||"konu";const p=prog(c);
-  const T=[["konu","Konular"],["pod","Podcast"],["sc","Soru-Cevap"],["test","Test"]];
+  const c=C(view.id),tab=view.tab||"hafta";const p=prog(c);
+  const T=[["hafta","Haftalar"],["konu","Konular"],["pod","Podcast"],["sc","Soru-Cevap"],["test","Test"]];
   let body="";
   const P=tab==="test"?"":(sp.key&&sp.key.split(":")[0]===tab&&sp.key.split(":")[1]===c.id?playerHTML():"");
+  if(tab==="hafta"){const cur=sp.key==="hafta:"+c.id&&sp.marks&&sp.marks[sp.i]?sp.marks[sp.i][1]:-1;renderedWeek=cur;const r=courseAll(c);const starts=c.konular.map((_,i)=>r.marks.findIndex(m=>m[1]===i));const pos=S.pos["hafta:"+c.id];
+    body=P+`<div class="btns"><button class="btn" data-pl="hafta" data-st="0">▶ 12 haftayı kesintisiz dinle</button>${pos&&r.marks[pos]?`<button class="btn alt" data-pl="hafta" data-st="${pos}">Kaldığın yerden devam · Hafta ${r.marks[pos][1]+1}</button>`:""}</div><p class="muted">Her hafta sırasıyla konu anlatımı, podcast ve soru-cevaplardan oluşur; bir hafta bitince sonraki hafta kendiliğinden başlar. Kaldığın yer bu cihazda hatırlanır.</p>`+c.konular.map((k,i)=>{const p=c.podcast.find(x=>x.k===i),q=c.sc.filter(x=>x[2]===i);const mins=Math.max(1,Math.round(weekLines(c,i).reduce((a,l)=>a+l[1].split(" ").length,0)/130));return `<div class="card week${i===cur?" now":""}" id="w${i}"><div class="qhead"><span class="chip">Hafta ${i+1} · ~${mins} dk</span><button class="mini" data-pl="hafta" data-st="${starts[i]}" aria-label="Hafta ${i+1}'den dinle">▶ Buradan dinle</button></div><h3 style="margin-top:8px">${esc(k.b)}</h3><ol class="parts"><li>Konu anlatımı · ${k.m.length} madde</li>${p?`<li>Podcast · ${esc(p.t)}</li>`:""}${q.length?`<li>Soru-cevap · ${q.length} soru</li>`:""}</ol>${i===cur?`<div class="wk">${r.lines.map((l,j)=>r.marks[j][1]===i?`<div class="line seek" data-l="hafta:${c.id}|${j}"><span class="av ${l[0]==="H"?"h":""}">${l[0]==="N"?"A":l[0]}</span><div><b>${NM[l[0]]}:</b> ${esc(l[1])}</div></div>`:"").join("")}</div>`:""}</div>`}).join("")}
   if(tab==="konu"){let g=0;body=P+`<div class="btns"><button class="btn" data-pl="konu" data-st="0">▶ Tüm konuları dinle</button></div><p class="muted">Bir maddeye dokunarak oradan dinlemeye başlayabilirsin. Ekran kilitlenince bazı telefonlarda okuma durabilir.</p><div class="toc">${c.konular.map((k,i)=>`<button class="mini" data-jump="${i}">${i+1}. ${esc(k.b)}</button>`).join("")}</div>`+c.konular.map((k,i)=>{const t=g++;return `<div class="card topic" id="t${i}"><div class="qhead"><span class="chip">Konu ${i+1}</span><button class="mini" data-pl="konu" data-st="${t}" aria-label="Konu ${i+1}'i dinle">▶ Dinle</button></div><h3 class="seek" style="margin-top:8px" data-l="konu:${c.id}|${t}">${esc(k.b)}</h3><ul>${k.m.map(m=>`<li class="seek" data-l="konu:${c.id}|${g++}">${esc(m)}</li>`).join("")}</ul></div>`}).join("")}
   if(tab==="pod"){const ep=sp.key&&sp.key.startsWith("pod:"+c.id+":")?+sp.key.split(":")[2]:-1;body=P+(ep>=0?`<div class="card" style="padding:8px">${c.podcast[ep].s.map((l,i)=>`<div class="line seek" data-l="pod:${c.id}:${ep}|${i}"><span class="av ${l[0]==="H"?"h":""}">${l[0]}</span><div><b>${NM[l[0]]}:</b> ${esc(l[1])}</div></div>`).join("")}</div>`:`<p class="muted">Bölümler hoca ve öğrenci arasında geçen sohbet biçimindedir. Cihazının Türkçe sesiyle okunur; internet gerekmez. Metne dokunarak istediğin yerden başlatabilirsin.</p>`)+c.podcast.map((e,i)=>`<div class="card ep"><button class="play" data-pl="pod" data-ep="${i}" aria-label="${esc(e.t)} bölümünü oynat">▶</button><div><span class="chip">Bölüm ${i+1} · ~${Math.max(2,Math.round(e.s.reduce((a,l)=>a+l[1].split(" ").length,0)/130))} dk</span><h3 style="margin-top:6px">${esc(e.t)}</h3><span class="muted">${esc(e.d)}</span></div></div>`).join("")}
   if(tab==="sc")body=P+`<div class="btns"><button class="btn" data-pl="sc" data-st="0">▶ Tüm soru-cevapları dinle</button></div><p class="muted">Öğrencilerin sık sorduğu sorular ve hocanın cevapları. Kendi sorunu “Sorularım” bölümüne not edip derste sorabilirsin.</p>`+c.sc.map((q,i)=>`<details class="qa"><summary data-l="sc:${c.id}|${i*2}"><span class="av">Ö</span><span>${esc(q[0])}</span></summary><div class="ans" data-l="sc:${c.id}|${i*2+1}"><span class="av h">H</span><div>${esc(q[1])}<div><button class="mini" data-pl="sc" data-st="${i*2}">▶ Dinle</button></div></div></div></details>`).join("")+`<button class="btn alt" data-go2="mine" data-cid="${c.id}">Hocaya soracağım soruyu not al</button>`;
@@ -1529,20 +1560,29 @@ const NM={H:"Hoca","Ö":"Öğrenci",N:"Anlatıcı"};
 const loadV=()=>{try{voices=synth.getVoices().filter(v=>/^tr/i.test(v.lang))}catch(e){}};
 if(synth){loadV();synth.onvoiceschanged=()=>{const had=voices.length;loadV();if(!had&&voices.length&&view.name==="course")render()}}
 const playlists=c=>({konu:c.konular.flatMap((k,ti)=>[["N","Konu "+(ti+1)+". "+k.b+"."],...k.m.map(m=>["N",m])]),sc:c.sc.flatMap(q=>[["Ö",q[0]],["H",q[1]]]),pod:c.podcast.map(e=>e.s)});
-function startPl(type,ep,st){const c=C(view.id);const P=playlists(c);const key=type==="pod"?"pod:"+c.id+":"+ep:type+":"+c.id;
-  if(sp.key!==key){stopSpeech();sp.key=key;sp.lines=type==="pod"?P.pod[ep]:P[type];sp.title=type==="pod"?c.podcast[ep].t:(type==="konu"?"Konular":"Soru-Cevap")+" · "+c.kisa;sp.i=st;render()}
+const weekLines=(c,i)=>{const k=c.konular[i],p=c.podcast.find(x=>x.k===i),q=c.sc.filter(x=>x[2]===i);const L=[["N","Hafta "+(i+1)+". "+k.b+"."],["N","Konu anlatımı."],...k.m.map(m=>["N",m])];if(p)L.push(["N","Podcast: "+p.t+"."],...p.s);if(q.length){L.push(["N","Soru ve cevaplar."]);q.forEach(x=>L.push(["Ö",x[0]],["H",x[1]]))}return L};
+function courseAll(c,intro){const lines=[],marks=[];if(intro){lines.push(["N",c.ad+" dersi."]);marks.push([c.id,0])}c.konular.forEach((_,i)=>weekLines(c,i).forEach(l=>{lines.push(l);marks.push([c.id,i])}));return{lines,marks}}
+let _all=null;const allAudio=()=>_all||(_all=COURSES.reduce((a,c)=>{const r=courseAll(c,true);a.lines.push(...r.lines);a.marks.push(...r.marks);return a},{lines:[],marks:[]}));
+let renderedWeek=-1;
+function startPl(type,ep,st){let key,lines,title,marks=null;
+  if(type==="hepsi"){const r=allAudio();key="hepsi";lines=r.lines;marks=r.marks;title="Tüm dersler"}
+  else{const c=C(view.id);key=type==="pod"?"pod:"+c.id+":"+ep:type+":"+c.id;
+    if(type==="hafta"){const r=courseAll(c);lines=r.lines;marks=r.marks;title="12 hafta · "+c.kisa}
+    else{const P=playlists(c);lines=type==="pod"?P.pod[ep]:P[type];title=type==="pod"?c.podcast[ep].t:(type==="konu"?"Konular":"Soru-Cevap")+" · "+c.kisa}}
+  if(sp.key!==key){stopSpeech();sp.key=key;sp.lines=lines;sp.marks=marks;sp.title=title;sp.i=st;render()}
   speakFrom(st)}
+const wkLabel=()=>{const m=sp.marks&&sp.marks[sp.i];return m?C(m[0]).kisa+" · Hafta "+(m[1]+1)+" · "+C(m[0]).konular[m[1]].b:""};
 function playerHTML(){const n=sp.lines.length,cur=sp.lines[sp.i]||["N",""];
   const warn=!synth?"Bu tarayıcı sesli okumayı desteklemiyor; metni okuyarak takip edebilirsin.":(!voices.length?"Cihazında Türkçe ses bulunamadı. Ayarlar › Metin okuma (Metin-konuşma çıktısı) bölümünden Türkçe ses paketini indirirsen içerik sesli okunur.":"");
-  return `<div class="player"><div class="qhead"><span class="cond" style="font-size:21px">${esc(sp.title)}</span><span id="pn" style="font-size:14px">${sp.i+1}/${n}</span></div>${warn?`<p style="margin:6px 0 0;font-size:14px">${esc(warn)}</p>`:""}<p class="pcur" id="pcur"><b>${NM[cur[0]]}:</b> ${esc(cur[1])}</p><div class="prog"><i id="pp" style="width:${sp.i/n*100}%"></i></div><div class="ctl"><button data-pc="prev" aria-label="Önceki">⏮</button><button data-pc="toggle" id="pt" style="min-width:96px">${sp.on?"Duraklat":"Oynat"}</button><button data-pc="next" aria-label="Sonraki">⏭</button><button data-pc="rate" id="pr">${sp.rate}×</button><button data-pc="close">Kapat</button></div></div>`}
+  return `<div class="player"><div class="qhead"><span class="cond" style="font-size:21px">${esc(sp.title)}</span><span id="pn" style="font-size:14px">${sp.i+1}/${n}</span></div>${sp.marks?`<p id="pw" style="margin:4px 0 0;font-size:14px;font-weight:600">${esc(wkLabel())}</p>`:""}${warn?`<p style="margin:6px 0 0;font-size:14px">${esc(warn)}</p>`:""}<p class="pcur" id="pcur"><b>${NM[cur[0]]}:</b> ${esc(cur[1])}</p><div class="prog"><i id="pp" style="width:${sp.i/n*100}%"></i></div><div class="ctl"><button data-pc="prev" aria-label="Önceki">⏮</button><button data-pc="toggle" id="pt" style="min-width:96px">${sp.on?"Duraklat":"Oynat"}</button><button data-pc="next" aria-label="Sonraki">⏭</button><button data-pc="rate" id="pr">${sp.rate}×</button><button data-pc="close">Kapat</button></div></div>`}
 function stopSpeech(){sp.on=false;try{synth&&synth.cancel()}catch(e){}}
 function sayOnce(t){stopSpeech();if(!synth||!voices.length){toast("Cihazda Türkçe ses yok");return}try{const u=new SpeechSynthesisUtterance(t);u.lang="tr-TR";u.voice=voices[0];u.rate=sp.rate;synth.speak(u)}catch(e){}}
-function speakFrom(i){const n=sp.lines.length;if(i>=n){sp.on=false;sp.i=0;uiSp();toast("Bitti");return}
-  sp.i=i;if(!synth||!voices.length){sp.on=false;uiSp();return}sp.on=true;uiSp();
+function speakFrom(i){const n=sp.lines.length;if(i>=n){sp.on=false;sp.i=0;if(sp.marks){delete S.pos[sp.key];save()}uiSp();toast("Bitti");return}
+  sp.i=i;if(sp.marks){S.pos[sp.key]=i;save()}if(!synth||!voices.length){sp.on=false;uiSp();return}sp.on=true;uiSp();
   try{synth.cancel();const l=sp.lines[i];const u=new SpeechSynthesisUtterance(l[1]);u.lang="tr-TR";u.rate=sp.rate;
   u.voice=l[0]==="Ö"?(voices[1]||voices[0]):voices[0];u.pitch=(l[0]==="Ö"&&!voices[1])?1.3:(l[0]==="H"?0.9:1);
   u.onend=()=>{if(sp.on&&sp.i===i)speakFrom(i+1)};synth.speak(u)}catch(err){}}
-function uiSp(){const pt=$("#pt");if(!pt)return;const n=sp.lines.length,cur=sp.lines[sp.i]||["N",""];pt.textContent=sp.on?"Duraklat":"Oynat";$("#pp").style.width=(sp.i/n*100)+"%";$("#pr").textContent=sp.rate+"×";$("#pn").textContent=(sp.i+1)+"/"+n;$("#pcur").innerHTML="<b>"+NM[cur[0]]+":</b> "+esc(cur[1]);
+function uiSp(){if(view.name==="course"&&(view.tab||"hafta")==="hafta"&&sp.key==="hafta:"+view.id&&sp.marks&&sp.marks[sp.i]&&sp.marks[sp.i][1]!==renderedWeek)render();const pt=$("#pt");if(!pt)return;const pw=$("#pw");if(pw)pw.textContent=wkLabel();const n=sp.lines.length,cur=sp.lines[sp.i]||["N",""];pt.textContent=sp.on?"Duraklat":"Oynat";$("#pp").style.width=(sp.i/n*100)+"%";$("#pr").textContent=sp.rate+"×";$("#pn").textContent=(sp.i+1)+"/"+n;$("#pcur").innerHTML="<b>"+NM[cur[0]]+":</b> "+esc(cur[1]);
   document.querySelectorAll(".spon").forEach(e=>e.classList.remove("spon"));const el=document.querySelector('[data-l="'+sp.key+"|"+sp.i+'"]');if(el){el.classList.add("spon");const d=el.closest("details");if(d)d.open=true;if(sp.on)el.scrollIntoView({block:"center",behavior:"smooth"})}}
 
 /* ---------- Test motoru ---------- */
@@ -1582,7 +1622,7 @@ function search(){const term=(view.t||"").trim();const lo=term.toLocaleLowerCase
 
 function bind(){
   app.querySelectorAll("[data-act=back]").forEach(b=>b.onclick=()=>{if(view.name==="quizView"&&quiz&&quiz.mode==="exam"&&quiz.pos<quiz.list.length){finishQuiz();render();return}if(view.name==="quizView"&&quiz&&quiz.from)nav("course",quiz.from);else if(view.name==="quizView")nav(quiz&&quiz.mode==="exam"?"exam":"home");else nav("home")});
-  app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>nav("course",{id:b.dataset.open,tab:"konu"}));
+  app.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>nav("course",{id:b.dataset.open,tab:"hafta"}));
   app.querySelectorAll("[data-go2]").forEach(b=>b.onclick=()=>nav(b.dataset.go2,b.dataset.cid?{cid:b.dataset.cid}:{}));
   app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{stopSpeech();view.tab=b.dataset.tab;delete view.ep;render()});
   app.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{const[c,i]=b.dataset.daily.split(":");startQuiz([makeQ(c,+i)],"test","Günün sorusu")});
